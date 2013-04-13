@@ -1,0 +1,8 @@
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\bin\Debug\SpotiChelasDAL.dll.config
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\bin\Debug\SpotiChelasDAL.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\bin\Debug\SpotiChelasDAL.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\bin\Debug\SpotiChelasModel.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\bin\Debug\SpotiChelasModel.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\obj\Debug\SpotiChelasDAL.csprojResolveAssemblyReference.cache
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\obj\Debug\SpotiChelasDAL.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\SpotiChelasDAL\obj\Debug\SpotiChelasDAL.pdb

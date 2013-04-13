@@ -1,0 +1,12 @@
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\Services.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\Services.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\Common.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\DAL.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\Common.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\DAL.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\obj\Debug\Services.csprojResolveAssemblyReference.cache
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\obj\Debug\Services.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Services\obj\Debug\Services.pdb
