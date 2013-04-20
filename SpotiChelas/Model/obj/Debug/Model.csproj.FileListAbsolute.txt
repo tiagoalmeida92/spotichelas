@@ -1,0 +1,8 @@
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\bin\Debug\Model.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\bin\Debug\Model.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\bin\Debug\EntityFramework.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\bin\Debug\EntityFramework.xml
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\obj\Debug\Model.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\obj\Debug\Model.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\etapa2\SpotiChelas\Model\bin\Debug\Model.dll.config

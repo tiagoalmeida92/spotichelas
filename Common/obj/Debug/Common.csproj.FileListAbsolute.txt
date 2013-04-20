@@ -1,5 +1,0 @@
-C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Common\bin\Debug\Common.dll
-C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Common\bin\Debug\Common.pdb
-C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
-C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Common\obj\Debug\Common.dll
-C:\Users\Tiago\Documents\ISEL\1213v\PI\SpotiChelas\Common\obj\Debug\Common.pdb
