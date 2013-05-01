@@ -1,34 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using Model.Models;
+using Domain.Entities;
+using Services;
+using UI.ViewModels;
 
 namespace UI.Controllers
-{ 
+{
     public class PlaylistController : Controller
     {
-        private readonly PlaylistDb _db = new PlaylistDb();
+        private readonly IPlaylistService _playlistService = new PlaylistService();
 
         //
         // GET: /Playlist/
 
         public ViewResult Index()
         {
-            return View(_db.Playlists.ToList());
+            var playlists = _playlistService.GetAll();
+            return View(playlists);
         }
 
-        //
-        // GET: /Playlist/Details/5
-
-        public ViewResult Details(int id)
-        {
-            Playlist playlist = _db.Playlists.Find(id);
-            return View(playlist);
-        }
 
         //
         // GET: /Playlist/Create
@@ -36,7 +26,7 @@ namespace UI.Controllers
         public ActionResult Create()
         {
             return View();
-        } 
+        }
 
         //
         // POST: /Playlist/Create
@@ -46,64 +36,83 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Playlists.Add(playlist);
-                _db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
-
-            return View(playlist);
-        }
-        
-        //
-        // GET: /Playlist/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            Playlist playlist = _db.Playlists.Find(id);
-            return View(playlist);
-        }
-
-        //
-        // POST: /Playlist/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(Playlist playlist)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Entry(playlist).State = EntityState.Modified;
-                _db.SaveChanges();
+                _playlistService.Add(playlist);
                 return RedirectToAction("Index");
             }
+
             return View(playlist);
         }
 
-        //
-        // GET: /Playlist/Delete/5
- 
-        public ActionResult Delete(int id)
+
+        [HttpGet]
+        public ActionResult Details(int id)
         {
-            Playlist playlist = _db.Playlists.Find(id);
-            return View(playlist);
+            Playlist playlist = _playlistService.GetById(id);
+
+
+            IEnumerable<Track> tracks = _playlistService.GetTracks(playlist);
+
+
+            var viewModel = new PlaylistViewModel
+                {
+                    Playlist = playlist,
+                    Tracks = tracks
+                };
+            return View(viewModel);
         }
 
         //
-        // POST: /Playlist/Delete/5
+        // GET: /Playlists/Edit/5
 
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {            
-            Playlist playlist = _db.Playlists.Find(id);
-            _db.Playlists.Remove(playlist);
-            _db.SaveChanges();
+        public ActionResult Edit(int id)
+        {
+            Playlist playlist = _playlistService.GetById(id);
+            return View(playlist);
+        }
+
+
+        [HttpPost]
+        public ActionResult AddTrack(int playlistId, string trackId)
+        {
+            
+             _playlistService.AddTrack(playlistId,trackId);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if(_db != null)
-                _db.Dispose();
-            base.Dispose(disposing);
-        }
+        ////
+        //// POST: /Playlists/Edit/5
+
+        //[HttpPost]
+        //public ActionResult Edit(Playlist playlist)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Entry(playlist).State = EntityState.Modified;
+        //        _db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(playlist);
+        //}
+
+        ////
+        //// GET: /Playlists/Delete/5
+
+        //public ActionResult Delete(int id)
+        //{
+        //    Playlist playlist = _db.Playlists.Find(id);
+        //    return View(playlist);
+        //}
+
+        ////
+        //// POST: /Playlists/Delete/5
+
+        //[HttpPost, ActionName("Delete")]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Playlist playlist = _db.Playlists.Find(id);
+        //    _db.Playlists.Remove(playlist);
+        //    _db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
     }
 }

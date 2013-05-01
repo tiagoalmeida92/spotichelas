@@ -1,25 +1,42 @@
-﻿@model Model.Models.Playlist
+﻿@using Domain.Entities
+@model UI.ViewModels.PlaylistViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Playlist.Name</h2>
+<h3> @Model.Playlist.Description</h3>
+
+@Html.ActionLink("Edit", "Edit", new {id = Model.Playlist.Id})
 
 <fieldset>
     <legend>Playlist</legend>
 
-    <div class="display-label">Name</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
+    <table>
+           
+            
+        @foreach (Track track in Model.Tracks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => track.Artist)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => track.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => track.Duration)
+                </td>
+            </tr>
+        }
 
-    <div class="display-label">Description</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
+    </table>
+
+
+    
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @* @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) *@
     @Html.ActionLink("Back to List", "Index")
 </p>

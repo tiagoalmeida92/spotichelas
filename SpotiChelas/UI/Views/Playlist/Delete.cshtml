@@ -1,4 +1,4 @@
-﻿@model Model.Models.Playlist
+﻿@model Domain.Entities.Playlist
 
 @{
     ViewBag.Title = "Delete";
@@ -20,7 +20,8 @@
         @Html.DisplayFor(model => model.Description)
     </div>
 </fieldset>
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     <p>
         <input type="submit" value="Delete" /> |
         @Html.ActionLink("Back to List", "Index")

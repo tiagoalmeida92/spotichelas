@@ -1,0 +1,48 @@
+﻿@using Domain.Entities
+@model  UI.ViewModels.SearchResultsViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Results</h1>
+
+<table>
+    <tr>
+        <th>
+            Artist
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Duration
+        </th>
+    </tr>
+
+    @foreach (Track track in Model.Tracks)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => track.Artist)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => track.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => track.Duration)
+            </td>
+            <td>
+                @using (Html.BeginForm("AddTrack", "Playlist", FormMethod.Post))
+                {
+                    @Html.Hidden("trackid", track.Id)
+                    @Html.DropDownList("playlistId", new SelectList(Model.Playlists, "Id", "Name"))
+                   <input type="submit" value="Add" />
+                }
+            </td>
+
+        </tr>
+    }
+
+</table>

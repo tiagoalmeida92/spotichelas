@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Model.Models.Playlist>
+﻿@using Domain.Entities
+@model IEnumerable<Domain.Entities.Playlist>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Playlists";
 }
 
-<h2>Index</h2>
+<h2>Playlists</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -20,20 +21,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (Playlist item in Model)
+    {
+        <tr>
+            <td>
+                
+                @Html.ActionLink(
+                    Html.DisplayFor(modelItem => item.Name).ToHtmlString(),
+                    "Details",
+                    new {id = item.Id}
+                     )
+                
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+        </tr>
+    }
 
 </table>
