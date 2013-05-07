@@ -14,19 +14,6 @@ namespace Domain.Persistence.Migrations
 
         protected override void Seed(PlaylistDb context)
         {
-            context.Playlists.AddOrUpdate(new Playlist
-                {
-                    Name = "InitialPlaylist",
-                    Description = "Added on Configuration.Seed Method",
-                    PlaylistTracks = new Collection<PlaylistTrack>
-                        {
-                            new PlaylistTrack
-                                {
-                                    PlaylistId = 1,
-                                    SpotifyTrackId = "fake"
-                                }
-                        }
-                });
 
             //  This method will be called after migrating to the latest version.
 
@@ -40,6 +27,22 @@ namespace Domain.Persistence.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.Playlists.AddOrUpdate(new Playlist
+                {
+                    Name = "InitialPlaylist",
+                    Description = "Added on Configuration.Seed Method",
+                    PlaylistTracks = new Collection<PlaylistTrack>
+                        {
+                            new PlaylistTrack
+                                {
+                                    PlaylistId = 1,
+                                    SpotifyTrackId = "5jROXt1Iz8Zk98WobPtC4k"
+                                }
+                        }
+                });
+
+            
         }
     }
 }

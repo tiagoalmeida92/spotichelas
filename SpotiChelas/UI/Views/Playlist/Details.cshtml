@@ -15,22 +15,14 @@
 
     <table>
            
-            
-        @foreach (Track track in Model.Tracks)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => track.Artist)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => track.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => track.Duration)
-                </td>
-            </tr>
-        }
-
+        
+            @foreach (Track track in Model.Tracks)
+            {
+                <tr>
+                    @Html.DisplayFor(model => track)
+                </tr>
+            }
+        
     </table>
 
 

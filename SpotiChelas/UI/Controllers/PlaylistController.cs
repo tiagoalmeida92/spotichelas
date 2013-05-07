@@ -48,11 +48,7 @@ namespace UI.Controllers
         public ActionResult Details(int id)
         {
             Playlist playlist = _playlistService.GetById(id);
-
-
             IEnumerable<Track> tracks = _playlistService.GetTracks(playlist);
-
-
             var viewModel = new PlaylistViewModel
                 {
                     Playlist = playlist,
@@ -67,17 +63,39 @@ namespace UI.Controllers
         public ActionResult Edit(int id)
         {
             Playlist playlist = _playlistService.GetById(id);
-            return View(playlist);
+            IEnumerable<Track> tracks = _playlistService.GetTracks(playlist);
+            var viewModel = new PlaylistViewModel
+            {
+                Playlist = playlist,
+                Tracks = tracks
+            };
+            return View(viewModel);
         }
 
 
+        //invocado no /search
         [HttpPost]
         public ActionResult AddTrack(int playlistId, string trackId)
-        {
-            
+        {  
              _playlistService.AddTrack(playlistId,trackId);
             return RedirectToAction("Index");
         }
+
+        //
+        // POST: /Playlists/Edit/5
+
+        [HttpPost]
+        public ActionResult Edit(Playlist playlist)
+        {
+           // if (ModelState.IsValid)
+            //{
+           _playlistService.Update(playlist);
+            return RedirectToAction("Index");
+            //}
+         //   return View(playlist);
+        }
+
+
 
         ////
         //// POST: /Playlists/Edit/5

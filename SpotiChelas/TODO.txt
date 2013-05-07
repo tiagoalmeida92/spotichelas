@@ -1,1 +1,47 @@
-- TrackWebRepository ugly need method GenerateTrack from json scaffolding
+
+
+- TrackWebRepository ugly need method GenerateTrack from json2csharp scaffolding
+- search pagination
+- playlist controller  actions details == edit 
+- playlist services..addsong lazy loading eager loading...
+- action playlist/details links para artista e album etce com lookup do spotify
+- ordem dos tracks ta mariada
+
+A segunda etapa do projecto de PI tem dois objectivos:
+
+    Migrar a implementação da etapa 1 para a plataforma ASP.NET MVC.
+    Implementar um conjunto de requisitos adicionais, relacionados com permissões baseadas na autenticação do utilizador, descritos em seguida.
+
+
+	Autenticação, autorização e registo de utilizadores
+
+    A aplicação web deve incluir suporte para a gestão de utilizadores, nomeadamente:
+        Criação de utilizadores;
+        Edição de utilizadores;
+        Atribuição de papeis (roles) a utilizadores, permitida apenas a quem tenha o role admin.
+        Remoção de utilizadores, permitida apenas a quem tenha o role admin ou pelo próprio utilizador a remover.
+
+    A criação de utilizadores pode ser realizada através de acesso não autenticado. Contudo, os utilizadores só são activados após resposta a desafios enviados para o endereço de correio eletrónico associado ao número do utilizador.
+
+    Um utilizador é caracterizado por: nickname, nome, email e imagem com fotografia. A imagem só pode ser definida após a activação do utilizador. O nickname não pode ser alterado e tem de ser único no sistema.
+
+Existe acesso por utilizadores anónimos e por utilizadores autenticados. A autenticação usa o método forms authentication. Existe um utilizador especial, designado de administrador.
+Operações disponíveis (autorizadas) com base na autenticação:
+
+Um utilizador anónimo deve conseguir realizar as seguintes ações:
+
+    Registar-se como utilizador.
+    Autenticar-se perante a aplicação
+
+Um utilizador autenticado pode:
+
+    Realizar todas as acções permitidas aos utilizadores anónimos.
+    Criar playlists e adicionar-lhes músicas.
+
+    Dar/remover acesso a outros utilizadores às suas playlists. Este acesso pode atribuído para:
+        leitura - apenas visualização do conteúdo da playlist.
+        contribuição - edição de playlists partilhadas suportando adição e remoção de músicas.
+
+Informação de erro
+
+    Quando a submissão dum formulário não é aceite, devido à não validação da informação nele presente, o conteúdo da resposta deve conter o formulário pré-preenchido com a informação submetida. Deve também ter um indicação detalhada dos erros de validação.

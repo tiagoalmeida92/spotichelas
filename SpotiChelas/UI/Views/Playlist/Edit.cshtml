@@ -1,5 +1,4 @@
-﻿@model Domain.Entities.Playlist
-
+﻿@model UI.ViewModels.PlaylistViewModel
 @{
     ViewBag.Title = "Edit";
 }
@@ -9,35 +8,33 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"> </script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"> </script>
 
-@using (Html.BeginForm())
+@* The idea is to have a save button and only have 1 http-post
+inside the action for the post store everything right in the db
+solution knockout.js lib
+*@
+
+
+@Html.EditorFor(model => model.Playlist)
+
+<table>
+
+@foreach (var track in Model.Tracks)
 {
-    @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Playlist</legend>
+    <tr>
+        @Html.EditorFor(model => track)
 
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+    </tr>
 }
+    
+
+    
+    
+</table>
+
+
+
+
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")

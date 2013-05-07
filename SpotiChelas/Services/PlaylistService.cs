@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using Domain.Entities;
@@ -65,6 +66,15 @@ namespace Services
                 db.PlaylistTracks.Add(pltrack);
                 db.SaveChanges();
 
+            }
+        }
+
+        public void Update(Playlist playlist)
+        {
+            using (var db = new PlaylistDb())
+            {
+                db.Entry(playlist).State = EntityState.Modified;
+                db.SaveChanges();
             }
         }
     }
