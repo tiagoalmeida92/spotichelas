@@ -72,6 +72,22 @@ namespace UI.Controllers
             return View(viewModel);
         }
 
+        //
+        // POST: /Playlists/Edit/5
+
+        [HttpPost]
+        public ActionResult Edit(Playlist playlist)
+        {
+            _playlistService.Update(playlist);
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(int playlistId)
+        {
+            return RedirectToAction(_playlistService.Delete(playlistId) ? "Index" : "Edit");
+        }
 
         //invocado no /search
         [HttpPost]
@@ -81,20 +97,27 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
-        //
-        // POST: /Playlists/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Playlist playlist)
+        public ActionResult TrackUp(int playlistId, string trackId)
         {
-           // if (ModelState.IsValid)
-            //{
-           _playlistService.Update(playlist);
-            return RedirectToAction("Index");
-            //}
-         //   return View(playlist);
+            _playlistService.TrackUp(playlistId, trackId);
+            return RedirectToAction("Edit");
+        }
+        
+        [HttpPost]
+        public ActionResult TrackDown(int playlistId, string trackId)
+        {
+            _playlistService.TrackDown(playlistId, trackId);
+            return RedirectToAction("Edit");
         }
 
+        [HttpPost]
+        public ActionResult DeleteTrack(int playlistId, string trackId)
+        {
+            _playlistService.DeleteTrack(playlistId, trackId);
+            return RedirectToAction("Edit");
+        }
 
 
         ////
@@ -132,5 +155,6 @@ namespace UI.Controllers
         //    _db.SaveChanges();
         //    return RedirectToAction("Index");
         //}
+      
     }
 }

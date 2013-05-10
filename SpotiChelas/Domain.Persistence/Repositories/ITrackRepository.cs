@@ -6,7 +6,7 @@ namespace Domain.Persistence.Repositories
 {
     public interface ITrackRepository
     {
-        IEnumerable<Track> GetTracks(params String[] trackIds);
+        IEnumerable<Track> GetTracks(IEnumerable<String> trackIds);
 
         IEnumerable<Track> Search(string searchTerm);
     }

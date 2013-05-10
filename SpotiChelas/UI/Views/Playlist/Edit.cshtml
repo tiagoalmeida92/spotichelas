@@ -13,22 +13,58 @@ inside the action for the post store everything right in the db
 solution knockout.js lib
 *@
 
-
+@*Edita nome e desc*@
 @Html.EditorFor(model => model.Playlist)
 
+@*Default do Html.BeginForm é  POST*@
+
+@*Delete da playlist*@
+@using (Html.BeginForm("delete", "Playlist"))
+{
+    @Html.Hidden("playlistId", Model.Playlist.Id)
+    <input type="submit" value="Delete"/>
+}
+
+@*Lista com musicas e butoes para Up Down e Delete*@
 <table>
 
 @foreach (var track in Model.Tracks)
 {
     <tr>
-        @Html.EditorFor(model => track)
+        @Html.DisplayFor(model => track)
+        
+        <td>
+            @using (Html.BeginForm("trackUp", "Playlist"))
+            {
+                @Html.Hidden("playlistId", Model.Playlist.Id)
+                @Html.Hidden("trackId", track.Id)
+                <input type="submit" value="Up"/>
+            }
+        </td>
+
+        <td>
+            @using (Html.BeginForm("trackDown", "Playlist"))
+            {
+                @Html.Hidden("playlistId", Model.Playlist.Id)
+                @Html.Hidden("trackId", track.Id)
+                <input type="submit" value="Down"/>
+            }
+        </td>
+        <td>
+            @using (Html.BeginForm("deleteTrack", "Playlist"))
+            {
+                @Html.Hidden("playlistId", Model.Playlist.Id)
+                @Html.Hidden("trackId", track.Id)
+                <input type="submit" value="Delete"/>
+            }
+        </td>
+        
 
     </tr>
+    
 }
     
 
-    
-    
 </table>
 
 
@@ -39,3 +75,36 @@ solution knockout.js lib
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+@*
+@model Domain.Entities.Track      
+
+@* @Html.DisplayFor(model => model) 
+WORKS IN MVC 4 CANNOT BE NESTED IN MVC3  *@ 
+@*
+@Html.Partial("DisplayTemplates/Track")
+
+<td>
+    @using (Html.BeginForm("trackUp","Playlist"))
+    {
+        @Html.HiddenFor(track => track.Id)
+        <input type="submit" value="Up"/>
+    }
+</td>
+
+<td>
+    @using (Html.BeginForm("trackDown","Playlist"))
+    {
+         @Html.HiddenFor(track => track.Id)
+        <input type="submit" value="Down"/>
+    }
+</td>
+<td>
+    @using (Html.BeginForm("deleteTrack","Playlist"))
+    {
+        @Html.HiddenFor(track => track.Id)
+        <input type="submit" value="Delete"/>
+    }
+</td>
+*@

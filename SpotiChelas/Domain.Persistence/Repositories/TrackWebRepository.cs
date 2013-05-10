@@ -15,7 +15,7 @@ namespace Domain.Persistence.Repositories
     {
         private const string JsonMediaType = "json";
 
-        public IEnumerable<Track> GetTracks(params string[] trackIds)
+        public IEnumerable<Track> GetTracks(IEnumerable<String> trackIds)
         {
             var tracks = new List<Track>();
             Parallel.ForEach(trackIds, trackId =>

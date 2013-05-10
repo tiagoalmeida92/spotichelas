@@ -214,7 +214,6 @@
     <Content Include="Views\Shared\DisplayTemplates\TimeSpan.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Playlist.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Track.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Track.cshtml" />
   </ItemGroup>
   <ItemGroup>

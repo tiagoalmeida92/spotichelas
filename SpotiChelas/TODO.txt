@@ -1,12 +1,14 @@
 
-
+ISSUES
 - TrackWebRepository ugly need method GenerateTrack from json2csharp scaffolding
 - search pagination
 - playlist controller  actions details == edit 
 - playlist services..addsong lazy loading eager loading...
 - action playlist/details links para artista e album etce com lookup do spotify
-- ordem dos tracks ta mariada
+- ver melhor o databinding Playlist a partir do exemplo editor scaffolding mvc
+- autenticação e autorização ler livro
 
+ENUNCIADO
 A segunda etapa do projecto de PI tem dois objectivos:
 
     Migrar a implementação da etapa 1 para a plataforma ASP.NET MVC.
