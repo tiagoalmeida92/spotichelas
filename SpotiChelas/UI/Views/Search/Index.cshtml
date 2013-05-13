@@ -19,6 +19,9 @@
             Duration
         </th>
     </tr>
+    
+    @{ var isLogged = User.Identity.IsAuthenticated; }
+
 
     @foreach (Track track in Model.Tracks)
     {
@@ -33,14 +36,17 @@
             <td>
                 @Html.DisplayFor(modelItem => track.Duration)
             </td>
-            <td>
-                @using (Html.BeginForm("AddTrack", "Playlist", FormMethod.Post))
-                {
-                    @Html.Hidden("trackid", track.Id)
-                    @Html.DropDownList("playlistId", new SelectList(Model.Playlists, "Id", "Name"))
-                   <input type="submit" value="Add" />
-                }
-            </td>
+            @if (isLogged)
+            {
+                <td>
+                    @using (Html.BeginForm("AddTrack", "Playlist", FormMethod.Post))
+                    {
+                        @Html.Hidden("trackid", track.Id)
+                        @Html.DropDownList("playlistId", new SelectList(Model.Playlists, "Id", "Name"))
+                        <input type="submit" value="Add" />
+                    }
+                </td>
+            }
 
         </tr>
     }

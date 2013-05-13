@@ -14,13 +14,13 @@ namespace Services
 
         public IEnumerable<Playlist> GetAll()
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
                 return db.Playlists.ToList();
         }
 
         public Playlist GetById(int id)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 return db.Playlists.Include(x => x.PlaylistTracks).FirstOrDefault(playlist => playlist.Id == id);
             }
@@ -28,7 +28,7 @@ namespace Services
 
         public void Add(Playlist pl)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 db.Playlists.Add(pl);
                 db.SaveChanges();
@@ -37,7 +37,7 @@ namespace Services
 
         public bool Delete(int playlistId)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 //Se existirem tracks na playlist 
                 //não pode ser apagada
@@ -63,7 +63,7 @@ namespace Services
 
         public void AddTrack(int playlistId, string songId)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 Playlist playlist =
                     db.Playlists.Include(playlist1 => playlist1.PlaylistTracks).FirstOrDefault(p => p.Id == playlistId);
@@ -81,7 +81,7 @@ namespace Services
 
         public void Update(Playlist playlist)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 db.Entry(playlist).State = EntityState.Modified;
                 db.SaveChanges();
@@ -91,7 +91,7 @@ namespace Services
         //swap entre a ordem do track de trackid com o acima dele
         public void TrackUp(int playlistId, string trackId)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 //track para mover para cima
                 PlaylistTrack playlistTrack =
@@ -117,7 +117,7 @@ namespace Services
 
         public void TrackDown(int playlistId, string trackId)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 //track para mover para cima
                 PlaylistTrack playlistTrack =
@@ -143,7 +143,7 @@ namespace Services
 
         public void DeleteTrack(int playlistId, string trackId)
         {
-            using (var db = new PlaylistDb())
+            using (var db = new SpotiChelasDb())
             {
                 PlaylistTrack track =
                     db.PlaylistTracks.First(pTrack => pTrack.PlaylistId == playlistId && pTrack.SpotifyTrackId == trackId);

@@ -3,9 +3,9 @@ using Domain.Entities;
 
 namespace Domain.Persistence.Repositories
 {
-    public class PlaylistDb : DbContext
+    public class SpotiChelasDb : DbContext
     {
-        public PlaylistDb() : base("name= DefaultConnection")
+        public SpotiChelasDb() : base("name= SpotiChelasConnection")
         {
         }
 

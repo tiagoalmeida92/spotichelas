@@ -6,6 +6,7 @@ using UI.ViewModels;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class PlaylistController : Controller
     {
         private readonly IPlaylistService _playlistService = new PlaylistService();
@@ -59,7 +60,7 @@ namespace UI.Controllers
 
         //
         // GET: /Playlists/Edit/5
-
+        [Authorize(Roles = "contributor")]
         public ActionResult Edit(int id)
         {
             Playlist playlist = _playlistService.GetById(id);

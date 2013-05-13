@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
 using UI.Models;
@@ -23,6 +26,9 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+
+
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
@@ -74,13 +80,35 @@ namespace UI.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null,
-                                      out createStatus);
+                MembershipUser user = Membership.CreateUser(model.UserName, model.Password, model.Email, null, null,
+                                                            false, null,
+                                                            out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                    Roles.AddUserToRole(model.UserName, "user");
+
+                    string link = Request.Url.Scheme + Uri.SchemeDelimiter + Request.Url.Host +
+                                  (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) +
+                                  "/Account/Verify/" + user.ProviderUserKey;
+
+                    //Send email
+                    var email = new MailMessage("noreply.spotichelas@gmail.com", user.Email)
+                        {
+                            Subject = "Verification Email",
+                            Body = "Welcome to Spotichelas," + user.UserName +
+                                   "\n Activation link:" + link
+                        };
+                    var smtp = new SmtpClient("smtp.gmail.com")
+                        {
+                            UseDefaultCredentials = false,
+                            EnableSsl = true,
+                            Credentials = new NetworkCredential("noreply.spotichelas@gmail.com", "isel2013")
+                        };
+                    smtp.Send(email);
+
+                    return RedirectToAction("AccountCreated");
                 }
                 else
                 {
@@ -91,6 +119,62 @@ namespace UI.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        public ActionResult AccountCreated()
+        {
+            return View("AccountCreated");
+        }
+
+        public ActionResult Verify(string userId)
+        {
+            var guid = new Guid(userId);
+            MembershipUser user = Membership.GetUser(guid);
+            if (user != null && !user.IsApproved)
+            {
+                user.IsApproved = true;
+                Membership.UpdateUser(user);
+                FormsAuthentication.SetAuthCookie(user.UserName, false /* createPersistentCookie */);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        //
+        // GET: /Account/Settings
+
+        [Authorize]
+        public ActionResult Settings()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/Settings
+
+        [Authorize(Roles = "admin")]
+        public ActionResult ManageUsers()
+        {
+            return View(Membership.GetAllUsers().Cast<MembershipUser>());
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult AddRole(string username, string newRole)
+        {
+            if (!Roles.IsUserInRole(username, newRole))
+                Roles.AddUserToRole(username, newRole);
+            return RedirectToAction("ManageUsers");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult DeleteUser(string username)
+        {
+            Membership.DeleteUser(username);
+            return RedirectToAction("ManageUsers");
+        }
+
 
         //
         // GET: /Account/ChangePassword

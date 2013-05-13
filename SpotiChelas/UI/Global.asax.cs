@@ -3,6 +3,8 @@ using System.Data.Entity.Infrastructure;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
+using System.Linq;
 
 namespace UI
 {
@@ -39,9 +41,21 @@ namespace UI
             Database.DefaultConnectionFactory =
                 new SqlConnectionFactory(
                     @"Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
-
+            RegisterRoles();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+        }
+
+        private static void RegisterRoles()
+        {
+           if(!Roles.RoleExists("admin"))
+               Roles.CreateRole("admin");
+           if (!Roles.RoleExists("user"))
+               Roles.CreateRole("user");
+            if (Membership.GetUser("tiago") == null)
+                Membership.CreateUser("tiago", "123456");
+            if(!Roles.GetRolesForUser("tiago").Contains("admin"))
+                Roles.AddUserToRole("tiago","admin");
         }
     }
 }

@@ -4,7 +4,7 @@ to use a different color start by replacing all instances of
 #5c87b2 with your new color.
 ----------------------------------------------------------*/
 body {
-    background-color: #008000;
+    background-color: #5c87b2;
     color: #696969;
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     font-size: .85em;
@@ -80,15 +80,17 @@ header, #header {
 header h1, #header h1 {
     border: none;
     color: #fff;
-    /* MUDANCA*/
-    display: inline;
     font-size: 32px !important;
     font-weight: bold;
     line-height: 2em;
     margin: 0;
     padding: 5px 0;
-
+    font-family: Century Gothic,Helvetica;
     text-shadow: 1px 1px 2px #111;
+}
+
+header h4 {
+    color: white;
 }
 
 #main {
@@ -121,7 +123,7 @@ ul#menu {
     margin: 0;
     padding: 0 0 2px;
     position: relative;
-    text-align: left;
+    text-align: center;
 }
 
 ul#menu li {
@@ -293,3 +295,5 @@ div#title {
 .text-box.multi-line { height: 6.5em; }
 
 .tri-state { width: 6em; }
+
+.display-inline { display: inline}

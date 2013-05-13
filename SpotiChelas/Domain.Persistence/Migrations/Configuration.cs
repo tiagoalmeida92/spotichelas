@@ -1,18 +1,19 @@
 using System.Collections.ObjectModel;
 using System.Data.Entity.Migrations;
+using System.Web.Security;
 using Domain.Entities;
 using Domain.Persistence.Repositories;
 
 namespace Domain.Persistence.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<PlaylistDb>
+    internal sealed class Configuration : DbMigrationsConfiguration<SpotiChelasDb>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(PlaylistDb context)
+        protected override void Seed(SpotiChelasDb context)
         {
 
             //  This method will be called after migrating to the latest version.
@@ -27,6 +28,8 @@ namespace Domain.Persistence.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+
 
             context.Playlists.AddOrUpdate(new Playlist
                 {
