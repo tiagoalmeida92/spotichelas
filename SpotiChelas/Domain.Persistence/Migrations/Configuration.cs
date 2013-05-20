@@ -1,21 +1,19 @@
-using System.Collections.ObjectModel;
-using System.Data.Entity.Migrations;
-using System.Web.Security;
-using Domain.Entities;
-using Domain.Persistence.Repositories;
-
 namespace Domain.Persistence.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<SpotiChelasDb>
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Domain.Persistence.Repositories.SpotiChelasDb>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(SpotiChelasDb context)
+        protected override void Seed(Domain.Persistence.Repositories.SpotiChelasDb context)
         {
-
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -28,24 +26,6 @@ namespace Domain.Persistence.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
-
-
-            context.Playlists.AddOrUpdate(new Playlist
-                {
-                    Name = "InitialPlaylist",
-                    Description = "Added on Configuration.Seed Method",
-                    PlaylistTracks = new Collection<PlaylistTrack>
-                        {
-                            new PlaylistTrack
-                                {
-                                    PlaylistId = 1,
-                                    SpotifyTrackId = "5jROXt1Iz8Zk98WobPtC4k"
-                                }
-                        }
-                });
-
-            
         }
     }
 }

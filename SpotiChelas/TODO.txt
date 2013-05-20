@@ -14,6 +14,14 @@ ISSUES
 - playlist/edit com opção:
      Dar/remover acesso a outros utilizadores às suas playlists 
 	 start here!!!!
+-account/register/ link sem passar o verify na query
+- criar classe que trata de enviar o email verify
+- search bar ser uma partial view
+-upload imagem http://stackoverflow.com/questions/5193842/file-upload-asp-net-mvc-3-0
+- merge better membership users and userprofiles table
+- UP NEXT associar as playlists ao utilizadores
+- SpotiChelasDb onmodelcreation might be wrong
+- playlist/details == playlists/edit código
 
 ENUNCIADO
 A segunda etapa do projecto de PI tem dois objectivos:

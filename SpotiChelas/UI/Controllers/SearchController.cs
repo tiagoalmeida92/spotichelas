@@ -9,9 +9,8 @@ namespace UI.Controllers
 {
     public class SearchController : Controller
     {
-
-        ISearchService _searchService = new SearchService();
-        IPlaylistService _playlistService = new PlaylistService();
+        readonly SearchService _searchService = new SearchService();
+        readonly PlaylistService _playlistService = new PlaylistService();
         
         //
         // GET: /Search/
@@ -19,7 +18,7 @@ namespace UI.Controllers
         public ActionResult Index(string searchTerm)
         {
             IEnumerable<Track> tracks =  _searchService.Search(searchTerm);
-            IEnumerable<Playlist> playlists = _playlistService.GetAll();
+            var playlists = _playlistService.GetAll(User.Identity.Name);
             var viewModel = new SearchResultsViewModel
                 {
                     Tracks = tracks,

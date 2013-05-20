@@ -1,0 +1,31 @@
+﻿@using Domain.Entities
+@model IEnumerable<Domain.Entities.PlaylistPermission>
+
+@{
+    ViewBag.Title = "Permitted Playlists";
+}
+
+<h2>Permitted Playlists</h2>
+
+<table>
+    <tr>
+        <td>
+            User
+        </td>
+        <td>
+            Playlist Name
+        </td>
+    </tr>
+    @foreach (PlaylistPermission perm in Model)
+    {
+        <tr>
+            <td>
+                @perm.OwnerId
+            </td>
+            <td>
+                @Html.ActionLink(perm.Playlist.Name, "Details", new{perm.PlaylistId})
+            </td>
+        </tr>
+    }
+
+</table>

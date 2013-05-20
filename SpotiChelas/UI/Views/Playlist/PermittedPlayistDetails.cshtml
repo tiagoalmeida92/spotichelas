@@ -1,14 +1,17 @@
 ﻿@using Domain.Entities
-@model UI.ViewModels.PlaylistViewModel
+@model UI.ViewModels.PlaylistPermissionViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Model.Permission.Playlist.Name;
 }
 
-<h2>@Model.Playlist.Name</h2>
-<h3> @Model.Playlist.Description</h3>
+<h2>@Model.Permission.Playlist.Name</h2>
 
-@Html.ActionLink("Edit", "Edit")
+<h3> @Model.Permission.Playlist.Description</h3>
+
+@*if (@Model.Permission.Contributor){
+        @Html.ActionLink("Edit", "PermittedPlayistEdit")
+}+*@
 
 <fieldset>
     <legend>Playlist</legend>

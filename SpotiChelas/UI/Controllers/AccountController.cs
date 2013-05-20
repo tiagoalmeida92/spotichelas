@@ -4,7 +4,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
+using Domain.Entities;
+using Services;
 using UI.Models;
+using UI.ViewModels;
 
 namespace UI.Controllers
 {
@@ -26,9 +29,6 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-
-
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
@@ -45,6 +45,7 @@ namespace UI.Controllers
                 else
                 {
                     ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ModelState.AddModelError("", "Your email isn't verified.");
                 }
             }
 
@@ -80,6 +81,7 @@ namespace UI.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
+                //user create isApproved = false
                 MembershipUser user = Membership.CreateUser(model.UserName, model.Password, model.Email, null, null,
                                                             false, null,
                                                             out createStatus);
@@ -88,10 +90,16 @@ namespace UI.Controllers
                 {
                     //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                     Roles.AddUserToRole(model.UserName, "user");
-
+                    //create profile
+                    var userProfiles = new UserProfileService();
+                    userProfiles.InsertProfile(new UserProfile
+                        {
+                            UserId = user.UserName,
+                            Name = user.UserName
+                        });
                     string link = Request.Url.Scheme + Uri.SchemeDelimiter + Request.Url.Host +
                                   (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) +
-                                  "/Account/Verify/" + user.ProviderUserKey;
+                                  "/Account/Verify/?" + user.ProviderUserKey;
 
                     //Send email
                     var email = new MailMessage("noreply.spotichelas@gmail.com", user.Email)
@@ -125,18 +133,37 @@ namespace UI.Controllers
             return View("AccountCreated");
         }
 
-        public ActionResult Verify(string userId)
+        [HttpGet]
+        public ActionResult Verify(string id)
         {
-            var guid = new Guid(userId);
+            var guid = new Guid(id);
             MembershipUser user = Membership.GetUser(guid);
             if (user != null && !user.IsApproved)
             {
                 user.IsApproved = true;
                 Membership.UpdateUser(user);
-                FormsAuthentication.SetAuthCookie(user.UserName, false /* createPersistentCookie */);
+                FormsAuthentication.SetAuthCookie(user.UserName, false);
             }
-
             return RedirectToAction("Index", "Home");
+        }
+
+        //
+        // GET: /Account/Profile/id or no id
+        [Authorize]
+        public ActionResult Profile(string username  = null)
+        {
+            MembershipUser user = Membership.GetUser(username ?? User.Identity.Name);
+            var userService = new UserProfileService();
+            var userProfile = userService.GetUser(user.UserName);
+            var viewModel = new UserProfileViewModel
+                {
+                    LoginName = user.UserName,
+                    Email = user.Email,
+                    Name = userProfile.Name,
+                    PhotoLocation = userProfile.PhotoLocation
+                };
+
+            return View(viewModel);
         }
 
         //
@@ -146,6 +173,23 @@ namespace UI.Controllers
         public ActionResult Settings()
         {
             return View();
+        }
+
+        [Authorize]
+        public ActionResult ChangePhoto()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult ChangePhoto(string newUrl)
+        {
+            var userService = new UserProfileService();
+            UserProfile userProfile = userService.GetUser(User.Identity.Name);
+            userProfile.PhotoLocation = newUrl;
+            userService.UpdateUser(userProfile);
+            return RedirectToAction("Profile");
         }
 
         //
@@ -238,7 +282,7 @@ namespace UI.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "UserProfile name already exists. Please enter a different user name.";
 
                 case MembershipCreateStatus.DuplicateEmail:
                     return
@@ -274,5 +318,7 @@ namespace UI.Controllers
         }
 
         #endregion
+
+
     }
 }

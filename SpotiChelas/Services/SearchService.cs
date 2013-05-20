@@ -4,7 +4,7 @@ using Domain.Persistence.Repositories;
 
 namespace Services
 {
-    public class SearchService : ISearchService
+    public class SearchService 
     {
         private readonly ITrackRepository _repo = new TrackWebRepository();
 

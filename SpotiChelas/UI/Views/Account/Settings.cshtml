@@ -8,10 +8,14 @@
 @if (User.IsInRole("admin"))
 {
     <p>
-        @Html.ActionLink("Manage Users", "ManageUsers")
+        @Html.ActionLink("Manage UserProfiles", "ManageUsers")
     </p>
 }
 
 <p>
     @Html.ActionLink("Change Password", "ChangePassword")
+</p>
+
+<p>
+    @Html.ActionLink("Change Image", "ChangePhoto")
 </p>

@@ -1,0 +1,23 @@
+﻿@model UI.ViewModels.UserProfileViewModel
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h2>@Model.Name</h2>
+
+
+<p>Login: @Model.LoginName</p>
+<p>Email: @Model.Email</p>
+
+
+@{
+    string url = Model.PhotoLocation ?? Url.Content("~/Content/themes/base/images/user-icon1.jpg");    
+}
+<img src= "@url" width="150" height="200"/>
+
+
+@using (Html.BeginForm("Settings", "Account", FormMethod.Get))
+{
+    <input type="submit" value="Settings"/>
+}

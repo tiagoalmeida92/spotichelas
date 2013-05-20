@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<MembershipUser>
 
 @{
-    ViewBag.Title = "Manage Users";
+    ViewBag.Title = "Manage UserProfiles";
 }
 
-<h2>Manage Users</h2>
+<h2>Manage UserProfiles</h2>
 
 
 <table>
@@ -27,7 +27,7 @@
                 @using (Html.BeginForm("DeleteUser", "Account"))
                 {
                     @Html.Hidden("username", user.UserName)
-                    <input type="submit" value="Delete User"/>
+                    <input type="submit" value="Delete UserProfile"/>
                 }
             </td>
 

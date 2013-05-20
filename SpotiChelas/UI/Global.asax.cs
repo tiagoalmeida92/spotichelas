@@ -1,10 +1,10 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
-using System.Linq;
 
 namespace UI
 {
@@ -22,9 +22,19 @@ namespace UI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            // /playlist/2/edit
-            routes.MapRoute("IdInTheMiddle",
-                            "{controller}/{id}/{action}");
+            //playlists route /playlist/3/edit
+            routes.MapRoute("PlaylistsRouteIds",
+                            "Playlist/{playlistId}/{action}",
+                            new {controller="Playlist"}
+                            );
+
+             //playlists route /playlist/index
+            routes.MapRoute("PlaylistsRoute",
+                            "Playlist/{action}",
+                            new {controller="Playlist", action ="Index"}
+                            );
+
+
 
             routes.MapRoute(
                 "Default", // Route name
@@ -48,14 +58,14 @@ namespace UI
 
         private static void RegisterRoles()
         {
-           if(!Roles.RoleExists("admin"))
-               Roles.CreateRole("admin");
-           if (!Roles.RoleExists("user"))
-               Roles.CreateRole("user");
-            if (Membership.GetUser("tiago") == null)
-                Membership.CreateUser("tiago", "123456");
-            if(!Roles.GetRolesForUser("tiago").Contains("admin"))
-                Roles.AddUserToRole("tiago","admin");
+            if (!Roles.RoleExists("admin"))
+                Roles.CreateRole("admin");
+            if (!Roles.RoleExists("user"))
+                Roles.CreateRole("user");
+            if (Membership.GetUser("administrador") == null)
+                Membership.CreateUser("administrador", "123456");
+            if (!Roles.GetRolesForUser("administrador").Contains("admin"))
+                Roles.AddUserToRole("administrador", "admin");
         }
     }
 }

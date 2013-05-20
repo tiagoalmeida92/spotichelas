@@ -7,6 +7,11 @@
 
 <h2>Playlists</h2>
 
+
+<p>
+    @Html.ActionLink("Playlists From Others", "PermittedPlaylists","Playlist")
+</p>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -28,7 +33,7 @@
                 @Html.ActionLink(
                     Html.DisplayFor(modelItem => item.Name).ToHtmlString(),
                     "Details",
-                    new {id = item.Id}
+                    new {playlistId = item.Id}
                      )
                 
             </td>
