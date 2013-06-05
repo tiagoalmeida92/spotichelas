@@ -1,16 +1,26 @@
 ﻿using System.Collections.Generic;
-using Domain.Entities;
-using Domain.Persistence.Repositories;
+using AutoMapper;
+using Dto;
+using Persistence.DAO;
+using Persistence.Repositories;
 
 namespace Services
 {
-    public class SearchService 
+    public class SearchService : ISearchService
     {
-        private readonly ITrackRepository _repo = new TrackWebRepository();
+        private readonly ITrackRepository _repo;
 
-        public IEnumerable<Track> Search(string searchTerm)
+
+        public SearchService(ITrackRepository repo)
         {
-            return _repo.Search(searchTerm);
+            _repo = repo;
+        }
+
+        public IEnumerable<TrackDto> Search(string searchTerm)
+        {
+            IEnumerable<Track> tracks = _repo.Search(searchTerm);
+            Mapper.CreateMap<Track, TrackDto>();
+            return Mapper.Map<IEnumerable<Track>, List<TrackDto>>(tracks);
         }
     }
 }

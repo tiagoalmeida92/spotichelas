@@ -1,5 +1,4 @@
-﻿@using Domain.Entities
-@model UI.ViewModels.PlaylistPermissionViewModel
+﻿@model UI.ViewModels.PlaylistPermissionViewModel
 
 @{
     ViewBag.Title = @Model.Permission.Playlist.Name;
@@ -19,12 +18,12 @@
     <table>
            
         
-            @foreach (Track track in Model.Tracks)
-            {
-                <tr>
-                    @Html.DisplayFor(model => track)
-                </tr>
-            }
+        @foreach (SpotifyTrack track in Model.Tracks)
+        {
+            <tr>
+                @Html.DisplayFor(model => track)
+            </tr>
+        }
         
     </table>
 

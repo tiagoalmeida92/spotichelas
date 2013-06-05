@@ -1,5 +1,4 @@
-﻿@using Domain.Entities
-@model  UI.ViewModels.SearchResultsViewModel
+﻿@model  UI.ViewModels.SearchResultsViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -20,10 +19,10 @@
         </th>
     </tr>
     
-    @{ var isLogged = User.Identity.IsAuthenticated; }
+    @{ bool isLogged = User.Identity.IsAuthenticated; }
 
 
-    @foreach (Track track in Model.Tracks)
+    @foreach (SpotifyTrack track in Model.Tracks)
     {
         <tr>
 
@@ -39,7 +38,7 @@
             @if (isLogged)
             {
                 <td>
-                    @using (Html.BeginForm("AddTrack", "Playlist", FormMethod.Post))
+                    @using (Html.BeginForm("AddSpotifyTrack", "Playlist", FormMethod.Post))
                     {
                         @Html.Hidden("trackid", track.Id)
                         @Html.DropDownList("playlistId", new SelectList(Model.Playlists, "Id", "Name"))

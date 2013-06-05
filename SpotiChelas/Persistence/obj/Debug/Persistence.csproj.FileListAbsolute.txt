@@ -1,0 +1,12 @@
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Domain.Persistence\obj\Debug\Persistence.csprojResolveAssemblyReference.cache
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Domain.Persistence\obj\Debug\Domain.Persistence.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Domain.Persistence\obj\Debug\Domain.Persistence.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Debug\Persistence.dll.config
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Debug\Persistence.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Debug\Persistence.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Debug\EntityFramework.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Debug\EntityFramework.xml
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Debug\Persistence.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Debug\Persistence.pdb

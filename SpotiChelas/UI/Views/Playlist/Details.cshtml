@@ -1,5 +1,4 @@
-﻿@using Domain.Entities
-@model UI.ViewModels.PlaylistViewModel
+﻿@model UI.ViewModels.PlaylistViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -16,12 +15,12 @@
     <table>
            
         
-            @foreach (Track track in Model.Tracks)
-            {
-                <tr>
-                    @Html.DisplayFor(model => track)
-                </tr>
-            }
+        @foreach (SpotifyTrack track in Model.Tracks)
+        {
+            <tr>
+                @Html.DisplayFor(model => track)
+            </tr>
+        }
         
     </table>
 

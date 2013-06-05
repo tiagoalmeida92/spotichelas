@@ -5941,7 +5941,7 @@
                             // Make sure that we do not leak memory by inadvertently discarding
                             // the original fragment (which might have attached data) instead of
                             // using it; in addition, use the original fragment object for the last
-						// item instead of first because it can end up being emptied incorrectly
+                            // item instead of first because it can end up being emptied incorrectly
 						// in certain situations (Bug #8070).
 						// Fragments from the fragment cache must always be cloned and never used
 						// in place.

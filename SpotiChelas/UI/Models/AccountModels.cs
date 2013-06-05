@@ -24,7 +24,7 @@ namespace UI.Models
     public class LogOnModel
     {
         [Required]
-        [Display(Name = "UserProfile name")]
+        [Display(Name = "UserService name")]
         public string UserName { get; set; }
 
         [Required]
@@ -39,7 +39,7 @@ namespace UI.Models
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "UserProfile name")]
+        [Display(Name = "UserService name")]
         public string UserName { get; set; }
 
         [Required]

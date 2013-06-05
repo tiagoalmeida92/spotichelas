@@ -1,5 +1,4 @@
-﻿@using Domain.Entities
-@model IEnumerable<Domain.Entities.PlaylistPermission>
+﻿@model IEnumerable<Domain.Persistence.DataTables.PlaylistPermission>
 
 @{
     ViewBag.Title = "Manage Permissions";
@@ -12,9 +11,9 @@
 @using (Html.BeginForm("AddPermission", "Playlist"))
 {
     @*<input type="hidden" name="playlistId" value ="@ViewBag.PlaylistId"/>*@
-    @:User: <input type="text" name="grantedUser"/>
+    @:UserService: <input type="text" name="grantedUserService"/>
     @:Contribuidor: <input type="checkbox" name="contributor" value="true"/>
-    
+
     <input type="submit" value="OK"/>
 }
 
@@ -26,7 +25,7 @@
             Playlist
         </td>
         <td>
-            User
+            UserService
         </td>
         <td></td>
     </tr>
@@ -38,12 +37,12 @@
                 @permission.Playlist.Name 
             </td>
             <td>
-                 @permission.GrantedUser.UserId
+                @permission.GrantedUser.UserId
             </td>
             <td>     
                 @using (Html.BeginForm("RemovePermission", "Playlist"))
                 {
-                    @Html.Hidden("grantedUser", permission.GrantedUserId)
+                    @Html.Hidden("grantedUserService", permission.GrantedUserId)
                     @Html.Hidden("playlistId", permission.PlaylistId)
                     <input type="submit" value="Remove"/>
                 }

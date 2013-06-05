@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
-using Domain.Entities;
-using Services;
 using UI.Models;
-using UI.ViewModels;
 
 namespace UI.Controllers
 {
@@ -74,59 +69,59 @@ namespace UI.Controllers
         //
         // POST: /Account/Register
 
-        [HttpPost]
-        public ActionResult Register(RegisterModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                //user create isApproved = false
-                MembershipUser user = Membership.CreateUser(model.UserName, model.Password, model.Email, null, null,
-                                                            false, null,
-                                                            out createStatus);
+        //[HttpPost]
+        //public ActionResult Register(RegisterModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Attempt to register the user
+        //        MembershipCreateStatus createStatus;
+        //        //user create isApproved = false
+        //        MembershipUser user = Membership.CreateUser(model.UserName, model.Password, model.Email, null, null,
+        //                                                    false, null,
+        //                                                    out createStatus);
 
-                if (createStatus == MembershipCreateStatus.Success)
-                {
-                    //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    Roles.AddUserToRole(model.UserName, "user");
-                    //create profile
-                    var userProfiles = new UserProfileService();
-                    userProfiles.InsertProfile(new UserProfile
-                        {
-                            UserId = user.UserName,
-                            Name = user.UserName
-                        });
-                    string link = Request.Url.Scheme + Uri.SchemeDelimiter + Request.Url.Host +
-                                  (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) +
-                                  "/Account/Verify/?" + user.ProviderUserKey;
+        //        if (createStatus == MembershipCreateStatus.Success)
+        //        {
+        //            //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+        //            Roles.AddUserToRole(model.UserName, "user");
+        //            //create profile
+        //            var userProfiles = new UserService();
+        //            userProfiles.InsertProfile(new Domain.Entities.User
+        //                {
+        //                    UserId = user.UserName,
+        //                    Name = user.UserName
+        //                });
+        //            string link = Request.Url.Scheme + Uri.SchemeDelimiter + Request.Url.Host +
+        //                          (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) +
+        //                          "/Account/Verify/?" + user.ProviderUserKey;
 
-                    //Send email
-                    var email = new MailMessage("noreply.spotichelas@gmail.com", user.Email)
-                        {
-                            Subject = "Verification Email",
-                            Body = "Welcome to Spotichelas," + user.UserName +
-                                   "\n Activation link:" + link
-                        };
-                    var smtp = new SmtpClient("smtp.gmail.com")
-                        {
-                            UseDefaultCredentials = false,
-                            EnableSsl = true,
-                            Credentials = new NetworkCredential("noreply.spotichelas@gmail.com", "isel2013")
-                        };
-                    smtp.Send(email);
+        //            //Send email
+        //            var email = new MailMessage("noreply.spotichelas@gmail.com", user.Email)
+        //                {
+        //                    Subject = "Verification Email",
+        //                    Body = "Welcome to Spotichelas," + user.UserName +
+        //                           "\n Activation link:" + link
+        //                };
+        //            var smtp = new SmtpClient("smtp.gmail.com")
+        //                {
+        //                    UseDefaultCredentials = false,
+        //                    EnableSsl = true,
+        //                    Credentials = new NetworkCredential("noreply.spotichelas@gmail.com", "isel2013")
+        //                };
+        //            smtp.Send(email);
 
-                    return RedirectToAction("AccountCreated");
-                }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
-                }
-            }
+        //            return RedirectToAction("AccountCreated");
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", ErrorCodeToString(createStatus));
+        //        }
+        //    }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
 
         public ActionResult AccountCreated()
         {
@@ -147,24 +142,24 @@ namespace UI.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
-        // GET: /Account/Profile/id or no id
-        [Authorize]
-        public ActionResult Profile(string username  = null)
-        {
-            MembershipUser user = Membership.GetUser(username ?? User.Identity.Name);
-            var userService = new UserProfileService();
-            var userProfile = userService.GetUser(user.UserName);
-            var viewModel = new UserProfileViewModel
-                {
-                    LoginName = user.UserName,
-                    Email = user.Email,
-                    Name = userProfile.Name,
-                    PhotoLocation = userProfile.PhotoLocation
-                };
+        ////
+        //// GET: /Account/Profile/id or no id
+        //[Authorize]
+        //public ActionResult Profile(string username  = null)
+        //{
+        //    MembershipUser user = Membership.GetUser(username ?? User.Identity.Name);
+        //    var userService = new UserService();
+        //    var userProfile = userService.GetUser(user.UserName);
+        //    var viewModel = new UserProfileViewModel
+        //        {
+        //            LoginName = user.UserName,
+        //            Email = user.Email,
+        //            Name = userProfile.Name,
+        //            PhotoLocation = userProfile.PhotoLocation
+        //        };
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
         //
         // GET: /Account/Settings
@@ -181,16 +176,16 @@ namespace UI.Controllers
             return View();
         }
 
-        [HttpPost]
-        [Authorize]
-        public ActionResult ChangePhoto(string newUrl)
-        {
-            var userService = new UserProfileService();
-            UserProfile userProfile = userService.GetUser(User.Identity.Name);
-            userProfile.PhotoLocation = newUrl;
-            userService.UpdateUser(userProfile);
-            return RedirectToAction("Profile");
-        }
+        //[HttpPost]
+        //[Authorize]
+        //public ActionResult ChangePhoto(string newUrl)
+        //{
+        //    var userService = new UserService();
+        //    Domain.Entities.User user = userService.GetUser(User.Identity.Name);
+        //    user.PhotoLocation = newUrl;
+        //    userService.UpdateUser(user);
+        //    return RedirectToAction("Profile");
+        //}
 
         //
         // GET: /Account/Settings
@@ -282,7 +277,7 @@ namespace UI.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "UserProfile name already exists. Please enter a different user name.";
+                    return "UserService name already exists. Please enter a different user name.";
 
                 case MembershipCreateStatus.DuplicateEmail:
                     return
@@ -318,7 +313,5 @@ namespace UI.Controllers
         }
 
         #endregion
-
-
     }
 }

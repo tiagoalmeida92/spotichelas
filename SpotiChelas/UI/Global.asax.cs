@@ -25,15 +25,14 @@ namespace UI
             //playlists route /playlist/3/edit
             routes.MapRoute("PlaylistsRouteIds",
                             "Playlist/{playlistId}/{action}",
-                            new {controller="Playlist"}
-                            );
+                            new {controller = "Playlist"}
+                );
 
-             //playlists route /playlist/index
+            //playlists route /playlist/index
             routes.MapRoute("PlaylistsRoute",
                             "Playlist/{action}",
-                            new {controller="Playlist", action ="Index"}
-                            );
-
+                            new {controller = "Playlist", action = "Index"}
+                );
 
 
             routes.MapRoute(

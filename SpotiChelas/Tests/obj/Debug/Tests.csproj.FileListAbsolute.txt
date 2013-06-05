@@ -1,0 +1,15 @@
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Tests.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Tests.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\nunit.framework.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Persistence.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\EntityFramework.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Persistence.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\nunit.framework.xml
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\EntityFramework.xml
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\obj\Debug\Tests.csprojResolveAssemblyReference.cache
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\obj\Debug\Tests.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\obj\Debug\Tests.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Dto.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Debug\Dto.pdb

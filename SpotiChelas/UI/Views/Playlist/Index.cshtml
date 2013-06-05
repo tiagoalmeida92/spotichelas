@@ -1,5 +1,5 @@
-﻿@using Domain.Entities
-@model IEnumerable<Domain.Entities.Playlist>
+﻿@using Dto
+@model IEnumerable<Dto.PlaylistDto>
 
 @{
     ViewBag.Title = "Playlists";
@@ -7,10 +7,11 @@
 
 <h2>Playlists</h2>
 
-
-<p>
-    @Html.ActionLink("Playlists From Others", "PermittedPlaylists","Playlist")
-</p>
+<!--
+    <p>
+        @Html.ActionLink("Playlists From Others", "PermittedPlaylists", "Playlist")
+    </p>
+    -->
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -25,7 +26,7 @@
         </th>
     </tr>
 
-    @foreach (Playlist item in Model)
+    @foreach (var item in Model)
     {
         <tr>
             <td>

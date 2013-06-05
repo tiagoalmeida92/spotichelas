@@ -1,31 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using Domain.Entities;
+﻿using System.Web.Mvc;
 using Services;
-using UI.ViewModels;
 
 namespace UI.Controllers
 {
     public class SearchController : Controller
     {
-        readonly SearchService _searchService = new SearchService();
-        readonly PlaylistService _playlistService = new PlaylistService();
-        
+        private readonly IPlaylistService _playlistService;
+        private readonly ISearchService _searchService;
+
+        public SearchController(ISearchService searchService, IPlaylistService playlistService)
+        {
+            _searchService = searchService;
+            _playlistService = playlistService;
+        }
+
         //
         // GET: /Search/
 
-        public ActionResult Index(string searchTerm)
-        {
-            IEnumerable<Track> tracks =  _searchService.Search(searchTerm);
-            var playlists = _playlistService.GetAll(User.Identity.Name);
-            var viewModel = new SearchResultsViewModel
-                {
-                    Tracks = tracks,
-                    Playlists = playlists
+        //public ActionResult Index(string searchTerm)
+        //{
+        //    IEnumerable<TrackDto> tracks =  _searchService.Search(searchTerm);
+        //    var playlists = _playlistService.GetAll(User.Identity.Name);
+        //    var viewModel = new SearchResultsViewModel
+        //        {
+        //            Tracks = tracks,
+        //            Playlists = playlists
 
-                };
-            return View(viewModel);
-        }
+        //        };
+        //    return View(viewModel);
+        //}
     }
 }

@@ -1,5 +1,5 @@
 /*!
- * jQuery UI CSS Framework 1.8.20
+ * jQuery UI CSS Framework 1.8.24
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
  * Licensed under the MIT license.
@@ -8,5 +8,4 @@
  * http://docs.jquery.com/UI/Theming
  */
 @import "jquery.ui.base.css";
-
 @import "jquery.ui.theme.css";

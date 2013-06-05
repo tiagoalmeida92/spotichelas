@@ -2,98 +2,109 @@
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using Domain.Entities;
-using Domain.Persistence.Repositories;
+using AutoMapper;
+using Dto;
+using Persistence.DAO;
+using Persistence.Repositories;
 
 namespace Services
 {
-    public class PlaylistService
+    public class PlaylistService : IPlaylistService
     {
-        private readonly ITrackRepository _repository = new TrackWebRepository();
+        private readonly ITrackRepository _repo;
 
-
-        public IEnumerable<Playlist> GetAll(string userId)
+        public PlaylistService(ITrackRepository repo)
         {
-            using (var db = new SpotiChelasDb())
-                return db.Playlists.Where(playlist => playlist.UserId == userId).ToList();
+            _repo = repo;
         }
 
-        public Playlist GetById(string userId, int id)
+        public IEnumerable<PlaylistDto> GetAll(string userId)
         {
-            using (var db = new SpotiChelasDb())
-            {
-
-                var pl = db.Playlists.Include(x => x.PlaylistTracks)
-                           .FirstOrDefault(playlist => playlist.Id == id && playlist.UserId == userId);
-                return pl;
-
-                //return
-                //    db.Playlists.Include(x => x.PlaylistTracks)
-                //      .FirstOrDefault(playlist => playlist.Id == id && playlist.UserId == userId);
-            }
+            var db = new Db();
+            IQueryable<Playlist> playlists = db.Playlists.Where(playlist => playlist.UserId == userId);
+            Mapper.CreateMap<Playlist, PlaylistDto>();
+            return Mapper.Map<IEnumerable<Playlist>, List<PlaylistDto>>(playlists);
+            //return
+            //    playlists.Select(
+            //        p => new PlaylistDto {Id = p.Id, UserName = p.UserId, Name = p.Name, Description = p.Description}).ToList();
         }
 
-        public void Add(string userId, Playlist pl)
-        {
-            using (var db = new SpotiChelasDb())
-            {
-                pl.User = new UserProfile {UserId = userId};
-                db.Playlists.Add(pl);
-                db.SaveChanges();
-            }
-        }
+        //public Playlist GetById(string userId, int id)
+        //{
+        //    using (var db = new Db())
+        //    {
 
-        public bool Delete(string userId, int playlistId)
-        {
-            using (var db = new SpotiChelasDb())
-            {
-                Playlist playlist =
-                    db.Playlists.First(playlist1 => playlist1.Id == playlistId && playlist1.UserId == userId);
-                //Se existirem tracks na playlist 
-                //não pode ser apagada
-                if (playlist.PlaylistTracks.Any())
-                    return false;
-                db.Playlists.Remove(playlist);
-                db.SaveChanges();
-                return true;
-            }
-        }
+        //        var pl = db.Playlists.Include(x => x.PlaylistTracks)
+        //                   .FirstOrDefault(playlist => playlist.Id == id && playlist.UserId == userId);
+        //        return pl;
 
-        public IEnumerable<Track> GetTracks(Playlist playlist)
-        {
-            IEnumerable<string> trackIds = playlist.PlaylistTracks.Select(track => track.SpotifyTrackId);
-            IEnumerable<Track> tracks = _repository.GetTracks(trackIds);
-            IEnumerable<Track> orderedTracks = from t in tracks
-                                               join x in playlist.PlaylistTracks on t.Id equals x.SpotifyTrackId
-                                               orderby x.Order
-                                               select t;
-            return orderedTracks;
-        }
+        //        //return
+        //        //    db.Playlists.Include(x => x.PlaylistTracks)
+        //        //      .FirstOrDefault(playlist => playlist.Id == id && playlist.UserId == userId);
+        //    }
+        //}
 
-        public void AddTrack(string userId, int playlistId, string songId)
-        {
-            using (var db = new SpotiChelasDb())
-            {
-                Playlist playlist =
-                    db.Playlists.Include(playlist1 => playlist1.PlaylistTracks)
-                      .FirstOrDefault(p => p.Id == playlistId && p.UserId == userId);
-                // && p.UserProfile==user);
-                var pltrack = new PlaylistTrack
-                    {
-                        UserId = userId,
-                        Order =
-                            playlist.PlaylistTracks.Any() ? playlist.PlaylistTracks.Max(track => track.Order) + 1 : 1,
-                        PlaylistId = playlist.Id,
-                        SpotifyTrackId = songId
-                    };
-                db.PlaylistTracks.Add(pltrack);
-                db.SaveChanges();
-            }
-        }
+        //public void Add(string userId, Playlist pl)
+        //{
+        //    using (var db = new Db())
+        //    {
+        //        pl.UserService = new UserProfile {UserId = userId};
+        //        db.Playlists.Add(pl);
+        //        db.SaveChanges();
+        //    }
+        //}
+
+        //public bool Delete(string userId, int playlistId)
+        //{
+        //    using (var db = new Db())
+        //    {
+        //        Domain.Persistence.DataTables.Playlist playlist =
+        //            db.Playlists.First(playlist1 => playlist1.Id == playlistId && playlist1.UserId == userId);
+        //        //Se existirem tracks na playlist 
+        //        //não pode ser apagada
+        //        if (playlist.PlaylistTracks.Any())
+        //            return false;
+        //        db.Playlists.Remove(playlist);
+        //        db.SaveChanges();
+        //        return true;
+        //    }
+        //}
+
+        //public IEnumerable<SpotifyTrack> GetTracks(Playlist playlist)
+        //{
+        //    IEnumerable<string> trackIds = playlist.PlaylistTracks.Select(track => track.SpotifyTrackId);
+        //    IEnumerable<SpotifyTrack> tracks = _repository.GetTracks(trackIds);
+        //    IEnumerable<SpotifyTrack> orderedTracks = from t in tracks
+        //                                       join x in playlist.PlaylistTracks on t.Id equals x.SpotifyTrackId
+        //                                       orderby x.Order
+        //                                       select t;
+        //    return orderedTracks;
+        //}
+
+        //public void AddTrack(string userId, int playlistId, string songId)
+        //{
+        //    using (var db = new Db())
+        //    {
+        //        Playlist playlist =
+        //            db.Playlists.Include(playlist1 => playlist1.PlaylistTracks)
+        //              .FirstOrDefault(p => p.Id == playlistId && p.UserId == userId);
+        //        // && p.UserService==user);
+        //        var pltrack = new PlaylistTrack
+        //            {
+        //                UserId = userId,
+        //                Order =
+        //                    playlist.PlaylistTracks.Any() ? playlist.PlaylistTracks.Max(track => track.Order) + 1 : 1,
+        //                PlaylistId = playlist.Id,
+        //                SpotifyTrackId = songId
+        //            };
+        //        db.PlaylistTracks.Add(pltrack);
+        //        db.SaveChanges();
+        //    }
+        //}
 
         public void Update(Playlist playlist)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 db.Entry(playlist).State = EntityState.Modified;
                 db.SaveChanges();
@@ -103,7 +114,7 @@ namespace Services
         //swap entre a ordem do track de trackid com o acima dele
         public void TrackUp(string userId, int playlistId, string trackId)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 //track para mover para cima
                 PlaylistTrack playlistTrack =
@@ -130,7 +141,7 @@ namespace Services
 
         public void TrackDown(string userId, int playlistId, string trackId)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 //track para mover para cima
                 PlaylistTrack playlistTrack =
@@ -157,7 +168,7 @@ namespace Services
 
         public void DeleteTrack(string userId, int playlistId, string trackId)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 PlaylistTrack track =
                     db.PlaylistTracks.First(
@@ -170,7 +181,7 @@ namespace Services
 
         public IEnumerable<PlaylistPermission> GetPermissionsGivenBy(string userId)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 return
                     db.PlaylistPermissions.Include(permission => permission.Playlist)
@@ -182,7 +193,7 @@ namespace Services
 
         public void AddPermission(string ownerId, string grantedUserId, int playlistId, bool contributor)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 db.PlaylistPermissions.Add(new PlaylistPermission
                     {
@@ -197,7 +208,7 @@ namespace Services
 
         public void RemovePermission(string ownerId, string grantedUserId, int playlistId)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 PlaylistPermission perm =
                     db.PlaylistPermissions.FirstOrDefault(
@@ -212,11 +223,11 @@ namespace Services
 
         public IEnumerable<PlaylistPermission> GetPermmitedPlaylists(string user)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 return
                     db.PlaylistPermissions.Include(permission => permission.Owner)
-                    .Include(permission => permission.Playlist)
+                      .Include(permission => permission.Playlist)
                       .Where(permission => permission.GrantedUserId == user)
                       .ToList();
             }
@@ -224,12 +235,10 @@ namespace Services
 
         public PlaylistPermission GetPermittedPlaylist(string name, int playlistid)
         {
-            using (var db = new SpotiChelasDb())
+            using (var db = new Db())
             {
                 return db.PlaylistPermissions.Include(permission => permission.Playlist)
-                          .FirstOrDefault(p => p.GrantedUserId == name && p.PlaylistId == playlistid);
-                
-
+                         .FirstOrDefault(p => p.GrantedUserId == name && p.PlaylistId == playlistid);
             }
         }
     }

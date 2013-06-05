@@ -1,5 +1,4 @@
-﻿@using Domain.Entities
-@model UI.ViewModels.PlaylistViewModel
+﻿@model UI.ViewModels.PlaylistViewModel
 @{
     ViewBag.Title = "Edit";
 }
@@ -35,7 +34,7 @@ solution knockout.js lib
 @*Lista com musicas e butoes para Up Down e Delete*@
 <table>
 
-    @foreach (Track track in Model.Tracks)
+    @foreach (SpotifyTrack track in Model.Tracks)
     {
         <tr>
             @Html.DisplayFor(model => track)
@@ -58,7 +57,7 @@ solution knockout.js lib
                 }
             </td>
             <td>
-                @using (Html.BeginForm("deleteTrack", "Playlist"))
+                @using (Html.BeginForm("deleteSpotifyTrack", "Playlist"))
                 {
                     @Html.Hidden("playlistId", Model.Playlist.Id)
                     @Html.Hidden("trackId", track.Id)

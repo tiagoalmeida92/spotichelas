@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\UI\bin\EntityFramework.dll</HintPath>
@@ -44,20 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPlaylistService.cs" />
+    <Compile Include="ISearchService.cs" />
     <Compile Include="PlaylistService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchService.cs" />
-    <Compile Include="UserProfileService.cs" />
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj">
-      <Project>{F78345ED-1714-4DA5-8CCA-EFAFC3E7F390}</Project>
-      <Name>Domain.Entities</Name>
+    <ProjectReference Include="..\Dto\Dto.csproj">
+      <Project>{f78345ed-1714-4da5-8cca-efafc3e7f390}</Project>
+      <Name>Dto</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Domain.Persistence\Domain.Persistence.csproj">
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
       <Project>{A04CD89A-3804-4CFF-A21E-C9FB50905B64}</Project>
-      <Name>Domain.Persistence</Name>
+      <Name>Persistence</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

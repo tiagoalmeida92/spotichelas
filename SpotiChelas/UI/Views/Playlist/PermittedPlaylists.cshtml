@@ -1,5 +1,4 @@
-﻿@using Domain.Entities
-@model IEnumerable<Domain.Entities.PlaylistPermission>
+﻿@model IEnumerable<Domain.Persistence.DataTables.PlaylistPermission>
 
 @{
     ViewBag.Title = "Permitted Playlists";
@@ -10,7 +9,7 @@
 <table>
     <tr>
         <td>
-            User
+            UserService
         </td>
         <td>
             Playlist Name
@@ -23,7 +22,7 @@
                 @perm.OwnerId
             </td>
             <td>
-                @Html.ActionLink(perm.Playlist.Name, "Details", new{perm.PlaylistId})
+                @Html.ActionLink(perm.Playlist.Name, "Details", new {perm.PlaylistId})
             </td>
         </tr>
     }
