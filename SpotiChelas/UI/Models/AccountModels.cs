@@ -24,7 +24,7 @@ namespace UI.Models
     public class LogOnModel
     {
         [Required]
-        [Display(Name = "UserService name")]
+        [Display(Name = "User name")]
         public string UserName { get; set; }
 
         [Required]
@@ -32,14 +32,14 @@ namespace UI.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "UserService name")]
+        [Display(Name = "User name")]
         public string UserName { get; set; }
 
         [Required]

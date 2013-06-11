@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Persistence.DAO
+namespace Persistence.DO
 {
     public class Track
     {
@@ -8,7 +8,5 @@ namespace Persistence.DAO
         public string Name { get; set; }
         public string Artist { get; set; }
         public TimeSpan Duration { get; set; }
-
-        public Playlist Playlist { get; set; }
     }
 }

@@ -47,9 +47,9 @@ namespace UI
             AreaRegistration.RegisterAllAreas();
 
             // Use LocalDB for Entity Framework by default
-            Database.DefaultConnectionFactory =
-                new SqlConnectionFactory(
-                    @"Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
+            //Database.DefaultConnectionFactory =
+            //    new SqlConnectionFactory(
+            //        @"Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
             RegisterRoles();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
@@ -57,6 +57,7 @@ namespace UI
 
         private static void RegisterRoles()
         {
+            
             if (!Roles.RoleExists("admin"))
                 Roles.CreateRole("admin");
             if (!Roles.RoleExists("user"))

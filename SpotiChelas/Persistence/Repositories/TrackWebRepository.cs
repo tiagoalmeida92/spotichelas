@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Persistence.DAO;
+using Persistence.DO;
 using Persistence.Helpers;
 
 namespace Persistence.Repositories
@@ -17,21 +17,31 @@ namespace Persistence.Repositories
         public IEnumerable<Track> GetTracks(IEnumerable<String> trackIds)
         {
             var tracks = new List<Track>();
-            Parallel.ForEach(trackIds, trackId =>
-                {
+
+            //serie
+            foreach (var trackId in trackIds)
+            {
                     string url = SpotifyAPIHelper.GetLookupUrl(JsonMediaType, SpotifyAPIResource.track, trackId);
                     RootObject result = SpotifyRequestAndDeserialize(url);
                     tracks.Add(GenerateTrack(result.track));
-                }
-                );
+            }
+
+            //paralelo
+            //Parallel.ForEach(trackIds, trackId =>
+            //    {
+            //        string url = SpotifyAPIHelper.GetLookupUrl(JsonMediaType, SpotifyAPIResource.track, trackId);
+            //        RootObject result = SpotifyRequestAndDeserialize(url);
+            //        tracks.Add(GenerateTrack(result.track));
+            //    }
+            //    );
             return tracks;
         }
 
 
-        public IEnumerable<Track> Search(string searchTerm)
+        public IEnumerable<Track> Search(string searchTerm, int page)
         {
-            string url = SpotifyAPIHelper.GetSearchUrl(JsonMediaType, SpotifyAPIResource.track, searchTerm);
-            RootObject result = SpotifyRequestAndDeserialize(url);
+            var url = SpotifyAPIHelper.GetSearchUrl(JsonMediaType, SpotifyAPIResource.track, searchTerm, page);
+            var result = SpotifyRequestAndDeserialize(url);
             return (from t in result.tracks
                     select GenerateTrack(t));
         }

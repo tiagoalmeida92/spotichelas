@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Persistence.DAO
+namespace Persistence.DO
 {
     public class Playlist
     {
@@ -11,7 +11,7 @@ namespace Persistence.DAO
         public String Description { get; set; }
 
         public virtual UserProfile User { get; set; }
-        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
+        public virtual ICollection<PlaylistTrack> Tracks { get; set; }
         public virtual ICollection<PlaylistPermission> Permissions { get; set; }
     }
 }

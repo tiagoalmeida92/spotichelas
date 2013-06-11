@@ -1,4 +1,4 @@
-﻿namespace Persistence.DAO
+﻿namespace Persistence.DO
 {
     public class PlaylistPermission
     {

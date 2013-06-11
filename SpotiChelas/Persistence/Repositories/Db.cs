@@ -1,5 +1,7 @@
 ﻿using System.Data.Entity;
-using Persistence.DAO;
+using System.Data.Metadata.Edm;
+using Persistence.DO;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Persistence.Repositories
 {
@@ -7,6 +9,7 @@ namespace Persistence.Repositories
     {
         public Db() : base("name= SpotiChelasConnection")
         {
+            
         }
 
 
@@ -18,9 +21,15 @@ namespace Persistence.Repositories
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+            #region User rules
+
             modelBuilder.Entity<UserProfile>()
                         .HasKey(user => user.UserId)
                         .HasMany(user => user.Playlists);
+            #endregion
+
+            #region Playlist rules
 
             modelBuilder.Entity<Playlist>()
                         .HasKey(playlist => new {playlist.Id, playlist.UserId})
@@ -28,12 +37,26 @@ namespace Persistence.Repositories
                         .WithMany(x => x.Playlists)
                         .HasForeignKey(x => x.UserId);
 
+            modelBuilder.Entity<Playlist>()
+                        .Property(playlist => playlist.Id)
+                        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Playlist>().Property(t => t.Name).HasMaxLength(50);
+
+            #endregion
+
+            #region PlaylistTrack rules
+
             modelBuilder.Entity<PlaylistTrack>()
                         .HasKey(track => new {track.PlaylistId, track.UserId, track.SpotifyTrackId})
                         .HasRequired(ptrack => ptrack.Playlist)
-                        .WithMany(playlist => playlist.PlaylistTracks)
+                        .WithMany(playlist => playlist.Tracks)
                         .HasForeignKey(track => new {track.PlaylistId, track.UserId})
                         .WillCascadeOnDelete(false);
+
+            #endregion
+
+            #region PlaylistPermission rules
 
             modelBuilder.Entity<PlaylistPermission>()
                         .HasKey(permission => new {permission.OwnerId, permission.GrantedUserId, permission.PlaylistId})
@@ -52,6 +75,8 @@ namespace Persistence.Repositories
                         .WithMany(playlist => playlist.Permissions)
                         .HasForeignKey(permission => new {permission.PlaylistId, permission.OwnerId})
                         .WillCascadeOnDelete(false);
+            #endregion
+
         }
     }
 }

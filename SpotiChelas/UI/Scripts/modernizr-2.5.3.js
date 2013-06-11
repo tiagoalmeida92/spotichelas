@@ -44,9 +44,9 @@ window.Modernizr = (function(window, document, undefined) {
         // List of property values to set for css tests. See ticket #21
         prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
         // Following spec is to expose vendor-specific style properties as:
-        //   elem.style.WebkitBorderRadius
+        //   elem.style.WebkitBPositionRadius
         // and the following would be incorrect:
-        //   elem.style.webkitBorderRadius
+        //   elem.style.webkitBPositionRadius
 
     // Webkit ghosts their properties in lowercase but Opera & Moz do not.
     // Microsoft uses a lowercase `ms` instead of the correct `Ms` in IE8+
@@ -76,7 +76,7 @@ window.Modernizr = (function(window, document, undefined) {
                 fakeBody = body ? body : document.createElement('body');
 
             if (parseInt(nodes, 10)) {
-                // In order not to give false positives we create a node for each test
+                // In Position not to give false positives we create a node for each test
                 // This also allows the method to scale for unspecified uses
                 while (nodes--) {
                     node = document.createElement('div');
@@ -566,15 +566,15 @@ window.Modernizr = (function(window, document, undefined) {
     };
 
     tests['borderimage'] = function() {
-        return testPropsAll('borderImage');
+        return testPropsAll('bPositionImage');
     };
 
 
     // Super comprehensive table about all the unique implementations of
-    // border-radius: muddledramblings.com/table-of-css3-border-radius-compliance
+    // bPosition-radius: muddledramblings.com/table-of-css3-bPosition-radius-compliance
 
     tests['borderradius'] = function() {
-        return testPropsAll('borderRadius');
+        return testPropsAll('bPositionRadius');
     };
 
     // WebOS unfortunately false positives on this test.

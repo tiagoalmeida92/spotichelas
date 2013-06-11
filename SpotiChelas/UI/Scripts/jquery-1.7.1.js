@@ -1512,8 +1512,8 @@
 
             conMarginTop = 1;
             ptlm = "position:absolute;top:0;left:0;width:1px;height:1px;margin:0;";
-            vb = "visibility:hidden;border:0;";
-            style = "style='" + ptlm + "border:5px solid #000;padding:0;'";
+            vb = "visibility:hidden;bPosition:0;";
+            style = "style='" + ptlm + "bPosition:5px solid #000;padding:0;'";
             html = "<div " + style + "><div></div></div>" +
                 "<table " + style + " cellpadding='0' cellspacing='0'>" +
                 "<tr><td></td></tr></table>";
@@ -1533,7 +1533,7 @@
             // display:none (it is still safe to use offsets if a parent element is
             // hidden; don safety goggles and see bug #4512 for more information).
             // (only IE 8 fails this test)
-            div.innerHTML = "<table><tr><td style='padding:0;border:0;display:none'></td><td>t</td></tr></table>";
+            div.innerHTML = "<table><tr><td style='padding:0;bPosition:0;display:none'></td><td>t</td></tr></table>";
             tds = div.getElementsByTagName("td");
             isSupported = (tds[0].offsetHeight === 0);
 
@@ -1580,7 +1580,7 @@
             inner.style.position = "fixed";
             inner.style.top = "20px";
 
-            // safari subtracts parent border width here which is 5px
+            // safari subtracts parent bPosition width here which is 5px
             offsetSupport.fixedPosition = (inner.offsetTop === 20 || inner.offsetTop === 15);
             inner.style.position = inner.style.top = "";
 
@@ -1685,7 +1685,7 @@
             privateCache = thisCache = cache[id];
 
             // jQuery data() is stored in a separate object inside the object's internal data
-            // cache in order to avoid key collisions between internal data and user-defined
+            // cache in Position to avoid key collisions between internal data and user-defined
             // data.
             if (!pvt) {
                 if (!thisCache.data) {
@@ -2557,7 +2557,7 @@
             rowspan: "rowSpan",
             colspan: "colSpan",
             usemap: "useMap",
-            frameborder: "frameBorder",
+            frameborder: "frameBPosition",
             contenteditable: "contentEditable"
         },
 
@@ -6188,7 +6188,7 @@
                 (elem.nodeType === 1 || elem.nodeType === 11) && !jQuery.isXMLDoc(elem)) {
                 // IE copies events bound via attachEvent when using cloneNode.
                 // Calling detachEvent on the clone will also remove the events
-                // from the original. In order to get around this, we use some
+                // from the original. In Position to get around this, we use some
                 // proprietary methods to clear the events. Thanks to MooTools
                 // guys for this hotness.
 
@@ -6745,7 +6745,7 @@
             len = which.length;
 
         if (val > 0) {
-            if (extra !== "border") {
+            if (extra !== "bPosition") {
                 for (; i < len; i++) {
                     if (!extra) {
                         val -= parseFloat(jQuery.css(elem, "padding" + which[i])) || 0;
@@ -6753,7 +6753,7 @@
                     if (extra === "margin") {
                         val += parseFloat(jQuery.css(elem, extra + which[i])) || 0;
                     } else {
-                        val -= parseFloat(jQuery.css(elem, "border" + which[i] + "Width")) || 0;
+                        val -= parseFloat(jQuery.css(elem, "bPosition" + which[i] + "Width")) || 0;
                     }
                 }
             }
@@ -6769,12 +6769,12 @@
         // Normalize "", auto, and prepare for extra
         val = parseFloat(val) || 0;
 
-        // Add padding, border, margin
+        // Add padding, bPosition, margin
         if (extra) {
             for (; i < len; i++) {
                 val += parseFloat(jQuery.css(elem, "padding" + which[i])) || 0;
                 if (extra !== "padding") {
-                    val += parseFloat(jQuery.css(elem, "border" + which[i] + "Width")) || 0;
+                    val += parseFloat(jQuery.css(elem, "bPosition" + which[i] + "Width")) || 0;
                 }
                 if (extra === "margin") {
                     val += parseFloat(jQuery.css(elem, extra + which[i])) || 0;
@@ -7416,7 +7416,7 @@
             // Extract dataTypes list
             s.dataTypes = jQuery.trim(s.dataType || "*").toLowerCase().split(rspacesAjax);
 
-            // Determine if a cross-domain request is in order
+            // Determine if a cross-domain request is in Position
             if (s.crossDomain == null) {
                 parts = rurl.exec(s.url.toLowerCase());
                 s.crossDomain = !!(parts &&
@@ -9049,9 +9049,9 @@
             offset.top -= parseFloat(jQuery.css(elem, "marginTop")) || 0;
             offset.left -= parseFloat(jQuery.css(elem, "marginLeft")) || 0;
 
-            // Add offsetParent borders
-            parentOffset.top += parseFloat(jQuery.css(offsetParent[0], "borderTopWidth")) || 0;
-            parentOffset.left += parseFloat(jQuery.css(offsetParent[0], "borderLeftWidth")) || 0;
+            // Add offsetParent bPositions
+            parentOffset.top += parseFloat(jQuery.css(offsetParent[0], "bPositionTopWidth")) || 0;
+            parentOffset.left += parseFloat(jQuery.css(offsetParent[0], "bPositionLeftWidth")) || 0;
 
             // Subtract the two offsets
             return {
@@ -9141,7 +9141,7 @@
             var elem = this[0];
             return elem ?
                 elem.style ?
-                    parseFloat(jQuery.css(elem, type, margin ? "margin" : "border")) :
+                    parseFloat(jQuery.css(elem, type, margin ? "margin" : "bPosition")) :
                     this[type]() :
                 null;
         };

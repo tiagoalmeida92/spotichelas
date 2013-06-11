@@ -141,7 +141,7 @@
             $.each(side, function() {
                 size -= parseFloat($.curCSS(elem, "padding" + this, true)) || 0;
                 if (border) {
-                    size -= parseFloat($.curCSS(elem, "border" + this + "Width", true)) || 0;
+                    size -= parseFloat($.curCSS(elem, "bPosition" + this + "Width", true)) || 0;
                 }
                 if (margin) {
                     size -= parseFloat($.curCSS(elem, "margin" + this, true)) || 0;
@@ -1060,8 +1060,8 @@
                 po = { top: 0, left: 0 };
 
             return {
-                top: po.top + (parseInt(this.offsetParent.css("borderTopWidth"), 10) || 0),
-                left: po.left + (parseInt(this.offsetParent.css("borderLeftWidth"), 10) || 0)
+                top: po.top + (parseInt(this.offsetParent.css("bPositionTopWidth"), 10) || 0),
+                left: po.left + (parseInt(this.offsetParent.css("bPositionLeftWidth"), 10) || 0)
             };
 
         },
@@ -1116,10 +1116,10 @@
                 var over = ($(ce).css("overflow") != 'hidden');
 
                 this.containment = [
-                    (parseInt($(ce).css("borderLeftWidth"), 10) || 0) + (parseInt($(ce).css("paddingLeft"), 10) || 0),
-                    (parseInt($(ce).css("borderTopWidth"), 10) || 0) + (parseInt($(ce).css("paddingTop"), 10) || 0),
-                    (over ? Math.max(ce.scrollWidth, ce.offsetWidth) : ce.offsetWidth) - (parseInt($(ce).css("borderLeftWidth"), 10) || 0) - (parseInt($(ce).css("paddingRight"), 10) || 0) - this.helperProportions.width - this.margins.left - this.margins.right,
-                    (over ? Math.max(ce.scrollHeight, ce.offsetHeight) : ce.offsetHeight) - (parseInt($(ce).css("borderTopWidth"), 10) || 0) - (parseInt($(ce).css("paddingBottom"), 10) || 0) - this.helperProportions.height - this.margins.top - this.margins.bottom
+                    (parseInt($(ce).css("bPositionLeftWidth"), 10) || 0) + (parseInt($(ce).css("paddingLeft"), 10) || 0),
+                    (parseInt($(ce).css("bPositionTopWidth"), 10) || 0) + (parseInt($(ce).css("paddingTop"), 10) || 0),
+                    (over ? Math.max(ce.scrollWidth, ce.offsetWidth) : ce.offsetWidth) - (parseInt($(ce).css("bPositionLeftWidth"), 10) || 0) - (parseInt($(ce).css("paddingRight"), 10) || 0) - this.helperProportions.width - this.margins.left - this.margins.right,
+                    (over ? Math.max(ce.scrollHeight, ce.offsetHeight) : ce.offsetHeight) - (parseInt($(ce).css("bPositionTopWidth"), 10) || 0) - (parseInt($(ce).css("paddingBottom"), 10) || 0) - this.helperProportions.height - this.margins.top - this.margins.bottom
                 ];
                 this.relative_container = c;
 
@@ -1139,13 +1139,13 @@
                 top: (
                     pos.top																	// The absolute mouse position
                         + this.offset.relative.top * mod										// Only for relative positioned nodes: Relative offset from element to offset parent
-                        + this.offset.parent.top * mod											// The offsetParent's offset without borders (offset + border)
+                        + this.offset.parent.top * mod											// The offsetParent's offset without bPositions (offset + bPosition)
                         - ($.browser.safari && $.browser.version < 526 && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())) * mod)
                 ),
                 left: (
                     pos.left																// The absolute mouse position
                         + this.offset.relative.left * mod										// Only for relative positioned nodes: Relative offset from element to offset parent
-                        + this.offset.parent.left * mod											// The offsetParent's offset without borders (offset + border)
+                        + this.offset.parent.left * mod											// The offsetParent's offset without bPositions (offset + bPosition)
                         - ($.browser.safari && $.browser.version < 526 && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft()) * mod)
                 )
             };
@@ -1198,14 +1198,14 @@
                     pageY																// The absolute mouse position
                         - this.offset.click.top													// Click offset (relative to the element)
                         - this.offset.relative.top												// Only for relative positioned nodes: Relative offset from element to offset parent
-                        - this.offset.parent.top												// The offsetParent's offset without borders (offset + border)
+                        - this.offset.parent.top												// The offsetParent's offset without bPositions (offset + bPosition)
                         + ($.browser.safari && $.browser.version < 526 && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())))
                 ),
                 left: (
                     pageX																// The absolute mouse position
                         - this.offset.click.left												// Click offset (relative to the element)
                         - this.offset.relative.left												// Only for relative positioned nodes: Relative offset from element to offset parent
-                        - this.offset.parent.left												// The offsetParent's offset without borders (offset + border)
+                        - this.offset.parent.left												// The offsetParent's offset without bPositions (offset + bPosition)
                         + ($.browser.safari && $.browser.version < 526 && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft()))
                 )
             };
@@ -1978,7 +1978,7 @@
 
                         var axis = $(this.handles[i], this.element), padWrapper = 0;
 
-                        //Checking the correct pad and border
+                        //Checking the correct pad and bPosition
                         padWrapper = /sw|ne|nw|se|n|s/.test(i) ? axis.outerHeight() : axis.outerWidth();
 
                         //The padding type i have to apply...
@@ -2289,7 +2289,7 @@
                 var prel = this._proportionallyResizeElements[i];
 
                 if (!this.borderDif) {
-                    var b = [prel.css('borderTopWidth'), prel.css('borderRightWidth'), prel.css('borderBottomWidth'), prel.css('borderLeftWidth')],
+                    var b = [prel.css('bPositionTopWidth'), prel.css('bPositionRightWidth'), prel.css('bPositionBottomWidth'), prel.css('bPositionLeftWidth')],
                         p = [prel.css('paddingTop'), prel.css('paddingRight'), prel.css('paddingBottom'), prel.css('paddingLeft')];
 
                     this.borderDif = $.map(b, function(v, i) {
@@ -3755,8 +3755,8 @@
                 po = { top: 0, left: 0 };
 
             return {
-                top: po.top + (parseInt(this.offsetParent.css("borderTopWidth"), 10) || 0),
-                left: po.left + (parseInt(this.offsetParent.css("borderLeftWidth"), 10) || 0)
+                top: po.top + (parseInt(this.offsetParent.css("bPositionTopWidth"), 10) || 0),
+                left: po.left + (parseInt(this.offsetParent.css("bPositionLeftWidth"), 10) || 0)
             };
 
         },
@@ -3807,10 +3807,10 @@
                 var over = ($(ce).css("overflow") != 'hidden');
 
                 this.containment = [
-                    co.left + (parseInt($(ce).css("borderLeftWidth"), 10) || 0) + (parseInt($(ce).css("paddingLeft"), 10) || 0) - this.margins.left,
-                    co.top + (parseInt($(ce).css("borderTopWidth"), 10) || 0) + (parseInt($(ce).css("paddingTop"), 10) || 0) - this.margins.top,
-                    co.left + (over ? Math.max(ce.scrollWidth, ce.offsetWidth) : ce.offsetWidth) - (parseInt($(ce).css("borderLeftWidth"), 10) || 0) - (parseInt($(ce).css("paddingRight"), 10) || 0) - this.helperProportions.width - this.margins.left,
-                    co.top + (over ? Math.max(ce.scrollHeight, ce.offsetHeight) : ce.offsetHeight) - (parseInt($(ce).css("borderTopWidth"), 10) || 0) - (parseInt($(ce).css("paddingBottom"), 10) || 0) - this.helperProportions.height - this.margins.top
+                    co.left + (parseInt($(ce).css("bPositionLeftWidth"), 10) || 0) + (parseInt($(ce).css("paddingLeft"), 10) || 0) - this.margins.left,
+                    co.top + (parseInt($(ce).css("bPositionTopWidth"), 10) || 0) + (parseInt($(ce).css("paddingTop"), 10) || 0) - this.margins.top,
+                    co.left + (over ? Math.max(ce.scrollWidth, ce.offsetWidth) : ce.offsetWidth) - (parseInt($(ce).css("bPositionLeftWidth"), 10) || 0) - (parseInt($(ce).css("paddingRight"), 10) || 0) - this.helperProportions.width - this.margins.left,
+                    co.top + (over ? Math.max(ce.scrollHeight, ce.offsetHeight) : ce.offsetHeight) - (parseInt($(ce).css("bPositionTopWidth"), 10) || 0) - (parseInt($(ce).css("paddingBottom"), 10) || 0) - this.helperProportions.height - this.margins.top
                 ];
             }
 
@@ -3826,13 +3826,13 @@
                 top: (
                     pos.top																	// The absolute mouse position
                         + this.offset.relative.top * mod										// Only for relative positioned nodes: Relative offset from element to offset parent
-                        + this.offset.parent.top * mod											// The offsetParent's offset without borders (offset + border)
+                        + this.offset.parent.top * mod											// The offsetParent's offset without bPositions (offset + bPosition)
                         - ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())) * mod)
                 ),
                 left: (
                     pos.left																// The absolute mouse position
                         + this.offset.relative.left * mod										// Only for relative positioned nodes: Relative offset from element to offset parent
-                        + this.offset.parent.left * mod											// The offsetParent's offset without borders (offset + border)
+                        + this.offset.parent.left * mod											// The offsetParent's offset without bPositions (offset + bPosition)
                         - ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft()) * mod)
                 )
             };
@@ -3883,14 +3883,14 @@
                     pageY																// The absolute mouse position
                         - this.offset.click.top													// Click offset (relative to the element)
                         - this.offset.relative.top												// Only for relative positioned nodes: Relative offset from element to offset parent
-                        - this.offset.parent.top												// The offsetParent's offset without borders (offset + border)
+                        - this.offset.parent.top												// The offsetParent's offset without bPositions (offset + bPosition)
                         + ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())))
                 ),
                 left: (
                     pageX																// The absolute mouse position
                         - this.offset.click.left												// Click offset (relative to the element)
                         - this.offset.relative.left												// Only for relative positioned nodes: Relative offset from element to offset parent
-                        - this.offset.parent.left												// The offsetParent's offset without borders (offset + border)
+                        - this.offset.parent.left												// The offsetParent's offset without bPositions (offset + bPosition)
                         + ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft()))
                 )
             };
@@ -4035,8 +4035,8 @@ jQuery.effects || (function($, undefined) {
 /******************************************************************************/
 
 // override the animation for color styles
-    $.each(['backgroundColor', 'borderBottomColor', 'borderLeftColor',
-            'borderRightColor', 'borderTopColor', 'borderColor', 'color', 'outlineColor'],
+    $.each(['backgroundColor', 'bPositionBottomColor', 'bPositionLeftColor',
+            'bPositionRightColor', 'bPositionTopColor', 'bPositionColor', 'color', 'outlineColor'],
         function(i, attr) {
             $.fx.step[attr] = function(fx) {
                 if (!fx.colorInit) {
@@ -5331,8 +5331,8 @@ jQuery.effects || (function($, undefined) {
             var props1 = ['position', 'top', 'bottom', 'left', 'right', 'overflow', 'opacity']; // Always restore
             var props2 = ['width', 'height', 'overflow']; // Copy for children
             var cProps = ['fontSize'];
-            var vProps = ['borderTopWidth', 'borderBottomWidth', 'paddingTop', 'paddingBottom'];
-            var hProps = ['borderLeftWidth', 'borderRightWidth', 'paddingLeft', 'paddingRight'];
+            var vProps = ['bPositionTopWidth', 'bPositionBottomWidth', 'paddingTop', 'paddingBottom'];
+            var hProps = ['bPositionLeftWidth', 'bPositionRightWidth', 'paddingLeft', 'paddingRight'];
 
             // Set options
             var mode = $.effects.setMode(el, o.options.mode || 'effect'); // Set Mode
@@ -5675,7 +5675,7 @@ jQuery.effects || (function($, undefined) {
                 .next()
                 .hide();
 
-            // make sure at least one header is in the tab order
+            // make sure at least one header is in the tab Position
             if (!self.active.length) {
                 self.headers.eq(0).attr("tabIndex", 0);
             } else {
@@ -5687,7 +5687,7 @@ jQuery.effects || (function($, undefined) {
                     });
             }
 
-            // only need links in tab order for Safari
+            // only need links in tab Position for Safari
             if (!$.browser.safari) {
                 self.headers.find("a").attr("tabIndex", -1);
             }
@@ -6107,8 +6107,8 @@ jQuery.effects || (function($, undefined) {
                 s.width(s.parent().width()
                     - parseFloat(s.css("paddingLeft"))
                     - parseFloat(s.css("paddingRight"))
-                    - (parseFloat(s.css("borderLeftWidth")) || 0)
-                    - (parseFloat(s.css("borderRightWidth")) || 0));
+                    - (parseFloat(s.css("bPositionLeftWidth")) || 0)
+                    - (parseFloat(s.css("bPositionRightWidth")) || 0));
 
                 $.each(fxAttrs, function(i, prop) {
                     hideProps[prop] = "hide";
@@ -7957,15 +7957,15 @@ jQuery.effects || (function($, undefined) {
             }
         },
 
-        /* Retrieve the size of left and top borders for an element.
+        /* Retrieve the size of left and top bPositions for an element.
 	   @param  elem  (jQuery object) the element of interest
-	   @return  (number[2]) the left and top borders */
+	   @return  (number[2]) the left and top bPositions */
         _getBorders: function(elem) {
             var convert = function(value) {
                 return { thin: 1, medium: 2, thick: 3 }[value] || value;
             };
-            return [parseFloat(convert(elem.css('border-left-width'))),
-                parseFloat(convert(elem.css('border-top-width')))];
+            return [parseFloat(convert(elem.css('bPosition-left-width'))),
+                parseFloat(convert(elem.css('bPosition-top-width')))];
         },
 
         /* Check positioning to remain on screen. */
@@ -8795,7 +8795,7 @@ jQuery.effects || (function($, undefined) {
                 html += group;
             }
             html += buttonPanel + ($.browser.msie && parseInt($.browser.version, 10) < 7 && !inst.inline ?
-                '<iframe src="javascript:false;" class="ui-datepicker-cover" frameborder="0"></iframe>' : '');
+                '<iframe src="javascript:false;" class="ui-datepicker-cover" framebPosition="0"></iframe>' : '');
             inst._keyEvent = false;
             return html;
         },
@@ -9150,7 +9150,7 @@ jQuery.effects || (function($, undefined) {
                         zIndex: options.zIndex
                     })
                     // setting tabIndex makes the div focusable
-                    // setting outline to 0 prevents a border on focus in Mozilla
+                    // setting outline to 0 prevents a bPosition on focus in Mozilla
                     .attr('tabIndex', -1).css('outline', 0).keydown(function(event) {
                         if (options.closeOnEscape && !event.isDefaultPrevented() && event.keyCode &&
                             event.keyCode === $.ui.keyCode.ESCAPE) {
@@ -10574,8 +10574,8 @@ jQuery.effects || (function($, undefined) {
                 left: event.pageX - offset.left - (closestHandle.width() / 2),
                 top: event.pageY - offset.top -
                     (closestHandle.height() / 2) -
-                    (parseInt(closestHandle.css("borderTopWidth"), 10) || 0) -
-                    (parseInt(closestHandle.css("borderBottomWidth"), 10) || 0) +
+                    (parseInt(closestHandle.css("bPositionTopWidth"), 10) || 0) -
+                    (parseInt(closestHandle.css("bPositionBottomWidth"), 10) || 0) +
                     (parseInt(closestHandle.css("marginTop"), 10) || 0)
             };
 
@@ -11350,7 +11350,7 @@ jQuery.effects || (function($, undefined) {
                 }
 
                 // Prevent IE from keeping other link focussed when using the back button
-                // and remove dotted border from clicked link. This is controlled via CSS
+                // and remove dotted bPosition from clicked link. This is controlled via CSS
                 // in modern browsers; blur() removes focus from address bar in Firefox
                 // which can become a usability and annoying problem with tabs('rotate').
                 if ($.browser.msie) {

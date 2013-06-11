@@ -1,6 +1,5 @@
 
 ISSUES
-- search pagination
 - playlist controller  actions details == edit 
 - playlist services..addsong lazy loading eager loading...
 - action playlist/details links para artista e album etce com lookup do spotify
@@ -21,6 +20,8 @@ ISSUES
 - UP NEXT associar as playlists ao utilizadores
 - SpotiChelasDb onmodelcreation might be wrong
 - playlist/details == playlists/edit código
+- adicionar album aos resultados de pesquisa
+- automapper + ef lazy load = trouble
 
 ENUNCIADO
 A segunda etapa do projecto de PI tem dois objectivos:

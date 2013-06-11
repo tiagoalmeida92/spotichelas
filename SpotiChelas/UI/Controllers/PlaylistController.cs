@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web.Mvc;
 using Dto;
 using Services;
@@ -42,135 +43,37 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                //_playlistService.Add(User.Identity.Name, playlist);
+                playlist.UserId = HttpContext.User.Identity.Name;
+                _playlistService.Add(playlist);
                 return RedirectToAction("Index");
             }
-
             return View(playlist);
         }
 
 
-        //[HttpGet]
-        //public ActionResult Details(int playlistId)
-        //{
-        //  //  Playlist playlist = _playlistService.GetById(User.Identity.Name, playlistId);
-        //    //IEnumerable<SpotifyTrack> tracks = _playlistService.GetTracks(playlist);
-        //    var viewModel = new PlaylistViewModel
-        //        {
-        //        //    Playlist = playlist,
-        //          //  Tracks = tracks
-        //        };
-        //    return View(viewModel);
-        //}
+        [HttpGet]
+        public ActionResult Details(int playlistId)
+        {
+            var playlistDto = _playlistService.GetById(User.Identity.Name, playlistId);
+            return View(playlistDto);
+        }
 
-        //
-        // GET: /Playlists/Edit/5
+ 
 
-        //public ActionResult Edit(int playlistId)
-        //{
-        //   // Playlist playlist = _playlistService.GetById(User.Identity.Name, playlistId);
-        //    //IEnumerable<SpotifyTrack> tracks = _playlistService.GetTracks(playlist);
-        //    var viewModel = new PlaylistViewModel
-        //    {
-        //      //  Playlist = playlist,
-        //        //Tracks = tracks
-        //    };
-        //    return View(viewModel);
-        //}
+        //AJAX
+        [HttpPost]
+        public ActionResult AddTrack(int playlistId, string trackId)
+        {  
+            _playlistService.AddTrack(User.Identity.Name, playlistId, trackId);
+            return new EmptyResult();
+        }
 
-        //
-        // POST: /Playlists/Edit/5
-
-        //[HttpPost]
-        //public ActionResult Edit(Playlist playlist)
-        //{
-        //    _playlistService.Update(playlist);
-        //    return RedirectToAction("Index");
-        //}
-
-
-        //[HttpPost]
-        //public ActionResult Delete(int playlistId)
-        //{
-        //    return null;
-        //    // return RedirectToAction(_playlistService.Delete(User.Identity.Name, playlistId) ? "Index" : "Edit");
-        //}
-
-        ////invocado no /search
-        //[HttpPost]
-        //public ActionResult AddTrack(int playlistId, string trackId)
-        //{  
-        //   //  _playlistService.AddTrack(User.Identity.Name, playlistId,trackId);
-        //    return RedirectToAction("Index");
-        //}
-
-
-        //[HttpPost]
-        //public ActionResult TrackUp(int playlistId, string trackId)
-        //{
-        //    _playlistService.TrackUp(User.Identity.Name, playlistId, trackId);
-        //    return RedirectToAction("Edit", new{id=playlistId});
-        //}
-
-        //[HttpPost]
-        //public ActionResult TrackDown(int playlistId, string trackId)
-        //{
-        //    _playlistService.TrackDown(User.Identity.Name, playlistId, trackId);
-        //    return RedirectToAction("Edit", new{id=playlistId});
-        //}
-
-        //[HttpPost]
-        //public ActionResult DeleteTrack(int playlistId, string trackId)
-        //{
-        //    _playlistService.DeleteTrack(User.Identity.Name, playlistId, trackId);
-        //    return RedirectToAction("Edit", new{id=playlistId});
-        //}
-
-        //[HttpGet]
-        //public ActionResult ManagePermissions(int playlistId)
-        //{
-        //    IEnumerable<PlaylistPermission> playlitsPermitted = _playlistService.GetPermissionsGivenBy(User.Identity.Name);
-        //    ViewBag.PlaylistId = playlistId;
-        //    return View(playlitsPermitted);
-        //}
-
-        //[HttpPost]
-        //public ActionResult AddPermission(string grantedUser, int playlistId, bool? contributor)
-        //{
-        //    if(Membership.GetUser(grantedUser) != null)
-        //     _playlistService.AddPermission(User.Identity.Name, grantedUser, playlistId, contributor.HasValue);
-        //    return RedirectToAction("ManagePermissions");
-        //}
-
-        //[HttpPost]
-        //public ActionResult RemovePermission(string grantedUser, int playlistId)
-        //{
-        //    _playlistService.RemovePermission(User.Identity.Name, grantedUser, playlistId);
-        //    return RedirectToAction("ManagePermissions");
-        //}
-
-        //public ActionResult PermittedPlaylists()
-        //{
-        //    return null;
-        //    //return View(_playlistService.GetPermmitedPlaylists(User.Identity.Name));
-        //}
-
-        //public ActionResult PermittedPlayistDetails(int playlistId)
-        //{
-        //    var pl = _playlistService.GetPermittedPlaylist(UserService.Identity.Name, playlistid);
-        //    var tracks = _playlistService.GetTracks(pl.Playlist);
-        //    //criar new view model para por os tracks
-        //    var vm = new PlaylistPermissionViewModel
-        //        {
-        //            Permission = pl,
-        //            Tracks = tracks
-        //        };
-        //    return View(vm);
-        //}
-
-        //public ActionResult PermittedPlayistEdit(int playlistId)
-        //{
-
-        //}
+        //AJAX
+        [HttpPost]
+        public ActionResult EditTracks(PlaylistDto playlist)
+        {
+            _playlistService.EditTracks(playlist);
+            return new EmptyResult();
+        }
     }
 }

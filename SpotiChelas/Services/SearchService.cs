@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using Dto;
-using Persistence.DAO;
+using Persistence.DO;
 using Persistence.Repositories;
 
 namespace Services
@@ -16,9 +16,9 @@ namespace Services
             _repo = repo;
         }
 
-        public IEnumerable<TrackDto> Search(string searchTerm)
+        public IEnumerable<TrackDto> Search(string searchTerm, int page)
         {
-            IEnumerable<Track> tracks = _repo.Search(searchTerm);
+            var tracks = _repo.Search(searchTerm, page);
             Mapper.CreateMap<Track, TrackDto>();
             return Mapper.Map<IEnumerable<Track>, List<TrackDto>>(tracks);
         }

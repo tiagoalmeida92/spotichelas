@@ -1,53 +1,101 @@
 ﻿@model  UI.ViewModels.SearchResultsViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Search results";
+    const int pages = 7;
+    var authenticated = User.Identity.IsAuthenticated;
 }
 
-<h1>Results</h1>
+<h3>Search results for "@Model.SearchTerm"</h3>
 
-<table>
-    <tr>
-        <th>
-            Artist
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Duration
-        </th>
-    </tr>
-    
-    @{ bool isLogged = User.Identity.IsAuthenticated; }
+@*PAGINACAO*@
 
-
-    @foreach (SpotifyTrack track in Model.Tracks)
-    {
-        <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => track.Artist)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => track.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => track.Duration)
-            </td>
-            @if (isLogged)
+<div class="pagination pagination-centered">
+    <ul>
+        <li>@Html.ActionLink("«", "Index", new {q = @Model.SearchTerm, page = @Model.Page <= 1 ? 1 : @Model.Page - 1})</li>
+        @for (var i = @Model.Page - (pages/2); i <= @Model.Page + (pages/2) || i <= pages; ++i)
+        {
+            if (i < 1)
             {
-                <td>
-                    @using (Html.BeginForm("AddSpotifyTrack", "Playlist", FormMethod.Post))
-                    {
-                        @Html.Hidden("trackid", track.Id)
-                        @Html.DropDownList("playlistId", new SelectList(Model.Playlists, "Id", "Name"))
-                        <input type="submit" value="Add" />
-                    }
-                </td>
+                i = 1;
             }
+            <li>@Html.ActionLink(i.ToString(), "Index", new {q = @Model.SearchTerm, page = i})</li>
+        }
+        <li>@Html.ActionLink("»", "Index", new {q = @Model.SearchTerm, page = @Model.Page + 1})</li>
+    </ul>
+</div>
 
-        </tr>
-    }
 
-</table>
+<div class="well-small">
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Artist
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Duration
+                </th>
+                @if (authenticated)
+                {
+                    <th>
+                        Add to playlist
+                    </th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var track in Model.Tracks)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => track.Artist)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => track.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => track.Duration)
+                    </td>
+                    
+                    @if (authenticated)
+                    {
+                        <td data-trackid="@track.Id">
+                            <div class="btn-group">
+                                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @foreach (var p in Model.Playlists)
+                                    {
+                                        <li>
+                                            <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.Id"  href="#">
+                                                @p.Name
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>
+
+<script type="text/javascript">
+    $(".dropdown-playlist").click(function(e) {
+        var playlistId = $(this).data("playlistid");
+        var trackId = $(this).closest("td").data("trackid");
+        $.post("@Url.Action("AddTrack", "Playlist")", { "playlistId": playlistId, "trackId": trackId });
+        $(this).remove();
+        e.preventDefault();
+    });
+</script>

@@ -1,47 +1,49 @@
-﻿@using Dto
-@model IEnumerable<Dto.PlaylistDto>
+﻿@model IEnumerable<Dto.PlaylistDto>
 
 @{
     ViewBag.Title = "Playlists";
 }
 
-<h2>Playlists</h2>
 
-<!--
-    <p>
-        @Html.ActionLink("Playlists From Others", "PermittedPlaylists", "Playlist")
-    </p>
-    -->
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Description
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
+<div class="btn-toolbar">
+    <a class = "btn btn-primary" href="@Url.Action("Create")">Create New</a>
+</div>
+<div class="well">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    # Tracks
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
                 
-                @Html.ActionLink(
-                    Html.DisplayFor(modelItem => item.Name).ToHtmlString(),
-                    "Details",
-                    new {playlistId = item.Id}
-                     )
+                        @Html.ActionLink(
+                            item.Name,
+                            "Details",
+                            new {playlistId = item.Id}
+                             )
                 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-        </tr>
-    }
-
-</table>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(dtos => item.TotalTracks)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

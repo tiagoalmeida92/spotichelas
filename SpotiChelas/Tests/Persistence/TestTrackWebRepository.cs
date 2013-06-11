@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Persistence.DAO;
+using Persistence.DO;
 using Persistence.Repositories;
 
 namespace Tests.Persistence
@@ -31,7 +31,7 @@ namespace Tests.Persistence
         public void test_search()
         {
             var repo = new TrackWebRepository();
-            IEnumerable<Track> tracks = repo.Search("foo");
+            IEnumerable<Track> tracks = repo.Search("foo", 1);
             Assert.AreEqual(100, tracks.Count());
         }
     }

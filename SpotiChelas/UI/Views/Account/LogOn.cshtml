@@ -14,36 +14,63 @@
 
 @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 
-@using (Html.BeginForm())
+@using (Html.BeginForm((object) new {@class = "form-horizontal"}))
 {
-    <div>
+    <div class="control-group">
+        @Html.LabelFor(m => m.UserName)
+        <div class="controls">
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName)
+        </div>
+    </div>
+    <div class="control-group">
+         <span class="control-label">@Html.LabelFor(m => m.Password)</span>
+        <div class="controls">
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <label class="checkbox"><input type="checkbox" /> Remember me</label> <button type="submit" class="btn">Sign in</button>
+        </div>
+    </div>
+
+    
+}
+
+
+@*
+@using (Html.BeginForm((object) new {@class = "form-horizontal"}) )
+{
+    <div class="control-group">
         <fieldset>
             <legend>Account Information</legend>
 
-            <div class="editor-label">
+            <div>
                 @Html.LabelFor(m => m.UserName)
             </div>
-            <div class="editor-field">
+            <div>
                 @Html.TextBoxFor(m => m.UserName)
                 @Html.ValidationMessageFor(m => m.UserName)
             </div>
 
-            <div class="editor-label">
+            <div>
                 @Html.LabelFor(m => m.Password)
             </div>
-            <div class="editor-field">
+            <div>
                 @Html.PasswordFor(m => m.Password)
                 @Html.ValidationMessageFor(m => m.Password)
             </div>
 
-            <div class="editor-label">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
+            <div class="control-group">
+                <div class="controls">
+                    @Html.CheckBoxFor(m => m.RememberMe, new {@class = "checkbox"})
+                    @Html.LabelFor(m => m.RememberMe)
+                    <input class="btn" type="submit" value="Log On" />
+                 </div>
             </div>
-
-            <p>
-                <input type="submit" value="Log On" />
-            </p>
         </fieldset>
     </div>
 }
+*@

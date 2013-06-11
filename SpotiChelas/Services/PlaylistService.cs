@@ -1,245 +1,99 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using AutoMapper;
 using Dto;
-using Persistence.DAO;
+using Persistence.DO;
 using Persistence.Repositories;
 
 namespace Services
 {
     public class PlaylistService : IPlaylistService
     {
+        private readonly Db _db;
         private readonly ITrackRepository _repo;
 
-        public PlaylistService(ITrackRepository repo)
+        public PlaylistService(ITrackRepository repo, Db db)
         {
+            _db = db;
             _repo = repo;
         }
 
         public IEnumerable<PlaylistDto> GetAll(string userId)
         {
-            var db = new Db();
-            IQueryable<Playlist> playlists = db.Playlists.Where(playlist => playlist.UserId == userId);
-            Mapper.CreateMap<Playlist, PlaylistDto>();
-            return Mapper.Map<IEnumerable<Playlist>, List<PlaylistDto>>(playlists);
-            //return
-            //    playlists.Select(
-            //        p => new PlaylistDto {Id = p.Id, UserName = p.UserId, Name = p.Name, Description = p.Description}).ToList();
+            var playlists = _db.Playlists.Where(playlist => playlist.UserId == userId);
+            Mapper.CreateMap<Playlist, PlaylistDto>()
+                  .ForMember(dto => dto.TotalTracks,
+                             e => e.MapFrom(playlist => playlist.Tracks.Count()))
+                  .ForMember(dto => dto.Tracks, e => e.Ignore());
+            return Mapper.Map<IEnumerable<Playlist>, IEnumerable<PlaylistDto>>(playlists);
         }
 
-        //public Playlist GetById(string userId, int id)
-        //{
-        //    using (var db = new Db())
-        //    {
-
-        //        var pl = db.Playlists.Include(x => x.PlaylistTracks)
-        //                   .FirstOrDefault(playlist => playlist.Id == id && playlist.UserId == userId);
-        //        return pl;
-
-        //        //return
-        //        //    db.Playlists.Include(x => x.PlaylistTracks)
-        //        //      .FirstOrDefault(playlist => playlist.Id == id && playlist.UserId == userId);
-        //    }
-        //}
-
-        //public void Add(string userId, Playlist pl)
-        //{
-        //    using (var db = new Db())
-        //    {
-        //        pl.UserService = new UserProfile {UserId = userId};
-        //        db.Playlists.Add(pl);
-        //        db.SaveChanges();
-        //    }
-        //}
-
-        //public bool Delete(string userId, int playlistId)
-        //{
-        //    using (var db = new Db())
-        //    {
-        //        Domain.Persistence.DataTables.Playlist playlist =
-        //            db.Playlists.First(playlist1 => playlist1.Id == playlistId && playlist1.UserId == userId);
-        //        //Se existirem tracks na playlist 
-        //        //não pode ser apagada
-        //        if (playlist.PlaylistTracks.Any())
-        //            return false;
-        //        db.Playlists.Remove(playlist);
-        //        db.SaveChanges();
-        //        return true;
-        //    }
-        //}
-
-        //public IEnumerable<SpotifyTrack> GetTracks(Playlist playlist)
-        //{
-        //    IEnumerable<string> trackIds = playlist.PlaylistTracks.Select(track => track.SpotifyTrackId);
-        //    IEnumerable<SpotifyTrack> tracks = _repository.GetTracks(trackIds);
-        //    IEnumerable<SpotifyTrack> orderedTracks = from t in tracks
-        //                                       join x in playlist.PlaylistTracks on t.Id equals x.SpotifyTrackId
-        //                                       orderby x.Order
-        //                                       select t;
-        //    return orderedTracks;
-        //}
-
-        //public void AddTrack(string userId, int playlistId, string songId)
-        //{
-        //    using (var db = new Db())
-        //    {
-        //        Playlist playlist =
-        //            db.Playlists.Include(playlist1 => playlist1.PlaylistTracks)
-        //              .FirstOrDefault(p => p.Id == playlistId && p.UserId == userId);
-        //        // && p.UserService==user);
-        //        var pltrack = new PlaylistTrack
-        //            {
-        //                UserId = userId,
-        //                Order =
-        //                    playlist.PlaylistTracks.Any() ? playlist.PlaylistTracks.Max(track => track.Order) + 1 : 1,
-        //                PlaylistId = playlist.Id,
-        //                SpotifyTrackId = songId
-        //            };
-        //        db.PlaylistTracks.Add(pltrack);
-        //        db.SaveChanges();
-        //    }
-        //}
-
-        public void Update(Playlist playlist)
+        public void Add(PlaylistDto pl)
         {
-            using (var db = new Db())
-            {
-                db.Entry(playlist).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            Mapper.CreateMap<PlaylistDto, Playlist>();
+            var playlist = Mapper.Map<PlaylistDto, Playlist>(pl);
+            _db.Playlists.Add(playlist);
+            _db.SaveChanges();
         }
 
-        //swap entre a ordem do track de trackid com o acima dele
-        public void TrackUp(string userId, int playlistId, string trackId)
+        public PlaylistDto GetById(string user, int id)
         {
-            using (var db = new Db())
-            {
-                //track para mover para cima
-                PlaylistTrack playlistTrack =
-                    db.PlaylistTracks.First(
-                        track => track.PlaylistId == playlistId && track.SpotifyTrackId == trackId
-                                 && track.UserId == userId);
-                //track com Order mais baixo
-                PlaylistTrack playlistWithLowerPos =
-                    db.PlaylistTracks.FirstOrDefault(
-                        track => track.PlaylistId == playlistId && track.Order < playlistTrack.Order);
+            //mashup happens here
 
-                if (playlistWithLowerPos == null) //Não há nenhum acima
-                    return;
-                //Troca de ordens
-                int tmp = playlistTrack.Order;
-                playlistTrack.Order = playlistWithLowerPos.Order;
-                playlistWithLowerPos.Order = tmp;
-
-                db.Entry(playlistTrack).State = EntityState.Modified;
-                db.Entry(playlistWithLowerPos).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            var playlist = _db.Playlists.Include(x => x.Tracks).First(p => p.Id == id && p.UserId == user);
+            Mapper.CreateMap<Playlist, PlaylistDto>().ForMember(dto => dto.Tracks, e => e.Ignore());
+            var playlistDto = Mapper.Map<Playlist, PlaylistDto>(playlist);
+            var tracks =
+                _repo.GetTracks(playlist.Tracks
+                                        .OrderBy(track => track.Position)
+                                        .Select(track => track.SpotifyTrackId));
+            Mapper.CreateMap<Track, TrackDto>();
+            playlistDto.Tracks = Mapper.Map<IEnumerable<Track>, IEnumerable<TrackDto>>(tracks);
+            return playlistDto;
         }
 
-        public void TrackDown(string userId, int playlistId, string trackId)
+        public void AddTrack(string username, int playlistId, string trackId)
         {
-            using (var db = new Db())
-            {
-                //track para mover para cima
-                PlaylistTrack playlistTrack =
-                    db.PlaylistTracks.First(
-                        track => track.PlaylistId == playlistId && track.SpotifyTrackId == trackId
-                                 && track.UserId == userId);
-                //track com Order mais alto
-                PlaylistTrack playlistWithHigherPos =
-                    db.PlaylistTracks.FirstOrDefault(
-                        track => track.PlaylistId == playlistId && track.Order > playlistTrack.Order);
-
-                if (playlistWithHigherPos == null) //Não há nenhum abaixo
-                    return;
-                //Troca de ordens
-                int tmp = playlistTrack.Order;
-                playlistTrack.Order = playlistWithHigherPos.Order;
-                playlistWithHigherPos.Order = tmp;
-
-                db.Entry(playlistTrack).State = EntityState.Modified;
-                db.Entry(playlistWithHigherPos).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+            var pl = _db.Playlists.First(p => p.Id == playlistId && p.UserId == username);
+            pl.Tracks.Add(new PlaylistTrack
+                {
+                    SpotifyTrackId = trackId,
+                    Position = pl.Tracks.Max(track => track.Position) + 1
+                });
+            _db.SaveChanges();
         }
 
-        public void DeleteTrack(string userId, int playlistId, string trackId)
+        public void DeleteRows(int id, IEnumerable<string> sortedIds)
         {
-            using (var db = new Db())
-            {
-                PlaylistTrack track =
-                    db.PlaylistTracks.First(
-                        pTrack => pTrack.PlaylistId == playlistId && pTrack.SpotifyTrackId == trackId
-                                  && pTrack.UserId == userId);
-                db.PlaylistTracks.Remove(track);
-                db.SaveChanges();
-            }
+            //http://stackoverflow.com/questions/337704/parameterizing-an-sql-in-clause/337817#337817
+            // DELETE FROM PlaylistTracks WHERE Id NOT IN (
+            //select * from playlisttracks where playlistId = 2 
+            //AND SpotifyTrackId not in ('2ZDpTOEN1aWhSZACq5OQDt','0mWiuXuLAJ3Brin3Or2x6v','13F75FZlHVN6zOjpBbfRmP','1sn6iOK93jnp0Hn5BnNOXy','2kN05N1AQQplsgFweFAqYb,4sWk6tbgVPkA8OAk0utIz3')
+            var transform = sortedIds.Select(s => "'" + s + "'");
+            string inClause = string.Join(",", transform);
+            string sql =
+                string.Format("DELETE FROM PlaylistTracks WHERE playlistId = {0} AND SpotifyTrackId NOT IN ({1})", id,
+                              inClause);
+            _db.Database.ExecuteSqlCommand(sql);
         }
 
-        public IEnumerable<PlaylistPermission> GetPermissionsGivenBy(string userId)
+        public void EditTracks(PlaylistDto playlist)
         {
-            using (var db = new Db())
+            var pl = _db.Playlists.Include(playlist1 => playlist1.Tracks)
+                        .First(p => p.Id == playlist.Id && p.UserId == playlist.UserId);
+            var sortedIds = playlist.Tracks.Select(dto => dto.Id);
+            DeleteRows(playlist.Id, sortedIds);
+            var i = 0;
+            foreach (var id in sortedIds)
             {
-                return
-                    db.PlaylistPermissions.Include(permission => permission.Playlist)
-                      .Include(permission => permission.GrantedUser)
-                      .Where(permission => permission.OwnerId == userId)
-                      .ToList();
+                pl.Tracks.FirstOrDefault(track => track.SpotifyTrackId == id).Position = i;
+                ++i;
             }
-        }
-
-        public void AddPermission(string ownerId, string grantedUserId, int playlistId, bool contributor)
-        {
-            using (var db = new Db())
-            {
-                db.PlaylistPermissions.Add(new PlaylistPermission
-                    {
-                        OwnerId = ownerId,
-                        GrantedUserId = grantedUserId,
-                        PlaylistId = playlistId,
-                        Contributor = contributor
-                    });
-                db.SaveChanges();
-            }
-        }
-
-        public void RemovePermission(string ownerId, string grantedUserId, int playlistId)
-        {
-            using (var db = new Db())
-            {
-                PlaylistPermission perm =
-                    db.PlaylistPermissions.FirstOrDefault(
-                        permission =>
-                        permission.OwnerId == ownerId && permission.GrantedUserId == grantedUserId &&
-                        permission.PlaylistId == playlistId);
-                if (perm == null) return;
-                db.PlaylistPermissions.Remove(perm);
-                db.SaveChanges();
-            }
-        }
-
-        public IEnumerable<PlaylistPermission> GetPermmitedPlaylists(string user)
-        {
-            using (var db = new Db())
-            {
-                return
-                    db.PlaylistPermissions.Include(permission => permission.Owner)
-                      .Include(permission => permission.Playlist)
-                      .Where(permission => permission.GrantedUserId == user)
-                      .ToList();
-            }
-        }
-
-        public PlaylistPermission GetPermittedPlaylist(string name, int playlistid)
-        {
-            using (var db = new Db())
-            {
-                return db.PlaylistPermissions.Include(permission => permission.Playlist)
-                         .FirstOrDefault(p => p.GrantedUserId == name && p.PlaylistId == playlistid);
-            }
+            _db.SaveChanges();
         }
     }
 }

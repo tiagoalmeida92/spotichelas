@@ -1,5 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using Dto;
 using Services;
+using UI.ViewModels;
 
 namespace UI.Controllers
 {
@@ -17,17 +20,20 @@ namespace UI.Controllers
         //
         // GET: /Search/
 
-        //public ActionResult Index(string searchTerm)
-        //{
-        //    IEnumerable<TrackDto> tracks =  _searchService.Search(searchTerm);
-        //    var playlists = _playlistService.GetAll(User.Identity.Name);
-        //    var viewModel = new SearchResultsViewModel
-        //        {
-        //            Tracks = tracks,
-        //            Playlists = playlists
+        public ActionResult Index(string q, int? page)
+        {
+            var actualPage = page ?? 1;
+            var tracks =  _searchService.Search(q, actualPage);
+            var playlists = _playlistService.GetAll(User.Identity.Name);
+            var viewModel = new SearchResultsViewModel
+                {
+                    Tracks = tracks,
+                    Playlists = playlists,
+                    SearchTerm = q,
+                    Page = actualPage
 
-        //        };
-        //    return View(viewModel);
-        //}
+                };
+            return View(viewModel);
+        }
     }
 }

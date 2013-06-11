@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Persistence.DAO
+namespace Persistence.DO
 {
     public class Album
     {

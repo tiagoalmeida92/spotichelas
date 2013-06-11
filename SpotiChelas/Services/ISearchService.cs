@@ -5,6 +5,6 @@ namespace Services
 {
     public interface ISearchService
     {
-        IEnumerable<TrackDto> Search(string searchTerm);
+        IEnumerable<TrackDto> Search(string searchTerm, int i);
     }
 }

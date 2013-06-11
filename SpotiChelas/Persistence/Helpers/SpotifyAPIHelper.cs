@@ -11,6 +11,7 @@ namespace Persistence.Helpers
         private const string BaseUrl = "http://ws.spotify.com/";
         private const int APIVersion = 1;
 
+        //https://developer.spotify.com/technologies/web-api/
 
         public static string GetLookupUrl(string mediaType, SpotifyAPIResource resource, string resourceId)
         {
@@ -19,10 +20,10 @@ namespace Persistence.Helpers
                                  resourceId);
         }
 
-        public static string GetSearchUrl(string mediaType, SpotifyAPIResource resource, string q)
+        public static string GetSearchUrl(string mediaType, SpotifyAPIResource resource, string q, int page)
         {
-            //http://ws.spotify.com/search/1/album.json?q=foo
-            return String.Format("{0}{1}/{2}/{3}.{4}?q={5}", BaseUrl, Search, APIVersion, resource, mediaType, q);
+            //http://ws.spotify.com/search/1/album.json?q=foo&page=2
+            return String.Format("{0}{1}/{2}/{3}.{4}?q={5}&page={6}", BaseUrl, Search, APIVersion, resource, mediaType, q, page);
         }
     }
 
