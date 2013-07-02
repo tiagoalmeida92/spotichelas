@@ -278,7 +278,7 @@
         // only used by resizable
         hasScroll: function(el, a) {
 
-            //If overflow is hidden, the element might have extra content, but the user wants to hide it
+            //If overflow is hidden, the element might have extra content, but the UserProfile wants to hide it
             if ($(el).css("overflow") === "hidden") {
                 return false;
             }
@@ -2135,7 +2135,7 @@
             // Calculate the attrs that will be change
             var data = trigger.apply(this, [event, dx, dy]), ie6 = $.browser.msie && $.browser.version < 7, csdif = this.sizeDiff;
 
-            // Put this in the mouseDrag handler since the user can start pressing shift while resizing
+            // Put this in the mouseDrag handler since the UserProfile can start pressing shift while resizing
             this._updateVirtualBoundaries(event.shiftKey);
             if (this._aspectRatio || event.shiftKey)
                 data = this._updateRatio(data, event);
@@ -2157,7 +2157,7 @@
 
             this._updateCache(data);
 
-            // calling the user callback at the end
+            // calling the UserProfile callback at the end
             this._trigger('resize', event, this.ui());
 
             return false;
@@ -3923,7 +3923,7 @@
             var delayedTriggers = [], self = this;
 
             // We first have to update the dom position of the actual currentItem
-            // Note: don't do it if the current item is already removed (by a user), or it gets reappended (see #4088)
+            // Note: don't do it if the current item is already removed (by a UserProfile), or it gets reappended (see #4088)
             if (!this._noFinalSort && this.currentItem.parent().length) this.placeholder.before(this.currentItem);
             this._noFinalSort = null;
 
@@ -6288,7 +6288,7 @@ jQuery.effects || (function($, undefined) {
                     // clicking on the scrollbar causes focus to shift to the body
                     // but we can't detect a mouseup or a click immediately afterward
                     // so we have to track the next mousedown and close the menu if
-                    // the user clicks somewhere outside of the autocomplete
+                    // the UserProfile clicks somewhere outside of the autocomplete
                     var menuElement = self.menu.element[0];
                     if (!$(event.target).closest(".ui-menu-item").length) {
                         setTimeout(function() {
@@ -8761,7 +8761,7 @@ jQuery.effects || (function($, undefined) {
                             tbody += '<td class="' +
                                 ((dow + firstDay + 6) % 7 >= 5 ? ' ui-datepicker-week-end' : '') + // highlight weekends
                                 (otherMonth ? ' ui-datepicker-other-month' : '') + // highlight days from other months
-                            ((printDate.getTime() == selectedDate.getTime() && drawMonth == inst.selectedMonth && inst._keyEvent) || // user pressed key
+                            ((printDate.getTime() == selectedDate.getTime() && drawMonth == inst.selectedMonth && inst._keyEvent) || // UserProfile pressed key
                                 (defaultDate.getTime() == printDate.getTime() && defaultDate.getTime() == selectedDate.getTime()) ?
                                 // or defaultDate is current printedDate and defaultDate is selectedDate
                                 ' ' + this._dayOverClass : '') + // highlight selected day
@@ -9687,7 +9687,7 @@ jQuery.effects || (function($, undefined) {
         },
 
         _size: function() {
-            /* If the user has resized the dialog, the .ui-dialog and .ui-dialog-content
+            /* If the UserProfile has resized the dialog, the .ui-dialog and .ui-dialog-content
 		 * divs will both have width and height set, so we need to reset them
 		 */
             var options = this.options,
@@ -9885,9 +9885,9 @@ jQuery.effects || (function($, undefined) {
         },
 
         resize: function() {
-            /* If the dialog is draggable and the user drags it past the
+            /* If the dialog is draggable and the UserProfile drags it past the
 		 * right edge of the window, the document becomes wider so we
-		 * need to stretch the overlay. If the user then drags the
+		 * need to stretch the overlay. If the UserProfile then drags the
 		 * dialog back to the left, the document will become narrower,
 		 * so we need to shrink the overlay to the appropriate size.
 		 * This is handled by shrinking the overlay before setting it
@@ -11365,7 +11365,7 @@ jQuery.effects || (function($, undefined) {
         },
 
         _getIndex: function(index) {
-            // meta-function to give users option to provide a href string instead of a numerical index.
+            // meta-function to give UserProfiles option to provide a href string instead of a numerical index.
             // also sanitizes numerical indexes to valid values.
             if (typeof index == "string") {
                 index = this.anchors.index(this.anchors.filter("[href$='" + index + "']"));
@@ -11593,7 +11593,7 @@ jQuery.effects || (function($, undefined) {
                     self._trigger("load", null, self._ui(self.anchors[index], self.panels[index]));
                     try {
                         // Passing index avoid a race condition when this method is
-                        // called after the user has selected another tab.
+                        // called after the UserProfile has selected another tab.
                         // Pass the anchor that initiated this request allows
                         // loadError to manipulate the tab content panel via $(a.hash)
                         o.ajaxOptions.error(xhr, s, index, a);

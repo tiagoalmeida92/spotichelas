@@ -24,10 +24,13 @@ namespace Services
 
         public IEnumerable<PlaylistDto> GetAll(string userId)
         {
-            var playlists = _db.Playlists.Where(playlist => playlist.UserId == userId);
+            var user =
+                _db.UserProfiles.Include(u => u.Playlists)
+                   .Include(u => u.SharedPlaylistsToMe.Select(s => s.Playlist))
+                   .First(u => u.UserId == userId);
+            var playlists = user.Playlists.Concat(user.SharedPlaylistsToMe.Select(s=>s.Playlist));
             Mapper.CreateMap<Playlist, PlaylistDto>()
-                  .ForMember(dto => dto.TotalTracks,
-                             e => e.MapFrom(playlist => playlist.Tracks.Count()))
+                  .ForMember(dto => dto.TotalTracks, e => e.MapFrom(playlist => playlist.Tracks.Count))
                   .ForMember(dto => dto.Tracks, e => e.Ignore());
             return Mapper.Map<IEnumerable<Playlist>, IEnumerable<PlaylistDto>>(playlists);
         }
@@ -36,7 +39,7 @@ namespace Services
         {
             Mapper.CreateMap<PlaylistDto, Playlist>();
             var playlist = Mapper.Map<PlaylistDto, Playlist>(pl);
-            _db.Playlists.Add(playlist);
+            _db.Entry(playlist).State = EntityState.Added;
             _db.SaveChanges();
         }
 
@@ -44,8 +47,9 @@ namespace Services
         {
             //mashup happens here
 
-            var playlist = _db.Playlists.Include(x => x.Tracks).First(p => p.Id == id && p.UserId == user);
-            Mapper.CreateMap<Playlist, PlaylistDto>().ForMember(dto => dto.Tracks, e => e.Ignore());
+            var playlist = _db.Playlists.Find(id);
+            Mapper.CreateMap<Playlist, PlaylistDto>()
+                  .ForMember(dto => dto.Tracks, e => e.Ignore());
             var playlistDto = Mapper.Map<Playlist, PlaylistDto>(playlist);
             var tracks =
                 _repo.GetTracks(playlist.Tracks
@@ -58,42 +62,79 @@ namespace Services
 
         public void AddTrack(string username, int playlistId, string trackId)
         {
-            var pl = _db.Playlists.First(p => p.Id == playlistId && p.UserId == username);
+            var pl = _db.Playlists.Include(p => p.Tracks).SingleOrDefault(p => p.Id == playlistId);
+            var pos = 0;
+            if (pl.Tracks.Any())
+                pos = pl.Tracks.Max(t => t.Position) + 1;
             pl.Tracks.Add(new PlaylistTrack
                 {
                     SpotifyTrackId = trackId,
-                    Position = pl.Tracks.Max(track => track.Position) + 1
+                    Position = pos
                 });
             _db.SaveChanges();
         }
 
-        public void DeleteRows(int id, IEnumerable<string> sortedIds)
-        {
-            //http://stackoverflow.com/questions/337704/parameterizing-an-sql-in-clause/337817#337817
-            // DELETE FROM PlaylistTracks WHERE Id NOT IN (
-            //select * from playlisttracks where playlistId = 2 
-            //AND SpotifyTrackId not in ('2ZDpTOEN1aWhSZACq5OQDt','0mWiuXuLAJ3Brin3Or2x6v','13F75FZlHVN6zOjpBbfRmP','1sn6iOK93jnp0Hn5BnNOXy','2kN05N1AQQplsgFweFAqYb,4sWk6tbgVPkA8OAk0utIz3')
-            var transform = sortedIds.Select(s => "'" + s + "'");
-            string inClause = string.Join(",", transform);
-            string sql =
-                string.Format("DELETE FROM PlaylistTracks WHERE playlistId = {0} AND SpotifyTrackId NOT IN ({1})", id,
-                              inClause);
-            _db.Database.ExecuteSqlCommand(sql);
-        }
-
         public void EditTracks(PlaylistDto playlist)
         {
-            var pl = _db.Playlists.Include(playlist1 => playlist1.Tracks)
-                        .First(p => p.Id == playlist.Id && p.UserId == playlist.UserId);
-            var sortedIds = playlist.Tracks.Select(dto => dto.Id);
-            DeleteRows(playlist.Id, sortedIds);
+            var pl = _db.Playlists.Include(p => p.Tracks).First(p => p.Id == playlist.Id);
+            var sortedIds = playlist.Tracks == null
+                                ? new List<string>()
+                                : playlist.Tracks.Select(dto => dto.Id).ToList();
             var i = 0;
-            foreach (var id in sortedIds)
+            foreach (var track in pl.Tracks.ToList())
             {
-                pl.Tracks.FirstOrDefault(track => track.SpotifyTrackId == id).Position = i;
+                if (i < sortedIds.Count)
+                {
+                    track.SpotifyTrackId = sortedIds[i];
+                    _db.Entry(track).State = EntityState.Modified;
+                }
+                else
+                {
+                    _db.Entry(track).State = EntityState.Deleted;
+                }
                 ++i;
             }
             _db.SaveChanges();
+        }
+
+        public void Delete(string userId, int playlistId)
+        {
+            var pl = new Playlist {UserId = userId, Id = playlistId};
+            _db.Entry(pl).State = EntityState.Deleted;
+            _db.SaveChanges();
+        }
+
+        public IEnumerable<SharedPlaylistDto> GetSharedByMe(string name)
+        {
+            var playlists = _db.UserProfiles.
+                                Include(u => u.SharedPlaylistsByMe)
+                               .Include(u => u.SharedPlaylistsByMe.Select(e => e.Playlist))
+                               .First(u => u.UserId == name).SharedPlaylistsByMe;
+            Mapper.CreateMap<SharedPlaylist, SharedPlaylistDto>()
+                  .ForMember(e => e.PlaylistName, e => e.MapFrom(p => p.Playlist.Name));
+            return Mapper.Map<IEnumerable<SharedPlaylist>, IEnumerable<SharedPlaylistDto>>(playlists);
+        }
+
+        public bool AddSharedPlaylist(SharedPlaylistDto sharedPlaylistDto)
+        {
+            Mapper.CreateMap<SharedPlaylistDto, SharedPlaylist>();
+            var sharedPlaylist = Mapper.Map<SharedPlaylistDto, SharedPlaylist>(sharedPlaylistDto);
+            var owner = _db.UserProfiles.Find(sharedPlaylist.OwnerId);
+            var exists =
+                owner.SharedPlaylistsByMe.FirstOrDefault(
+                    e => e.PlaylistId == sharedPlaylist.PlaylistId && e.UserId == sharedPlaylist.UserId);
+            if (exists != null)
+            {
+                _db.Entry(exists).CurrentValues.SetValues(sharedPlaylist);
+                _db.SaveChanges();
+                return false;
+            }
+            else
+            {
+                _db.Entry(sharedPlaylist).State = EntityState.Added;
+                _db.SaveChanges();
+                return true;
+            }
         }
     }
 }

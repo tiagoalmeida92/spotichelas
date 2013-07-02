@@ -11,3 +11,5 @@ C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistenc
 C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Debug\Persistence.dll
 C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Debug\Persistence.pdb
 C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Debug\Persistence.csprojResolveAssemblyReference.cache
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Debug\Persistence.Migrations.Initial.resources
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Debug\Persistence.csproj.GenerateResource.Cache

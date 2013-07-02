@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="IPlaylistService.cs" />
     <Compile Include="ISearchService.cs" />
+    <Compile Include="IUserService.cs" />
     <Compile Include="PlaylistService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchService.cs" />

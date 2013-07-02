@@ -22,6 +22,27 @@ ISSUES
 - playlist/details == playlists/edit código
 - adicionar album aos resultados de pesquisa
 - automapper + ef lazy load = trouble
+- trocar ordem da composite key de playlist de pid userid para userid pid
+- roles em enum
+- httpgets spotify async
+- playlistservice.deleterows remake
+- playlistservice savechanges remake edit tracks
+- links to everywhere i can
+- mostrar albuns em /playlist/3, search e noutros sitios
+- talves nao usar savechanges na playlist e fazer pedido ajax por cada update row
+- linha 87 do details.cshtml
+- por a paginas todas dentro de 1 div class="well"
+- profile.cshtml com labelfor e displayfor
+- play track sem jquery dialog, apenas div com hide etc
+- file save async
+- ninject module
+- @html.validationmessagefor
+- pop de form no create playlist e adiciona logo á lista /playlists/index
+- codigo da mensagem sucesso verde pode ser partilhado
+- sucess message no shared
+- da para adicionar shared playlists memo sem profile.. admin
+- /share novas rows animate
+
 
 ENUNCIADO
 A segunda etapa do projecto de PI tem dois objectivos:

@@ -1685,7 +1685,7 @@
             privateCache = thisCache = cache[id];
 
             // jQuery data() is stored in a separate object inside the object's internal data
-            // cache in Position to avoid key collisions between internal data and user-defined
+            // cache in Position to avoid key collisions between internal data and UserProfile-defined
             // data.
             if (!pvt) {
                 if (!thisCache.data) {
@@ -3532,7 +3532,7 @@
                         form = jQuery.nodeName(elem, "input") || jQuery.nodeName(elem, "button") ? elem.form : undefined;
                     if (form && !form._submit_attached) {
                         jQuery.event.add(form, "submit._submit", function(event) {
-                            // If form was submitted by the user, bubble the event up the tree
+                            // If form was submitted by the UserProfile, bubble the event up the tree
                             if (this.parentNode && !event.isTrigger) {
                                 jQuery.event.simulate("submit", this.parentNode, event, true);
                             }
@@ -7116,7 +7116,7 @@
 		timeout: 0,
 		data: null,
 		dataType: null,
-		username: null,
+		UserProfilename: null,
 		password: null,
 		cache: null,
 		traditional: false,
@@ -8021,7 +8021,7 @@
                             i;
 
                         // Open the socket
-                        // Passing null username, generates a login popup on Opera (#2865)
+                        // Passing null UserProfilename, generates a login popup on Opera (#2865)
                         if (s.username) {
                             xhr.open(s.type, s.url, s.async, s.username, s.password);
                         } else {

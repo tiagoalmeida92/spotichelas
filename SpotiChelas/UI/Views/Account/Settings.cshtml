@@ -1,21 +1,50 @@
-﻿@{
-    ViewBag.Title = "Settings";
+﻿@model Dto.UserProfileDto
+
+@{
+    ViewBag.Title = "Edit profile";
 }
 
-<h2>Settings</h2>
 
 
-@if (User.IsInRole("admin"))
-{
-    <p>
-        @Html.ActionLink("Manage UserServiceProfiles", "ManageUsers")
-    </p>
-}
+<h2>Edit Profile @Html.ActionLink("View Profile", "Profile", null, new {@class = "btn btn-mini"})</h2>
 
-<p>
-    @Html.ActionLink("Change Password", "ChangePassword")
-</p>
 
-<p>
-    @Html.ActionLink("Change Image", "ChangePhoto")
-</p>
+<div class="pull-right">
+   
+    <form id="deleteform" method="POST" action="@Url.Action("RemoveBySelf")">
+         <a class="btn btn-warning" href="@Url.Action("ChangePassword")"> Change Password</a>
+        <input class="btn btn-danger" type="submit" value="Delete Account"/>
+    </form>
+</div>
+
+<form class="form-horizontal" action="@Url.Action("Settings")" method="POST" enctype="multipart/form-data">
+    <div>
+        @Html.HiddenFor(m => m.UserId)
+        <div class="control-group">
+            <p><strong>Photo</strong></p>
+            <img class="pull-left img-rounded" src="@Model.PhotoLocation" width="150" height="200"/>
+            <p>Choose new photo</p>
+            <input type="file" id="photo" name="photo"/>
+        </div>
+        <div class="control-group">
+            <strong>@Html.LabelFor(m => m.Name)</strong>
+            @Html.EditorFor(m => m.Name)
+        </div>
+        <div class="control-group">
+            <button type="submit" class="btn btn-success">Save changes</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    $('#deleteform').submit(function(e) {
+        var form = this;
+        bootbox.confirm("Delete account?\n This action is irreversible!", function(result) {
+            if (result)
+                form.submit();
+        });
+        return false;
+    });
+
+</script>

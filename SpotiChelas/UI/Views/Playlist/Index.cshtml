@@ -7,6 +7,7 @@
 
 <div class="btn-toolbar">
     <a class = "btn btn-primary" href="@Url.Action("Create")">Create New</a>
+    <a class="btn" href="@Url.Action("Share")">Share Playlists</a>
 </div>
 <div class="well">
     <table class="table">
@@ -31,7 +32,7 @@
                 
                         @Html.ActionLink(
                             item.Name,
-                            "Details",
+                            "Edit",
                             new {playlistId = item.Id}
                              )
                 

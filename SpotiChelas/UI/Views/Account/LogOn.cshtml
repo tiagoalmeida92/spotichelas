@@ -14,7 +14,7 @@
 
 @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 
-@using (Html.BeginForm((object) new {@class = "form-horizontal"}))
+@using (Html.BeginForm())
 {
     <div class="control-group">
         @Html.LabelFor(m => m.UserName)
@@ -32,45 +32,10 @@
     </div>
     <div class="control-group">
         <div class="controls">
-            <label class="checkbox"><input type="checkbox" /> Remember me</label> <button type="submit" class="btn">Sign in</button>
+            <label class="checkbox"><input type="checkbox" /> Remember me</label> <button type="submit" class="btn btn-primary">Sign in</button>
         </div>
     </div>
 
     
 }
 
-
-@*
-@using (Html.BeginForm((object) new {@class = "form-horizontal"}) )
-{
-    <div class="control-group">
-        <fieldset>
-            <legend>Account Information</legend>
-
-            <div>
-                @Html.LabelFor(m => m.UserName)
-            </div>
-            <div>
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </div>
-
-            <div>
-                @Html.LabelFor(m => m.Password)
-            </div>
-            <div>
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </div>
-
-            <div class="control-group">
-                <div class="controls">
-                    @Html.CheckBoxFor(m => m.RememberMe, new {@class = "checkbox"})
-                    @Html.LabelFor(m => m.RememberMe)
-                    <input class="btn" type="submit" value="Log On" />
-                 </div>
-            </div>
-        </fieldset>
-    </div>
-}
-*@

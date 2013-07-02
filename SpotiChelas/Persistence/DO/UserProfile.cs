@@ -10,7 +10,7 @@ namespace Persistence.DO
         public string PhotoLocation { get; set; }
 
         public virtual ICollection<Playlist> Playlists { get; set; }
-        public virtual ICollection<PlaylistPermission> PlaylistsGivenPermission { get; set; }
-        public virtual ICollection<PlaylistPermission> PlaylistsTakenPermission { get; set; }
+        public virtual ICollection<SharedPlaylist> SharedPlaylistsByMe { get; set; } 
+        public virtual ICollection<SharedPlaylist> SharedPlaylistsToMe { get; set; } 
     }
 }

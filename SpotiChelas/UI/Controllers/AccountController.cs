@@ -1,13 +1,26 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Dto;
+using Services;
 using UI.Models;
+using UI.Utils;
 
 namespace UI.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IUserService _userService;
+
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         //
         // GET: /Account/LogOn
 
@@ -39,8 +52,11 @@ namespace UI.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                    ModelState.AddModelError("", "Your email isn't verified.");
+                    var user = Membership.GetUser(model.UserName);
+                    if (user != null && !user.IsApproved)
+                        ModelState.AddModelError("", "Your email confirmation is pending, please check your inbox.");
+                    else
+                        ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 }
             }
 
@@ -54,7 +70,6 @@ namespace UI.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -69,59 +84,35 @@ namespace UI.Controllers
         //
         // POST: /Account/Register
 
-        //[HttpPost]
-        //public ActionResult Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Attempt to register the user
-        //        MembershipCreateStatus createStatus;
-        //        //user create isApproved = false
-        //        MembershipUser user = Membership.CreateUser(model.UserName, model.Password, model.Email, null, null,
-        //                                                    false, null,
-        //                                                    out createStatus);
+        [HttpPost]
+        public ActionResult Register(RegisterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Attempt to register the user
+                MembershipCreateStatus createStatus;
+                var user = Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, false, null,
+                                                 out createStatus);
 
-        //        if (createStatus == MembershipCreateStatus.Success)
-        //        {
-        //            //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-        //            Roles.AddUserToRole(model.UserName, "user");
-        //            //create profile
-        //            var userProfiles = new UserService();
-        //            userProfiles.InsertProfile(new Domain.Entities.User
-        //                {
-        //                    UserId = user.UserName,
-        //                    Name = user.UserName
-        //                });
-        //            string link = Request.Url.Scheme + Uri.SchemeDelimiter + Request.Url.Host +
-        //                          (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) +
-        //                          "/Account/Verify/?" + user.ProviderUserKey;
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+                    Roles.AddUserToRole(model.UserName, "user");
+                    _userService.CreateProfile(model.UserName);
+                    string link = Request.Url.Scheme + Uri.SchemeDelimiter + Request.Url.Host +
+                                  (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) +
+                                  Url.Action("Verify") + "/" + user.ProviderUserKey;
+                    EmailUtil.Send(user.Email, user.UserName, link);
+                    return RedirectToAction("AccountCreated");
+                }
+                else
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                }
+            }
 
-        //            //Send email
-        //            var email = new MailMessage("noreply.spotichelas@gmail.com", user.Email)
-        //                {
-        //                    Subject = "Verification Email",
-        //                    Body = "Welcome to Spotichelas," + user.UserName +
-        //                           "\n Activation link:" + link
-        //                };
-        //            var smtp = new SmtpClient("smtp.gmail.com")
-        //                {
-        //                    UseDefaultCredentials = false,
-        //                    EnableSsl = true,
-        //                    Credentials = new NetworkCredential("noreply.spotichelas@gmail.com", "isel2013")
-        //                };
-        //            smtp.Send(email);
-
-        //            return RedirectToAction("AccountCreated");
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", ErrorCodeToString(createStatus));
-        //        }
-        //    }
-
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
 
         public ActionResult AccountCreated()
         {
@@ -131,35 +122,47 @@ namespace UI.Controllers
         [HttpGet]
         public ActionResult Verify(string id)
         {
-            var guid = new Guid(id);
-            MembershipUser user = Membership.GetUser(guid);
-            if (user != null && !user.IsApproved)
+            Guid guid;
+            if (Guid.TryParse(id, out guid))
             {
-                user.IsApproved = true;
-                Membership.UpdateUser(user);
-                FormsAuthentication.SetAuthCookie(user.UserName, false);
+                MembershipUser user = Membership.GetUser(guid);
+                if (!user.IsApproved)
+                {
+                    user.IsApproved = true;
+                    Membership.UpdateUser(user);
+                    FormsAuthentication.SetAuthCookie(user.UserName, false);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    FormsAuthentication.SignOut();
+                    return RedirectToAction("LogOn");
+                }
             }
-            return RedirectToAction("Index", "Home");
+            FormsAuthentication.SignOut();
+            return View("Error");
         }
 
-        ////
-        //// GET: /Account/Profile/id or no id
-        //[Authorize]
-        //public ActionResult Profile(string username  = null)
-        //{
-        //    MembershipUser user = Membership.GetUser(username ?? User.Identity.Name);
-        //    var userService = new UserService();
-        //    var userProfile = userService.GetUser(user.UserName);
-        //    var viewModel = new UserProfileViewModel
-        //        {
-        //            LoginName = user.UserName,
-        //            Email = user.Email,
-        //            Name = userProfile.Name,
-        //            PhotoLocation = userProfile.PhotoLocation
-        //        };
-
-        //    return View(viewModel);
-        //}
+        [Authorize]
+        public ActionResult Profile(String id)
+        {
+            var user = Membership.GetUser(id ?? User.Identity.Name);
+            if (user == null)
+            {
+                return new HttpNotFoundResult("Non existant user.");
+            }
+            var profile = _userService.GetById(user.UserName);
+            profile.Email = user.Email;
+            if (profile.PhotoLocation == null)
+            {
+                profile.PhotoLocation = Url.Content("~/Resources/Photos/user-icon1.jpg");
+            }
+            else
+            {
+                profile.PhotoLocation = Url.Content(Path.Combine("~/Resources/Photos", profile.PhotoLocation));
+            }
+            return View(profile);
+        }
 
         //
         // GET: /Account/Settings
@@ -167,51 +170,39 @@ namespace UI.Controllers
         [Authorize]
         public ActionResult Settings()
         {
-            return View();
+            var profile = _userService.GetById(User.Identity.Name);
+            profile.Email = Membership.GetUser().Email;
+            if (profile.PhotoLocation == null)
+            {
+                profile.PhotoLocation = Url.Content("~/Resources/Photos/user-icon1.jpg");
+            }
+            else
+            {
+                profile.PhotoLocation = Url.Content(Path.Combine("~/Resources/Photos", profile.PhotoLocation));
+            }
+            return View(profile);
         }
 
+        [HttpPost]
         [Authorize]
-        public ActionResult ChangePhoto()
+        public ActionResult Settings(UserProfileDto profile, HttpPostedFileBase photo)
         {
-            return View();
+            if (photo != null)
+            {
+                var randomFileName = Path.ChangeExtension(Path.GetRandomFileName(), Path.GetExtension(photo.FileName));
+                profile.PhotoLocation = randomFileName;
+                var path = Path.Combine(Server.MapPath("~/Resources/Photos"), randomFileName);
+                photo.SaveAs(path);
+            }
+            _userService.Update(profile);
+            return RedirectToAction("Profile");
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //public ActionResult ChangePhoto(string newUrl)
-        //{
-        //    var userService = new UserService();
-        //    Domain.Entities.User user = userService.GetUser(User.Identity.Name);
-        //    user.PhotoLocation = newUrl;
-        //    userService.UpdateUser(user);
-        //    return RedirectToAction("Profile");
-        //}
-
-        //
-        // GET: /Account/Settings
 
         [Authorize(Roles = "admin")]
-        public ActionResult ManageUsers()
+        public ActionResult AdminArea()
         {
             return View(Membership.GetAllUsers().Cast<MembershipUser>());
-        }
-
-
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public ActionResult AddRole(string username, string newRole)
-        {
-            if (!Roles.IsUserInRole(username, newRole))
-                Roles.AddUserToRole(username, newRole);
-            return RedirectToAction("ManageUsers");
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "admin")]
-        public ActionResult DeleteUser(string username)
-        {
-            Membership.DeleteUser(username);
-            return RedirectToAction("ManageUsers");
         }
 
 
@@ -277,7 +268,7 @@ namespace UI.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "UserService name already exists. Please enter a different user name.";
+                    return "User name already exists. Please enter a different user name.";
 
                 case MembershipCreateStatus.DuplicateEmail:
                     return
@@ -313,5 +304,35 @@ namespace UI.Controllers
         }
 
         #endregion
+
+        [HttpPost]
+
+        public ActionResult RemoveBySelf()
+        {
+            var user = User.Identity.Name;
+            _userService.Delete(user);
+            Membership.DeleteUser(user);
+            return RedirectToAction("Index","Home");
+        }
+
+        //AJAX
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult Remove(string id)
+        {
+            _userService.Delete(id);
+            Membership.DeleteUser(id);
+            return new EmptyResult();
+        }
+
+        //AJAX
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult EditRole(string id, string role)
+        {
+            if(!Roles.IsUserInRole(id, role))
+                 Roles.AddUserToRole(id, role);
+            return new EmptyResult();
+        }
     }
 }

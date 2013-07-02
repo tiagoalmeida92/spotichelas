@@ -1,0 +1,59 @@
+﻿@using Dto
+@model UI.ViewModels.SharePlaylistsViewModel
+
+@{
+    ViewBag.Title = "Shared Playlists";
+}
+
+<h3>Share your playlists with others</h3>
+
+<div>
+    <form id="shareForm" class="form-inline" action="@Url.Action("SharePlaylist")" method="POST">
+        <label>Playlist</label>
+        @Html.DropDownListFor(m => new SharedPlaylistDto().PlaylistId, new SelectList(Model.Playlists, "Id", "Name"))
+        <label>User</label>
+        <input type="text" name="UserId"/>
+        <label class="checkbox">
+            <input id="Contributor" name="Contributor" type="checkbox" value="true" />
+            <input name="Contributor" type="hidden" value="false" />
+            Contributor
+        </label>
+        <input type="hidden" name="OwnerId" value="@User.Identity.Name"/>
+        <button class="btn btn-success" type="submit"><i class="icon-ok icon-white"></i> Share!</button>
+    </form>
+</div>
+
+<h3>Current shared playlists</h3>
+
+<div class="well">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Playlist Name</td>
+                <td>User</td>
+                <td>Contributor</td>
+            </tr>
+        </thead>
+        <tbody id="shareplayliststable">
+            @foreach (var sharedPlaylist in Model.SharedPlaylists)
+            {
+                @Html.DisplayFor(m=> sharedPlaylist)
+            }
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    $('#shareForm').submit(function(e) {
+        var formData = $(this).serialize() + '&PlaylistName=' + $('#PlaylistId option:selected').text();
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: formData,
+            success: function(result) {
+                $('#shareplayliststable tr:last').after(result);
+            }
+        });
+        return false;
+    });
+</script>

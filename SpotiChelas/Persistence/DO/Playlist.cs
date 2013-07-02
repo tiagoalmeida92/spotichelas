@@ -10,8 +10,8 @@ namespace Persistence.DO
         public String Name { get; set; }
         public String Description { get; set; }
 
-        public virtual UserProfile User { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
         public virtual ICollection<PlaylistTrack> Tracks { get; set; }
-        public virtual ICollection<PlaylistPermission> Permissions { get; set; }
+        public virtual ICollection<SharedPlaylist> SharedToUsers { get; set; }
     }
 }

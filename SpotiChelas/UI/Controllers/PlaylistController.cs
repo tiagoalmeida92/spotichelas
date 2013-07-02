@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Web.Mvc;
 using Dto;
 using Services;
+using UI.ViewModels;
 
 namespace UI.Controllers
 {
@@ -52,7 +53,7 @@ namespace UI.Controllers
 
 
         [HttpGet]
-        public ActionResult Details(int playlistId)
+        public ActionResult Edit(int playlistId)
         {
             var playlistDto = _playlistService.GetById(User.Identity.Name, playlistId);
             return View(playlistDto);
@@ -74,6 +75,40 @@ namespace UI.Controllers
         {
             _playlistService.EditTracks(playlist);
             return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int playlistId)
+        {
+
+            _playlistService.Delete(User.Identity.Name, playlistId);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Share()
+        {
+            var user = User.Identity.Name;
+            var sharedPlaylists = _playlistService.GetSharedByMe(user);
+            var allPlaylists = _playlistService.GetAll(user);
+            return View(new SharePlaylistsViewModel
+                {
+                    Playlists = allPlaylists,
+                    SharedPlaylists = sharedPlaylists
+                });
+        }
+
+        //AJAX
+        [HttpPost]
+        public ActionResult SharePlaylist(SharedPlaylistDto sharedPlaylist)
+        {
+            if (_playlistService.AddSharedPlaylist(sharedPlaylist))
+            {
+                return PartialView("DisplayTemplates/SharedPlaylistDto", sharedPlaylist);
+            }
+            else
+            {
+                return new EmptyResult();
+            }
         }
     }
 }

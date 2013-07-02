@@ -2,12 +2,12 @@
     @if (Request.IsAuthenticated)
     {
     
-        <li>@Html.ActionLink(User.Identity.Name, "Profile", "Account")</li>
+        <li>@Html.ActionLink(User.Identity.Name, "Profile", "Account", new {id = ""}, null)</li>
         <li>@Html.ActionLink("Log Off", "LogOff", "Account")</li>
     }
     else
     {
         
-        <li>@Html.ActionLink("Register","Register","Account")</li>
         <li>@Html.ActionLink("Log On", "LogOn", "Account")</li>
+        <li>@Html.ActionLink("Register","Register","Account")</li>        
     }

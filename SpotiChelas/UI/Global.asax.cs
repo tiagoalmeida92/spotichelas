@@ -1,5 +1,7 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,13 +24,15 @@ namespace UI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+
             //playlists route /playlist/3/edit
             routes.MapRoute("PlaylistsRouteIds",
-                            "Playlist/{playlistId}/{action}",
+                            "Playlist/{action}/{playlistId}",
                             new {controller = "Playlist"}
                 );
 
-            //playlists route /playlist/index
+             //playlists route /playlist/index
             routes.MapRoute("PlaylistsRoute",
                             "Playlist/{action}",
                             new {controller = "Playlist", action = "Index"}
@@ -57,7 +61,6 @@ namespace UI
 
         private static void RegisterRoles()
         {
-            
             if (!Roles.RoleExists("admin"))
                 Roles.CreateRole("admin");
             if (!Roles.RoleExists("user"))
@@ -67,5 +70,6 @@ namespace UI
             if (!Roles.GetRolesForUser("administrador").Contains("admin"))
                 Roles.AddUserToRole("administrador", "admin");
         }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿@model UI.ViewModels.UserProfileViewModel
+﻿@model Dto.UserProfileDto
 
 @{
     ViewBag.Title = Model.Name;
@@ -7,17 +7,21 @@
 <h2>@Model.Name</h2>
 
 
-<p>Login: @Model.LoginName</p>
-<p>Email: @Model.Email</p>
-
-
-@{
-    string url = Model.PhotoLocation ?? Url.Content("~/Content/themes/base/images/user-icon1.jpg");
-}
-<img src= "@url" width="150" height="200"/>
-
-
-@using (Html.BeginForm("Settings", "Account", FormMethod.Get))
+@if (Model.UserId == User.Identity.Name)
 {
-    <input type="submit" value="Settings"/>
+    <p>
+        <a class="btn btn-small" href="@Url.Action("Settings")"><i class="icon-pencil"></i> Edit Profile</a>
+        @if (User.IsInRole("admin"))
+        {
+            <a class="btn btn-small" href="@Url.Action("AdminArea")">Admin Area</a>
+        }
+    </p>
 }
+
+
+<div class="clearfix">
+    <img class="pull-left img-rounded" src="@Model.PhotoLocation" width="150" height="200"/>
+    <p><strong>Nickname: </strong>@Model.UserId</p>
+    <p><strong>Playlists: </strong>@Model.TotalPlaylists</p>
+    <p><strong>Email: </strong>@Model.Email</p>
+</div>

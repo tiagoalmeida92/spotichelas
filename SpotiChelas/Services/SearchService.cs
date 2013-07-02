@@ -20,7 +20,7 @@ namespace Services
         {
             var tracks = _repo.Search(searchTerm, page);
             Mapper.CreateMap<Track, TrackDto>();
-            return Mapper.Map<IEnumerable<Track>, List<TrackDto>>(tracks);
+            return Mapper.Map<IEnumerable<Track>, IEnumerable<TrackDto>>(tracks);
         }
     }
 }

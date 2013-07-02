@@ -15,10 +15,8 @@
         <li>@Html.ActionLink("«", "Index", new {q = @Model.SearchTerm, page = @Model.Page <= 1 ? 1 : @Model.Page - 1})</li>
         @for (var i = @Model.Page - (pages/2); i <= @Model.Page + (pages/2) || i <= pages; ++i)
         {
-            if (i < 1)
-            {
-                i = 1;
-            }
+            if (i < 1){ i = 1;}
+            
             <li>@Html.ActionLink(i.ToString(), "Index", new {q = @Model.SearchTerm, page = i})</li>
         }
         <li>@Html.ActionLink("»", "Index", new {q = @Model.SearchTerm, page = @Model.Page + 1})</li>
@@ -27,7 +25,7 @@
 
 
 <div class="well-small">
-    <table class="table table-condensed table-hover">
+    <table class="table table-condensed table-striped">
         <thead>
             <tr>
                 <th>
@@ -66,8 +64,9 @@
                     @if (authenticated)
                     {
                         <td data-trackid="@track.Id">
+                            <a class="icon-play spotify-play" href="#"></a>
                             <div class="btn-group">
-                                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                                <a class="btn btn-mini btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
@@ -90,12 +89,21 @@
     
 </div>
 
+<div id="dialog"></div>
+
 <script type="text/javascript">
-    $(".dropdown-playlist").click(function(e) {
-        var playlistId = $(this).data("playlistid");
-        var trackId = $(this).closest("td").data("trackid");
-        $.post("@Url.Action("AddTrack", "Playlist")", { "playlistId": playlistId, "trackId": trackId });
-        $(this).remove();
-        e.preventDefault();
+    
+    $(function () {
+        initDialog();
+        $(".dropdown-playlist").click(function (e) {
+            var playlistId = $(this).data("playlistid");
+            var trackId = $(this).closest("td").data("trackid");
+            $.post("@Url.Action("AddTrack", "Playlist")", { "playlistId": playlistId, "trackId": trackId });
+            e.preventDefault();
+        });
+
+        
+
     });
+
 </script>

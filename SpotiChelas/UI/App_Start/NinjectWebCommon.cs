@@ -58,6 +58,7 @@ namespace UI.App_Start
             kernel.Bind<ITrackRepository>().To<TrackWebRepository>();
             kernel.Bind<IPlaylistService>().To<PlaylistService>();
             kernel.Bind<ISearchService>().To<SearchService>();
+            kernel.Bind<IUserService>().To<UserService>();
         }
     }
 }

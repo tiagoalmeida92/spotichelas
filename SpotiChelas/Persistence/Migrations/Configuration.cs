@@ -1,17 +1,18 @@
-using System.Data.Entity.Migrations;
-using Persistence.Repositories;
-
 namespace Persistence.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<Db>
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Persistence.Repositories.Db>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(Db context)
+        protected override void Seed(Persistence.Repositories.Db context)
         {
             //  This method will be called after migrating to the latest version.
 
