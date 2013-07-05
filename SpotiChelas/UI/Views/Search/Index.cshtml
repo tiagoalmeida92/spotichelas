@@ -15,8 +15,11 @@
         <li>@Html.ActionLink("«", "Index", new {q = @Model.SearchTerm, page = @Model.Page <= 1 ? 1 : @Model.Page - 1})</li>
         @for (var i = @Model.Page - (pages/2); i <= @Model.Page + (pages/2) || i <= pages; ++i)
         {
-            if (i < 1){ i = 1;}
-            
+            if (i < 1)
+            {
+                i = 1;
+            }
+
             <li>@Html.ActionLink(i.ToString(), "Index", new {q = @Model.SearchTerm, page = i})</li>
         }
         <li>@Html.ActionLink("»", "Index", new {q = @Model.SearchTerm, page = @Model.Page + 1})</li>
@@ -40,7 +43,6 @@
                 @if (authenticated)
                 {
                     <th>
-                        Add to playlist
                     </th>
                 }
             </tr>
@@ -62,27 +64,37 @@
                     </td>
                     
                     
-                        <td data-trackid="@track.Id">
-                            <a class="icon-play spotify-play" href="#"></a>
-                            @if (authenticated)
-                            {
-                                <div class="btn-group">
-                                    <a class="btn btn-mini btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @foreach (var p in Model.Playlists)
-                                        {
-                                            <li>
-                                                <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.Id"  href="#">
-                                                    @p.Name
-                                                </a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            }
-                        </td>
+                    <td data-trackid="@track.Id">
+                        <a class="icon-play spotify-play" href="#"></a>
+                        @if (authenticated)
+                        {
+                            <div class="btn-group">
+                                <a class="btn btn-mini btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @foreach (var p in Model.Playlists)
+                                    {
+                                        <li>
+                                            <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.Id"  href="#">
+                                                @p.Name
+                                            </a>
+                                        </li>
+                                    }
+                                    @foreach (var p in Model.Shared)
+                                    {
+                             
+                                             <li>
+                                                 <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.PlaylistId"  href="#">
+                                                     @p.Playlist.Name
+                                                 </a>
+                                             </li>
+                                           
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </td>
                     
                 </tr>
             }
@@ -94,17 +106,16 @@
 <div id="dialog"></div>
 
 <script type="text/javascript">
-    
-    $(function () {
+
+    $(function() {
         initDialog();
-        $(".dropdown-playlist").click(function (e) {
+        $(".dropdown-playlist").click(function(e) {
             var playlistId = $(this).data("playlistid");
             var trackId = $(this).closest("td").data("trackid");
             $.post("@Url.Action("AddTrack", "Playlist")", { "playlistId": playlistId, "trackId": trackId });
             e.preventDefault();
         });
 
-        
 
     });
 

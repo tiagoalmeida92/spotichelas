@@ -64,9 +64,10 @@
                         @Html.DisplayFor(model => track.Duration)
                     </td>
                     <td>
+                        
+                        <a class="icon-play spotify-play" href="#"></a>
                         @if (Model.Contributor)
                         {
-                            <a class="icon-play spotify-play" href="#"></a>
                             <a class="icon-remove removetrack" href="#"></a>
                         }
                     </td>
@@ -84,10 +85,10 @@
         var s = $('#sortable');
         s.sortable();
         s.disableSelection();
-	
-	@if (Model.Contributor)
-    	{
-        <text>
+
+        @if (Model.Contributor)
+        {
+            <text>
             $('#savechanges').click(function(e) {
                 var sortedIds = s.sortable("toArray",{attribute: 'data-trackid'});
                 $('#ntracks').text(sortedIds.length + ' Tracks');
@@ -127,9 +128,8 @@
                 return false;
             });
         </text>
-    };
+        };
 
     });
 
-    
 </script>

@@ -7,6 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using AutoMapper;
+using Dto;
+using Persistence.DO;
 
 namespace UI
 {
@@ -50,10 +53,7 @@ namespace UI
         {
             AreaRegistration.RegisterAllAreas();
 
-            // Use LocalDB for Entity Framework by default
-            //Database.DefaultConnectionFactory =
-            //    new SqlConnectionFactory(
-            //        @"Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
+            RegisterAutoMapperMappings();
             RegisterRoles();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
@@ -69,6 +69,30 @@ namespace UI
                 Membership.CreateUser("administrador", "123456");
             if (!Roles.GetRolesForUser("administrador").Contains("admin"))
                 Roles.AddUserToRole("administrador", "admin");
+        }
+
+        private static void RegisterAutoMapperMappings()
+        {
+            //UserProfiles
+            Mapper.CreateMap<UserProfileDto, UserProfile>();
+            Mapper.CreateMap<UserProfile, UserProfileDto>()
+                  .ForMember(dto => dto.TotalPlaylists, e => e.MapFrom(u => u.Playlists.Count))
+                  .ForMember(dto =>dto.Email, e=>e.Ignore());
+            
+            //Playlist
+            Mapper.CreateMap<PlaylistDto,Playlist>();
+            Mapper.CreateMap<Playlist, PlaylistDto>()
+                .ForMember(dto => dto.TotalTracks, e => e.MapFrom(playlist => playlist.Tracks.Count))
+                .ForMember(dto => dto.Tracks, e => e.Ignore());
+
+            //Tracks
+            Mapper.CreateMap<Track, TrackDto>();
+
+            //SharedPlaylist
+            Mapper.CreateMap<SharedPlaylist, SharedPlaylistDto>();
+
+
+
         }
 
     }

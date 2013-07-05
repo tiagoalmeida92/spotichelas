@@ -116,7 +116,6 @@ C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\S
 C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\System.Web.WebPages.Razor.dll
 C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\WebActivator.dll
 C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\Newtonsoft.Json.dll
-C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\AutoMapper.dll
 C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\Dto.pdb
 C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\Persistence.pdb
 C:\Users\samsung\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\UI\bin\Services.pdb
