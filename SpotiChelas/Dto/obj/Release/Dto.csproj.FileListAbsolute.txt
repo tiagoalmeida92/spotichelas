@@ -1,0 +1,4 @@
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Dto\bin\Release\Dto.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Dto\bin\Release\Dto.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Dto\obj\Release\Dto.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Dto\obj\Release\Dto.pdb

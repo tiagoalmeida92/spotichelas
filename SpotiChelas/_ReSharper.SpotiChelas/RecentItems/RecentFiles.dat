@@ -1,0 +1,40 @@
+﻿<RecentFiles>
+  <RecentFiles>
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Controllers/f:HomeController.cs" caret="258" fromTop="12" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Controllers/f:SearchController.cs" caret="178" fromTop="0" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Content/d:bootstrap/d:css/f:bootstrap.css" caret="1331" fromTop="17" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Account/f:Settings.cshtml" caret="0" fromTop="0" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Controllers/f:PlayController.cs" caret="0" fromTop="0" />
+    <File id="A04CD89A-3804-4CFF-A21E-C9FB50905B64/d:Repositories/f:Db.cs" caret="3570" fromTop="25" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Search/f:Index.cshtml" caret="3532" fromTop="15" />
+    <File id="F78345ED-1714-4DA5-8CCA-EFAFC3E7F390/f:SharedPlaylistDto.cs" caret="391" fromTop="14" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Shared/f:_LogOnPartial.cshtml" caret="380" fromTop="11" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Playlist/f:Share.cshtml" caret="1785" fromTop="10" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Controllers/f:PlaylistController.cs" caret="3007" fromTop="8" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Shared/d:DisplayTemplates/f:SharedPlaylistDto.cshtml" caret="312" fromTop="7" />
+    <File id="661D2C82-2986-4DE1-BCF6-4BA16D7E200E/f:TODO.txt/s:..?TODO.txt" caret="1752" fromTop="13" />
+    <File id="F78345ED-1714-4DA5-8CCA-EFAFC3E7F390/f:PlaylistDto.cs" caret="368" fromTop="12" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:ViewModels/f:GetAllViewModel.cs" caret="240" fromTop="11" />
+    <File id="88A25CA3-7152-48CB-BB95-8A1B18902660/f:IPlaylistService.cs" caret="489" fromTop="17" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Shared/f:_Layout.cshtml" caret="2023" fromTop="10" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Playlist/f:Edit.cshtml" caret="3655" fromTop="106" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Playlist/f:Index.cshtml" caret="2092" fromTop="23" />
+    <File id="88A25CA3-7152-48CB-BB95-8A1B18902660/f:PlaylistService.cs" caret="2097" fromTop="12" />
+  </RecentFiles>
+  <RecentEdits>
+    <File id="A04CD89A-3804-4CFF-A21E-C9FB50905B64/d:Repositories/f:Db.cs" caret="3570" fromTop="25" />
+    <File id="88A25CA3-7152-48CB-BB95-8A1B18902660/f:IPlaylistService.cs" caret="605" fromTop="21" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Controllers/f:PlaylistController.cs" caret="1062" fromTop="23" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:ViewModels/f:GetAllViewModel.cs" caret="288" fromTop="12" />
+    <File id="F78345ED-1714-4DA5-8CCA-EFAFC3E7F390/f:SharedPlaylistDto.cs" caret="391" fromTop="14" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Shared/d:DisplayTemplates/f:SharedPlaylistDto.cshtml" caret="157" fromTop="4" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Playlist/f:Share.cshtml" caret="1830" fromTop="13" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Shared/f:_LogOnPartial.cshtml" caret="380" fromTop="11" />
+    <File id="F78345ED-1714-4DA5-8CCA-EFAFC3E7F390/f:PlaylistDto.cs" caret="368" fromTop="12" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Playlist/f:Index.cshtml" caret="1479" fromTop="8" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Playlist/f:Edit.cshtml" caret="4227" fromTop="32" />
+    <File id="A39AE20A-4755-4C46-96C1-19F8CAE90E52/d:Views/d:Shared/f:_Layout.cshtml" caret="2023" fromTop="10" />
+    <File id="661D2C82-2986-4DE1-BCF6-4BA16D7E200E/f:TODO.txt/s:..?TODO.txt" caret="2104" fromTop="21" />
+    <File id="88A25CA3-7152-48CB-BB95-8A1B18902660/f:PlaylistService.cs" caret="1540" fromTop="2" />
+  </RecentEdits>
+</RecentFiles>

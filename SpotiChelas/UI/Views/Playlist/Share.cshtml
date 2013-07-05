@@ -8,9 +8,9 @@
 <h3>Share your playlists with others</h3>
 
 <div>
-    <form id="shareForm" class="form-inline" action="@Url.Action("SharePlaylist")" method="POST">
+    <form id="shareForm" class="form-inline" action="@Url.Action("AddSharePlaylist")" method="POST">
         <label>Playlist</label>
-        @Html.DropDownListFor(m => new SharedPlaylistDto().PlaylistId, new SelectList(Model.Playlists, "Id", "Name"))
+        @Html.DropDownList("PlaylistId", new SelectList(Model.Playlists, "Id", "Name"))
         <label>User</label>
         <input type="text" name="UserId"/>
         <label class="checkbox">
@@ -45,7 +45,7 @@
 
 <script type="text/javascript">
     $('#shareForm').submit(function(e) {
-        var formData = $(this).serialize() + '&PlaylistName=' + $('#PlaylistId option:selected').text();
+        var formData = $(this).serialize();
         $.ajax({
             url: this.action,
             type: this.method,
@@ -54,6 +54,17 @@
                 $('#shareplayliststable tr:last').after(result);
             }
         });
+        return false;
+    });
+
+    $('.removeshared').on('click',function(e) {
+        var tr = $(this).closest('tr');
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("RemoveSharedPlaylist")',
+            data: {playlistId: tr.data('playlistid'), userid: tr.data('userid'), ownerid: '@User.Identity.Name'}
+        });
+        tr.remove();
         return false;
     });
 </script>

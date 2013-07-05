@@ -1,0 +1,15 @@
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Tests.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Tests.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Dto.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\nunit.framework.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Persistence.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\EntityFramework.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Newtonsoft.Json.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Dto.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Persistence.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\nunit.framework.xml
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\EntityFramework.xml
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\bin\Release\Newtonsoft.Json.xml
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\obj\Release\Tests.csprojResolveAssemblyReference.cache
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\obj\Release\Tests.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Tests\obj\Release\Tests.pdb

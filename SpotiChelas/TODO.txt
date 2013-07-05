@@ -42,6 +42,8 @@ ISSUES
 - sucess message no shared
 - da para adicionar shared playlists memo sem profile.. admin
 - /share novas rows animate
+- Automapper 
+- quando playlist é apagada, apagar todas as partilhas
 
 
 ENUNCIADO

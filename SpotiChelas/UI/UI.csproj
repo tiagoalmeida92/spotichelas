@@ -120,6 +120,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\EmailUtil.cs" />
+    <Compile Include="ViewModels\GetAllViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="ViewModels\SharePlaylistsViewModel.cs" />
   </ItemGroup>
@@ -259,26 +260,24 @@
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Playlist\Index.cshtml" />
-    <Content Include="Views\Playlist\Edit.cshtml" />
     <Content Include="Views\Playlist\Create.cshtml" />
-    <Content Include="Views\Playlist\Delete.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TimeSpan.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Playlist.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Track.cshtml" />
     <Content Include="Views\Account\Settings.cshtml" />
     <Content Include="Views\Account\AccountCreated.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
-    <Content Include="Views\Account\ChangePhoto.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
     <Content Include="Views\Play\Track.cshtml" />
     <Content Include="Views\Account\AdminArea.cshtml" />
     <Content Include="Views\Playlist\Share.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SharedPlaylistDto.cshtml" />
+    <Content Include="Views\Playlist\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

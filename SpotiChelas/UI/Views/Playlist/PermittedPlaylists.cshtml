@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Domain.Persistence.DataTables.PlaylistPermission>
+
+@{
+    ViewBag.Title = "Permitted Playlists";
+}
+
+<h2>Permitted Playlists</h2>
+
+<table>
+    <tr>
+        <td>
+            UserService
+        </td>
+        <td>
+            Playlist Name
+        </td>
+    </tr>
+    @foreach (PlaylistPermission perm in Model)
+    {
+        <tr>
+            <td>
+                @perm.OwnerId
+            </td>
+            <td>
+                @Html.ActionLink(perm.Playlist.Name, "Details", new {perm.PlaylistId})
+            </td>
+        </tr>
+    }
+
+</table>

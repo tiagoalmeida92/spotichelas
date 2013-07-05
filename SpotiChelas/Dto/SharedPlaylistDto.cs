@@ -12,6 +12,6 @@ namespace Dto
         public int PlaylistId { get; set; }
         public string UserId { get; set; }
         public bool Contributor { get; set; }
-        public string PlaylistName { get; set; }
+        public PlaylistDto Playlist { get; set; }
     }
 }

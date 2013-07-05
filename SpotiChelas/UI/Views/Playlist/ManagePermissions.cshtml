@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Domain.Persistence.DataTables.PlaylistPermission>
+
+@{
+    ViewBag.Title = "Manage Permissions";
+}
+
+<h2>Manage Permissions</h2>
+
+<h3>Add permission</h3>
+
+@using (Html.BeginForm("AddPermission", "Playlist"))
+{
+    @*<input type="hidden" name="playlistId" value ="@ViewBag.PlaylistId"/>*@
+    @:UserProfileService: <input type="text" name="grantedUserProfileService"/>
+    @:Contribuidor: <input type="checkbox" name="contributor" value="true"/>
+
+    <input type="submit" value="OK"/>
+}
+
+<h3> Remove permissions</h3>
+
+<table>
+    <tr>
+        <td>
+            Playlist
+        </td>
+        <td>
+            UserProfileService
+        </td>
+        <td></td>
+    </tr>
+
+    @foreach (PlaylistPermission permission in Model)
+    {
+        <tr>
+            <td>
+                @permission.Playlist.Name 
+            </td>
+            <td>
+                @permission.GrantedUserProfile.UserProfileId
+            </td>
+            <td>     
+                @using (Html.BeginForm("RemovePermission", "Playlist"))
+                {
+                    @Html.Hidden("grantedUserProfileService", permission.GrantedUserProfileId)
+                    @Html.Hidden("playlistId", permission.PlaylistId)
+                    <input type="submit" value="Remove"/>
+                }
+            </td>
+        </tr>
+    }
+    
+
+</table>

@@ -1,0 +1,12 @@
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Release\Persistence.dll.config
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Release\Persistence.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Release\Persistence.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Release\EntityFramework.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Release\Newtonsoft.Json.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Release\EntityFramework.xml
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\bin\Release\Newtonsoft.Json.xml
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Release\Persistence.csprojResolveAssemblyReference.cache
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Release\Persistence.Migrations.Initial.resources
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Release\Persistence.csproj.GenerateResource.Cache
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Release\Persistence.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Persistence\obj\Release\Persistence.pdb

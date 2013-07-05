@@ -1,8 +1,8 @@
 ﻿@model Dto.SharedPlaylistDto
 
-<tr>
-    <td>
-        @Html.ActionLink(Model.PlaylistName, "Edit", "Playlist", new {playlistId = Model.PlaylistId}, null)
+<tr data-playlistid="@Model.PlaylistId" data-userid="@Model.UserId">
+    <td >
+        @Html.ActionLink(Model.Playlist.Name, "Edit", "Playlist", new {playlistId = Model.PlaylistId}, null)
     </td>
     <td>
         @Html.ActionLink(Model.UserId, "Profile", "Account", new {id = Model.UserId}, null)
@@ -10,4 +10,8 @@
     <td>
         @Html.DisplayFor(m => m.Contributor)
     </td>
+    <td>
+        <a class="icon-remove removeshared" href="#"></a>
+    </td>
 </tr>
+

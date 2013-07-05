@@ -1,0 +1,12 @@
+﻿
+@*@using (Html.BeginForm("Index", "Search", FormMethod.Get, new {@class = "navbar-search "}))
+{
+    
+        <div class="input-append"><input class="input-medium" type="text" id="" name="q"><span class="add-on"><i class="icon-search"></i></span></div>
+@*        <input class="input-medium search-query" name="q" type="search" />
+        <button type="submit" class="btn"><i class="icon-search"></i> </button>*@
+
+
+ <form class="navbar-search" action="@Url.Action("Index","Search")" method="GET">
+    <input type="text" name="q" class="search-query input-medium pull-right" placeholder="Search">
+ </form>

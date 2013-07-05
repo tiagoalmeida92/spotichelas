@@ -17,8 +17,13 @@ namespace Services
         
         void Delete(string username, int playlistId);
 
-        IEnumerable<SharedPlaylistDto> GetSharedByMe(string name);
+        IEnumerable<SharedPlaylistDto> GetSharedByMe(string username);
+
+        IEnumerable<SharedPlaylistDto> GetSharedToMe(string name);
 
         bool AddSharedPlaylist(SharedPlaylistDto sharedPlaylist);
+
+        void RemoveSharedPlaylist(SharedPlaylistDto sharedPlaylist);
+        
     }
 }

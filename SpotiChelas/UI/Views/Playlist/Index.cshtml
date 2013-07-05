@@ -1,9 +1,13 @@
-﻿@model IEnumerable<Dto.PlaylistDto>
+﻿@using System.Web.Mvc.Html
+@model UI.ViewModels.GetAllViewModel
 
 @{
     ViewBag.Title = "Playlists";
 }
 
+<div>
+    <h5>Playlists @Model.OwnPlaylists.Count() Shared @Model.SharedPlaylists.Count()</h5>
+</div>
 
 <div class="btn-toolbar">
     <a class = "btn btn-primary" href="@Url.Action("Create")">Create New</a>
@@ -25,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.OwnPlaylists)
             {
                 <tr>
                     <td>
@@ -42,6 +46,23 @@
                     </td>
                     <td>
                         @Html.DisplayFor(dtos => item.TotalTracks)
+                    </td>
+                </tr>
+            }
+            <tr style="background-color: white"><td></td><td></td><td></td></tr>
+            @foreach (var item in Model.SharedPlaylists)
+            {
+                <tr>
+                    <td>
+                
+                        @Html.ActionLink(item.Playlist.Name, "Edit", (object)new {playlistId = item.PlaylistId})
+                
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Playlist.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(dtos => item.Playlist.TotalTracks)
                     </td>
                 </tr>
             }

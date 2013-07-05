@@ -1,0 +1,4 @@
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Domain.Entities\bin\Debug\Domain.Entities.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Domain.Entities\bin\Debug\Domain.Entities.pdb
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Domain.Entities\obj\Debug\Domain.Entities.dll
+C:\Users\Tiago\Documents\ISEL\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Domain.Entities\obj\Debug\Domain.Entities.pdb

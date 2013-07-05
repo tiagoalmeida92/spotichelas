@@ -22,9 +22,13 @@ namespace UI.Controllers
 
         public ViewResult Index()
         {
-            string userName = HttpContext.User.Identity.Name;
-            IEnumerable<PlaylistDto> playlists = _playlistService.GetAll(userName);
-            return View(playlists);
+            var playlists = _playlistService.GetAll(User.Identity.Name);
+            var shared = _playlistService.GetSharedToMe(User.Identity.Name);
+            return View(new GetAllViewModel
+                            {
+                                OwnPlaylists = playlists,
+                                SharedPlaylists = shared
+                            });
         }
 
 
@@ -99,7 +103,7 @@ namespace UI.Controllers
 
         //AJAX
         [HttpPost]
-        public ActionResult SharePlaylist(SharedPlaylistDto sharedPlaylist)
+        public ActionResult AddSharePlaylist(SharedPlaylistDto sharedPlaylist)
         {
             if (_playlistService.AddSharedPlaylist(sharedPlaylist))
             {
@@ -110,5 +114,14 @@ namespace UI.Controllers
                 return new EmptyResult();
             }
         }
+
+        //AJAX
+        [HttpPost]
+        public ActionResult RemoveSharedPlaylist(SharedPlaylistDto sharedPlaylist)
+        {
+            _playlistService.RemoveSharedPlaylist(sharedPlaylist);
+            return new EmptyResult();
+        }
+
     }
 }

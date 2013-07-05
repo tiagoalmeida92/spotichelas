@@ -1,0 +1,14 @@
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Services.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Services.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\AutoMapper.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Dto.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\EntityFramework.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Persistence.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Newtonsoft.Json.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Dto.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Persistence.pdb
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\AutoMapper.xml
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\bin\Release\Newtonsoft.Json.xml
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\obj\Release\Services.csprojResolveAssemblyReference.cache
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\obj\Release\Services.dll
+C:\Users\samsung\Dropbox\backup\1213v\PI\S1213V-LI51D_N-G03\SpotiChelas\Services\obj\Release\Services.pdb

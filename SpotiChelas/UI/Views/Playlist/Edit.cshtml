@@ -1,4 +1,5 @@
-﻿@model Dto.PlaylistDto
+﻿@using Dto
+@model Dto.PlaylistDto
 
 @{
     ViewBag.Title = @Model.Name;
@@ -10,16 +11,19 @@
 
 <div>
     <h2>@Model.Name</h2>
-    <h6><i class="icon-user"></i> @Html.ActionLink(@Model.UserId,"Profile","Account")</h6>
+    <h6><i class="icon-user"></i> @Html.ActionLink(@Model.UserId, "Profile", "Account")</h6>
     <h5 id="ntracks">@Model.Tracks.Count() Tracks </h5>
 </div>
 
 <div class="btn-toolbar">
     <a class="btn btn-primary" href="@Url.Action("Index")">Back to List</a>
-    <a id="savechanges" class="btn btn-success" href="#">Save Changes</a>
-    <form id="deleteform" class="pull-right" action="@Url.Action("Delete")" method="POST">
-        <button class="btn btn-danger" type="submit">Delete Playlist</button>
-    </form>
+    @if (Model.Contributor)
+    {
+        <a id="savechanges" class="btn btn-success" href="#">Save Changes</a>
+        <form id="deleteform" class="pull-right" action="@Url.Action("Delete")" method="POST">
+            <button class="btn btn-danger" type="submit">Delete Playlist</button>
+        </form>
+    }
 </div>
 <div>
     <table class="table table-hover">
@@ -44,7 +48,7 @@
             </tr>
         </thead>
         <tbody id="sortable">
-            @foreach (var track in Model.Tracks)
+            @foreach (TrackDto track in Model.Tracks)
             {
                 <tr data-trackid="@track.Id">
                     <td>
@@ -60,8 +64,11 @@
                         @Html.DisplayFor(model => track.Duration)
                     </td>
                     <td>
-                        <a class="icon-play spotify-play" href="#"></a>
-                        <a class="icon-remove removetrack" href="#"></a>
+                        @if (Model.Contributor)
+                        {
+                            <a class="icon-play spotify-play" href="#"></a>
+                            <a class="icon-remove removetrack" href="#"></a>
+                        }
                     </td>
                 </tr>
             }
@@ -71,48 +78,56 @@
 <div id="dialog"></div>
 
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         initDialog();
+
         var s = $('#sortable');
         s.sortable();
         s.disableSelection();
-        $('#savechanges').click(function(e) {
-            var sortedIds = s.sortable("toArray",{attribute: 'data-trackid'});
-            $('#ntracks').text(sortedIds.length + ' Tracks');
-            var array = [];
-            $.each(sortedIds, function(index, value) {
-                array.push({ 'Id': value });
-            });
-            var data = {
-                'id': '@Model.Id',
-                'userid': '@User.Identity.Name',
-                'tracks': array
-            };
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("EditTracks")",
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                traditional: true,
-                success: function() {
-                    $('#successMessage').show();
-                    $('#successMessage').delay(2000).fadeOut('slow');
-                }
-            });
-            e.preventDefault();
-        });
-        $('.removetrack').click(function(e) {
 
-            $(this).closest('tr').remove();
-            e.preventDefault();
-        });
-        $('#deleteform').submit(function (e) {
-            var form = this;
-            bootbox.confirm("Delete " + "@Model.Name?\n This action is irreversible!", function (result) {
-                if (result) 
-                    form.submit();
-            });
-            return false;
-        });
     });
+
+    @if (Model.Contributor)
+    {
+        <text>
+            $('#savechanges').click(function(e) {
+                var sortedIds = s.sortable("toArray",{attribute: 'data-trackid'});
+                $('#ntracks').text(sortedIds.length + ' Tracks');
+                var array = [];
+                $.each(sortedIds, function(index, value) {
+                    array.push({ 'Id': value });
+                });
+                var data = {
+                    'id': '@Model.Id',
+                    'userid': '@User.Identity.Name',
+                    'tracks': array
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("EditTracks")",
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    traditional: true,
+                    success: function() {
+                        $('#successMessage').show();
+                        $('#successMessage').delay(2000).fadeOut('slow');
+                    }
+                });
+                e.preventDefault();
+            });
+            $('.removetrack').click(function(e) {
+
+                $(this).closest('tr').remove();
+                e.preventDefault();
+            });
+            $('#deleteform').submit(function (e) {
+                var form = this;
+                bootbox.confirm("Delete " + "@Model.Name?\n This action is irreversible!", function (result) {
+                    if (result) 
+                        form.submit();
+                });
+                return false;
+            });
+        </text>
+    };
 </script>
