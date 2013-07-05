@@ -84,11 +84,9 @@
         var s = $('#sortable');
         s.sortable();
         s.disableSelection();
-
-    });
-
-    @if (Model.Contributor)
-    {
+	
+	@if (Model.Contributor)
+    	{
         <text>
             $('#savechanges').click(function(e) {
                 var sortedIds = s.sortable("toArray",{attribute: 'data-trackid'});
@@ -130,4 +128,8 @@
             });
         </text>
     };
+
+    });
+
+    
 </script>
