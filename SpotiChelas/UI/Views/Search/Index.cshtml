@@ -61,27 +61,29 @@
                         @Html.DisplayFor(modelItem => track.Duration)
                     </td>
                     
-                    @if (authenticated)
-                    {
+                    
                         <td data-trackid="@track.Id">
                             <a class="icon-play spotify-play" href="#"></a>
-                            <div class="btn-group">
-                                <a class="btn btn-mini btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    @foreach (var p in Model.Playlists)
-                                    {
-                                        <li>
-                                            <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.Id"  href="#">
-                                                @p.Name
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
+                            @if (authenticated)
+                            {
+                                <div class="btn-group">
+                                    <a class="btn btn-mini btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        @foreach (var p in Model.Playlists)
+                                        {
+                                            <li>
+                                                <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.Id"  href="#">
+                                                    @p.Name
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
                         </td>
-                    }
+                    
                 </tr>
             }
         </tbody>

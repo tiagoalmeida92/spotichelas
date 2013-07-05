@@ -3,6 +3,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Metadata.Edm;
 using Persistence.DO;
 using System.ComponentModel.DataAnnotations.Schema;
+using Persistence.Migrations;
 
 namespace Persistence.Repositories
 {
@@ -17,6 +18,7 @@ namespace Persistence.Repositories
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<Db, Configuration>());
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
