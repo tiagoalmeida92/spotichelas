@@ -7,7 +7,7 @@ namespace Services
     {
         IEnumerable<PlaylistDto> GetAll(string userId);
 
-        void Add(PlaylistDto pl);
+        bool Add(PlaylistDto pl);
         
         PlaylistDto GetById(string userName, int playlistId);
         
@@ -19,7 +19,7 @@ namespace Services
 
         IEnumerable<SharedPlaylistDto> GetSharedByMe(string username);
 
-        IEnumerable<SharedPlaylistDto> GetSharedToMe(string name);
+        IEnumerable<SharedPlaylistDto> GetSharedToMe(string username);
 
         bool AddSharedPlaylist(SharedPlaylistDto sharedPlaylist);
 

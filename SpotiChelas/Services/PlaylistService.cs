@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -25,45 +24,42 @@ namespace Services
 
         public IEnumerable<PlaylistDto> GetAll(string userId)
         {
-            IQueryable<Playlist> playlists =
+            var playlists =
                 _db.Playlists.Include(p => p.Tracks).Where(playlist => playlist.UserId == userId);
-            Mapper.CreateMap<Playlist, PlaylistDto>()
-                .ForMember(dto => dto.TotalTracks, e => e.MapFrom(playlist => playlist.Tracks.Count))
-                .ForMember(dto => dto.Tracks, e => e.Ignore());
-            return Mapper.Map<IEnumerable<Playlist>, IEnumerable<PlaylistDto>>(playlists);
+            return Mapper.Map<IEnumerable<PlaylistDto>>(playlists);
         }
 
-        public void Add(PlaylistDto pl)
+        public bool Add(PlaylistDto pl)
         {
-            Mapper.CreateMap<PlaylistDto, Playlist>();
-            Playlist playlist = Mapper.Map<PlaylistDto, Playlist>(pl);
+            //check name unique
+            if(_db.Playlists.Any(p=> p.Name == pl.Name && p.UserId == pl.UserId)) return false;
+            Playlist playlist = Mapper.Map<Playlist>(pl);
             _db.Entry(playlist).State = EntityState.Added;
             _db.SaveChanges();
+            return true;
         }
 
         public PlaylistDto GetById(string user, int id)
         {
             Playlist playlist = _db.Playlists.Find(id);
-            var contributor = true;
+            bool contributor = true;
             if(playlist.UserId != user) // pode ser partilhada
             {
-                UserProfile up =
-                    _db.UserProfiles.Include(u => u.SharedPlaylistsToMe).FirstOrDefault(u => u.UserId == user);
+                UserProfile up = _db.UserProfiles.Include(u => u.SharedPlaylistsToMe).FirstOrDefault(u => u.UserId == user);
                 if (up == null) return null;
                 SharedPlaylist sr = up.SharedPlaylistsToMe.FirstOrDefault(p => p.PlaylistId == id);
                 if (sr == null) return null;
                 contributor = sr.Contributor;
             } 
-            Mapper.CreateMap<Playlist, PlaylistDto>()
-                .ForMember(dto => dto.Tracks, e => e.Ignore()).ForMember(dto=> dto.Contributor, e=>e.MapFrom(p=>contributor));
-            PlaylistDto playlistDto = Mapper.Map<Playlist, PlaylistDto>(playlist);
+            PlaylistDto playlistDto = Mapper.Map<PlaylistDto>(playlist);
+            playlistDto.Contributor = contributor;
             //mashup happens here
             IEnumerable<Track> tracks =
                 _repo.GetTracks(playlist.Tracks
                                     .OrderBy(track => track.Position)
                                     .Select(track => track.SpotifyTrackId));
             Mapper.CreateMap<Track, TrackDto>();
-            playlistDto.Tracks = Mapper.Map<IEnumerable<Track>, IEnumerable<TrackDto>>(tracks);
+            playlistDto.Tracks = Mapper.Map<IEnumerable<TrackDto>>(tracks);
             return playlistDto;
         }
 
@@ -119,9 +115,7 @@ namespace Services
                 Include(u => u.SharedPlaylistsByMe)
                 .Include(u => u.SharedPlaylistsByMe.Select(e => e.Playlist))
                 .First(u => u.UserId == username).SharedPlaylistsByMe;
-            Mapper.CreateMap<SharedPlaylist, SharedPlaylistDto>();
-            Mapper.CreateMap<Playlist, PlaylistDto>().ForMember(p=> p.Tracks, e=> e.Ignore());
-            return Mapper.Map<IEnumerable<SharedPlaylist>, IEnumerable<SharedPlaylistDto>>(playlists);
+            return Mapper.Map<IEnumerable<SharedPlaylistDto>>(playlists);
         }
 
         public IEnumerable<SharedPlaylistDto> GetSharedToMe(string username)
@@ -131,10 +125,7 @@ namespace Services
                 .Include(u => u.SharedPlaylistsToMe.Select(p => p.Playlist))
                 .FirstOrDefault(u => u.UserId == username);
             if (user == null) return null;
-            ICollection<SharedPlaylist> playlists = user.SharedPlaylistsToMe;
-            Mapper.CreateMap<SharedPlaylist, SharedPlaylistDto>();
-            Mapper.CreateMap<Playlist, PlaylistDto>().ForMember(p=>p.TotalTracks, e=> e.MapFrom(p=> p.Tracks.Count)).ForMember(p=> p.Tracks, e=> e.Ignore());
-            return Mapper.Map<IEnumerable<SharedPlaylist>, IEnumerable<SharedPlaylistDto>>(playlists);
+            return Mapper.Map<IEnumerable<SharedPlaylistDto>>(user.SharedPlaylistsToMe);
         }
 
         public bool AddSharedPlaylist(SharedPlaylistDto sharedPlaylistDto)
@@ -142,7 +133,6 @@ namespace Services
             if (sharedPlaylistDto.OwnerId == sharedPlaylistDto.UserId ||
                 !_db.UserProfiles.Any(u => u.UserId == sharedPlaylistDto.UserId))
                 return false;
-            Mapper.CreateMap<SharedPlaylistDto, SharedPlaylist>();
             SharedPlaylist sharedPlaylist = Mapper.Map<SharedPlaylistDto, SharedPlaylist>(sharedPlaylistDto);
             UserProfile owner = _db.UserProfiles.Find(sharedPlaylist.OwnerId);
             sharedPlaylistDto.Playlist = new PlaylistDto{Name = _db.Playlists.FirstOrDefault(p=> p.Id == sharedPlaylistDto.PlaylistId).Name};
@@ -153,17 +143,13 @@ namespace Services
                 _db.SaveChanges();
                 return false;
             }
-            else
-            {
-                _db.Entry(sharedPlaylist).State = EntityState.Added;
-                _db.SaveChanges();
-                return true;
-            }
+            _db.Entry(sharedPlaylist).State = EntityState.Added;
+            _db.SaveChanges();
+            return true;
         }
 
         public void RemoveSharedPlaylist(SharedPlaylistDto sharedPlaylistDto)
         {
-            Mapper.CreateMap<SharedPlaylistDto, SharedPlaylist>();
             SharedPlaylist sharedPlaylist = Mapper.Map<SharedPlaylistDto, SharedPlaylist>(sharedPlaylistDto);
             _db.Entry(sharedPlaylist).State = EntityState.Deleted;
             _db.SaveChanges();

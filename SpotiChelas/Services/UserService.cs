@@ -29,15 +29,11 @@ namespace Services
         public UserProfileDto GetById(string userName)
         {
             var profile = _db.UserProfiles.Find(userName);
-            Mapper.CreateMap<UserProfile, UserProfileDto>()
-                  .ForMember(dto => dto.TotalPlaylists, e => e.MapFrom(u => u.Playlists.Count))
-                  .ForMember(dto =>dto.Email, e=>e.Ignore());
             return Mapper.Map<UserProfile, UserProfileDto>(profile);
         }
 
         public void Update(UserProfileDto dto)
         {
-            Mapper.CreateMap<UserProfileDto, UserProfile>();
             var profile = Mapper.Map<UserProfile>(dto);
             _db.Entry(profile).State = EntityState.Modified;
             _db.SaveChanges();

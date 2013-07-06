@@ -1,3 +1,5 @@
+using Persistence.DO;
+
 namespace Persistence.Migrations
 {
     using System;
@@ -16,6 +18,8 @@ namespace Persistence.Migrations
         protected override void Seed(Persistence.Repositories.Db context)
         {
             //  This method will be called after migrating to the latest version.
+            var userprofile = new UserProfile {UserId = "administrador"};
+            context.UserProfiles.AddOrUpdate(userprofile);
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.

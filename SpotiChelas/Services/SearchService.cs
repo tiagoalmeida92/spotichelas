@@ -19,7 +19,6 @@ namespace Services
         public IEnumerable<TrackDto> Search(string searchTerm, int page)
         {
             var tracks = _repo.Search(searchTerm, page);
-            Mapper.CreateMap<Track, TrackDto>();
             return Mapper.Map<IEnumerable<Track>, IEnumerable<TrackDto>>(tracks);
         }
     }

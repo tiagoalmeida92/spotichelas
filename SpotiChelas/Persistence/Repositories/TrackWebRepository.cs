@@ -21,9 +21,9 @@ namespace Persistence.Repositories
             //serie
             foreach (var trackId in trackIds)
             {
-                    string url = SpotifyAPIHelper.GetLookupUrl(JsonMediaType, SpotifyAPIResource.track, trackId);
-                    RootObject result = SpotifyRequestAndDeserialize(url);
-                    tracks.Add(GenerateTrack(result.track));
+                string url = SpotifyAPIHelper.GetLookupUrl(JsonMediaType, SpotifyAPIResource.track, trackId);
+                RootObject result = SpotifyRequestAndDeserialize(url);
+                tracks.Add(GenerateTrack(result.track));
             }
 
             //paralelo
@@ -48,23 +48,30 @@ namespace Persistence.Repositories
 
         private static RootObject SpotifyRequestAndDeserialize(string url)
         {
-            WebRequest req = WebRequest.Create(url);
-            var webResponse = req.GetResponse() as HttpWebResponse;
-            var reader = new StreamReader(webResponse.GetResponseStream());
-            string jsonResult = reader.ReadToEnd();
-            reader.Close();
-            return JsonConvert.DeserializeObject<RootObject>(jsonResult);
+            try
+            {
+                WebRequest req = WebRequest.Create(url);
+                var webResponse = req.GetResponse() as HttpWebResponse;
+                var reader = new StreamReader(webResponse.GetResponseStream());
+                string jsonResult = reader.ReadToEnd();
+                reader.Close();
+                return JsonConvert.DeserializeObject<RootObject>(jsonResult);
+            }
+            catch 
+            {
+                return new RootObject();
+            }
         }
 
         private static Track GenerateTrack(SpotifyTrack track)
         {
             return new Track
-                {
-                    Artist = track.artists.Count > 2 ? "Varios" : track.artists[0].name,
-                    Id = track.href.Substring(track.href.LastIndexOf(":", StringComparison.Ordinal) + 1),
-                    Duration = TimeSpan.FromSeconds(Convert.ToDouble(track.length)),
-                    Name = track.name
-                };
+                       {
+                           Artist = track.artists.Count > 2 ? "Varios" : track.artists[0].name,
+                           Id = track.href.Substring(track.href.LastIndexOf(":", StringComparison.Ordinal) + 1),
+                           Duration = TimeSpan.FromSeconds(Convert.ToDouble(track.length)),
+                           Name = track.name
+                       };
         }
     }
 }

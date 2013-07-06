@@ -44,6 +44,7 @@ ISSUES
 - /share novas rows animate
 - Automapper 
 - quando playlist é apagada, apagar todas as partilhas
+- playlist play button sem ajax possivel?
 
 
 ENUNCIADO

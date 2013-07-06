@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Dto;
 using Services;
 using UI.ViewModels;
@@ -46,13 +44,11 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult Create(PlaylistDto playlist)
         {
-            if (ModelState.IsValid)
-            {
-                playlist.UserId = HttpContext.User.Identity.Name;
-                _playlistService.Add(playlist);
-                return RedirectToAction("Index");
-            }
-            return View(playlist);
+
+            playlist.UserId = User.Identity.Name;
+            var success = _playlistService.Add(playlist);
+
+            return RedirectToAction("Index");
         }
 
 

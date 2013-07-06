@@ -306,7 +306,6 @@ namespace UI.Controllers
         #endregion
 
         [HttpPost]
-
         public ActionResult RemoveBySelf()
         {
             var user = User.Identity.Name;

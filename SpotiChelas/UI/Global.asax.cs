@@ -69,6 +69,7 @@ namespace UI
                 Membership.CreateUser("administrador", "123456");
             if (!Roles.GetRolesForUser("administrador").Contains("admin"))
                 Roles.AddUserToRole("administrador", "admin");
+            
         }
 
         private static void RegisterAutoMapper()
