@@ -53,7 +53,7 @@ namespace UI
         {
             AreaRegistration.RegisterAllAreas();
 
-            RegisterAutoMapperMappings();
+            RegisterAutoMapper();
             RegisterRoles();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
@@ -71,7 +71,7 @@ namespace UI
                 Roles.AddUserToRole("administrador", "admin");
         }
 
-        private static void RegisterAutoMapperMappings()
+        private static void RegisterAutoMapper()
         {
             //UserProfiles
             Mapper.CreateMap<UserProfileDto, UserProfile>();
@@ -83,7 +83,8 @@ namespace UI
             Mapper.CreateMap<PlaylistDto,Playlist>();
             Mapper.CreateMap<Playlist, PlaylistDto>()
                 .ForMember(dto => dto.TotalTracks, e => e.MapFrom(playlist => playlist.Tracks.Count))
-                .ForMember(dto => dto.Tracks, e => e.Ignore());
+                .ForMember(dto => dto.Tracks, e => e.Ignore())
+                .ForMember(dto=> dto.Contributor, e=> e.Ignore());
 
             //Tracks
             Mapper.CreateMap<Track, TrackDto>();
