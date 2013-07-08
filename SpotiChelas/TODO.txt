@@ -1,7 +1,6 @@
 
 ISSUES
-- playlist controller  actions details == edit 
-- playlist services..addsong lazy loading eager loading...
+
 - action playlist/details links para artista e album etce com lookup do spotify
 - ver melhor o databinding Playlist a partir do exemplo editor scaffolding mvc
       -- faz sentido só em edits e details para poupar acessos, para deletes ou outros basta id
@@ -13,36 +12,20 @@ ISSUES
      Dar/remover acesso a outros utilizadores às suas playlists 
 	 start here!!!!
 - account/register/ link sem passar o verify na query
-- criar classe que trata de enviar o email verify
-- search bar ser uma partial view
-- upload imagem http://stackoverflow.com/questions/5193842/file-upload-asp-net-mvc-3-0
-- merge better membership users and userprofiles table
-- UP NEXT associar as playlists ao utilizadores
-- SpotiChelasDb onmodelcreation might be wrong
-- playlist/details == playlists/edit código
-- adicionar album aos resultados de pesquisa
-- automapper + ef lazy load = trouble
-- trocar ordem da composite key de playlist de pid userid para userid pid
-- roles em enum
 - httpgets spotify async
-- playlistservice.deleterows remake
-- playlistservice savechanges remake edit tracks
 - links to everywhere i can
 - mostrar albuns em /playlist/3, search e noutros sitios
 - talves nao usar savechanges na playlist e fazer pedido ajax por cada update row
-- linha 87 do details.cshtml
 - por a paginas todas dentro de 1 div class="well"
 - profile.cshtml com labelfor e displayfor
 - play track sem jquery dialog, apenas div com hide etc
 - file save async
-- ninject module
 - @html.validationmessagefor
-- pop de form no create playlist e adiciona logo á lista /playlists/index
+- pop up de form no create playlist e adiciona logo á lista /playlists/index
 - codigo da mensagem sucesso verde pode ser partilhado
 - sucess message no shared
 - da para adicionar shared playlists memo sem profile.. admin
 - /share novas rows animate
-- Automapper 
 - quando playlist é apagada, apagar todas as partilhas
 - playlist play button sem ajax possivel?
 

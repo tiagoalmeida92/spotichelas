@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using Dto;
 using Services;
 using UI.ViewModels;
@@ -41,6 +42,7 @@ namespace UI.Controllers
         //
         // POST: /Playlist/Create
 
+        //AJAX
         [HttpPost]
         public ActionResult Create(PlaylistDto playlist)
         {
@@ -48,7 +50,11 @@ namespace UI.Controllers
             playlist.UserId = User.Identity.Name;
             var success = _playlistService.Add(playlist);
 
-            return RedirectToAction("Index");
+            return new JsonResult
+                       {
+                           JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                           Data = new {ok = success}
+                       };
         }
 
 
@@ -101,14 +107,11 @@ namespace UI.Controllers
         [HttpPost]
         public ActionResult AddSharePlaylist(SharedPlaylistDto sharedPlaylist)
         {
-            if (_playlistService.AddSharedPlaylist(sharedPlaylist))
+            if (_playlistService.AddOrUpdateSharedPlaylist(sharedPlaylist))
             {
                 return PartialView("DisplayTemplates/SharedPlaylistDto", sharedPlaylist);
             }
-            else
-            {
-                return new EmptyResult();
-            }
+            return new EmptyResult();
         }
 
         //AJAX
@@ -117,6 +120,25 @@ namespace UI.Controllers
         {
             _playlistService.RemoveSharedPlaylist(sharedPlaylist);
             return new EmptyResult();
+        }
+
+        [ChildActionOnly]
+        public ActionResult GetPlaylistsForAddButton()
+        {
+            var playlists = _playlistService.GetAll(User.Identity.Name);
+            var shared = _playlistService.GetSharedToMe(User.Identity.Name);
+            if(shared != null) shared = shared.Where(s => s.Contributor);
+            return PartialView(new GetAllViewModel
+                            {
+                                OwnPlaylists = playlists,
+                                SharedPlaylists = shared
+                            });
+        }
+
+        //AJAX
+        public ActionResult Play(string id)
+        {
+            return PartialView((object) id);
         }
 
     }

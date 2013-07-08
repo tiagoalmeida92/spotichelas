@@ -25,14 +25,9 @@ namespace UI.Controllers
         {
             var actualPage = page ?? 1;
             var tracks = _searchService.Search(q, actualPage);
-            var playlists = _playlistService.GetAll(User.Identity.Name);
-            var shared = _playlistService.GetSharedToMe(User.Identity.Name);
-            if (shared != null) shared = shared.Where(s => s.Contributor);
             var viewModel = new SearchResultsViewModel
                                 {
                                     Tracks = tracks,
-                                    Shared = shared,
-                                    Playlists = playlists,
                                     SearchTerm = q,
                                     Page = actualPage
                                 };

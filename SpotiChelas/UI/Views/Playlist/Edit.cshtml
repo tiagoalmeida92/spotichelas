@@ -3,9 +3,10 @@
 
 @{
     ViewBag.Title = @Model.Name;
+    var dropdownlist = @Html.Action("GetPlaylistsForAddButton");
 }
 
-<div id="successMessage" class="alert alert-success alert span4 offset4" style="display: none; position: absolute">
+<div id="successMessage" class="alert alert-success span4 offset4" style="display: none; position: absolute">
     <p class="text-center"><strong>Sucess!</strong>The changes have been saved!</p>
 </div>
 
@@ -21,6 +22,7 @@
     {
         <a id="savechanges" class="btn btn-success" href="#">Save Changes</a>
         <form id="deleteform" class="pull-right" action="@Url.Action("Delete")" method="POST">
+            @Html.HiddenFor(m=> m.Id)
             <button class="btn btn-danger" type="submit">Delete Playlist</button>
         </form>
     }
@@ -63,9 +65,10 @@
                     <td>
                         @Html.DisplayFor(model => track.Duration)
                     </td>
-                    <td>
+                    <td data-trackid="@track.Id">
                         
                         <a class="icon-play spotify-play" href="#"></a>
+                        @dropdownlist
                         @if (Model.Contributor)
                         {
                             <a class="icon-remove removetrack" href="#"></a>
@@ -80,10 +83,23 @@
 
 <script type="text/javascript">
     $(function() {
-        initDialog();
-
+        initDialog("#dialog", ".spotify-play", 'tr', '@Url.Action("Play")');
+        initAddToPlaylists(".dropdown-playlist", '@Url.Action("AddTrack")');
         var s = $('#sortable');
-        s.sortable();
+        s.sortable({
+            start: function (event, ui) {
+                $(ui.item).find('td:last').hide();
+            },
+            stop: function (event,ui) {
+                $(ui.item).find('td:last').show();
+            },
+            helper: function (e, ui) {
+                ui.children().each(function() {
+                    $(this).width($(this).width());
+                });
+                return ui;
+            }
+        });
         s.disableSelection();
 
         @if (Model.Contributor)

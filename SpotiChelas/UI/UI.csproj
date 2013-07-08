@@ -114,7 +114,6 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\PlayController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -235,7 +234,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\myScripts\dialog.js" />
+    <Content Include="Scripts\myScripts\spotichelas.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -273,11 +272,12 @@
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_SearchPartial.cshtml" />
-    <Content Include="Views\Play\Track.cshtml" />
+    <Content Include="Views\Playlist\Play.cshtml" />
     <Content Include="Views\Account\AdminArea.cshtml" />
     <Content Include="Views\Playlist\Share.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SharedPlaylistDto.cshtml" />
     <Content Include="Views\Playlist\Edit.cshtml" />
+    <Content Include="Views\Playlist\GetPlaylistsForAddButton.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

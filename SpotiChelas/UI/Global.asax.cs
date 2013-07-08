@@ -13,9 +13,6 @@ using Persistence.DO;
 
 namespace UI
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
     public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -28,17 +25,11 @@ namespace UI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 
-
-            //playlists route /playlist/3/edit
-            routes.MapRoute("PlaylistsRouteIds",
-                            "Playlist/{action}/{playlistId}",
-                            new {controller = "Playlist"}
-                );
-
-             //playlists route /playlist/index
-            routes.MapRoute("PlaylistsRoute",
-                            "Playlist/{action}",
-                            new {controller = "Playlist", action = "Index"}
+            //playlists route /playlist/3
+            routes.MapRoute("PlaylistsEditIds",
+                            "Playlist/{playlistId}",
+                            new {controller = "Playlist", action="Edit"},
+                            new{playlistId=@"\d+"} // constraint apenas numeros
                 );
 
 
@@ -92,8 +83,7 @@ namespace UI
 
             //SharedPlaylist
             Mapper.CreateMap<SharedPlaylist, SharedPlaylistDto>();
-
-
+            Mapper.CreateMap<SharedPlaylistDto, SharedPlaylist>();
 
         }
 

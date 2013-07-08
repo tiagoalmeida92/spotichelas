@@ -21,7 +21,7 @@ namespace Services
 
         IEnumerable<SharedPlaylistDto> GetSharedToMe(string username);
 
-        bool AddSharedPlaylist(SharedPlaylistDto sharedPlaylist);
+        bool AddOrUpdateSharedPlaylist(SharedPlaylistDto dto);
 
         void RemoveSharedPlaylist(SharedPlaylistDto sharedPlaylist);
         

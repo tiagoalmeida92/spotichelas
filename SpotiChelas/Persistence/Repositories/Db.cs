@@ -82,7 +82,8 @@ namespace Persistence.Repositories
                         .HasKey(e => new {e.OwnerId, e.PlaylistId, e.UserId})
                         .HasRequired(e => e.Playlist)
                         .WithMany(e => e.SharedToUsers)
-                        .HasForeignKey(e => e.PlaylistId);
+                        .HasForeignKey(e => e.PlaylistId)
+                        .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<SharedPlaylist>()
                         .HasRequired(e => e.Owner)

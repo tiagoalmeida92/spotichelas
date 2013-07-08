@@ -3,10 +3,6 @@
 @{
     ViewBag.Title = "Create Playlist";
 }
-<style type="text/css">.editor-label { }
-
- .editor-field { }
-</style>
 
 <h2>Create</h2>
 
@@ -25,6 +21,9 @@
         <div>
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
+            <div id="name-error-div" class="alert alert-error" style="display: none; width: 150px">
+                Nome já existente!
+            </div>
         </div>
 
         <div>
@@ -44,3 +43,24 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $('form').submit(function() {
+            var formData = $(this).serialize();
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: formData,
+                success: function (result) {
+                    if(result.ok) {
+                        window.location.href = '@Url.Action("Index")';
+                    }else {
+                        $('#name-error-div').show();
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>

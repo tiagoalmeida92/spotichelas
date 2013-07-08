@@ -1,0 +1,25 @@
+﻿@model UI.ViewModels.GetAllViewModel
+
+<div class="btn-group">
+    <a class="btn btn-mini btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+        @foreach (var p in Model.OwnPlaylists)
+        {
+            <li>
+                <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.Id"  href="#">
+                    @p.Name
+                </a>
+            </li>
+        }
+        @foreach (var p in Model.SharedPlaylists)
+        {
+            <li>
+                <a tabindex="-1" class="dropdown-playlist" data-playlistid ="@p.PlaylistId"  href="#">
+                    @p.Playlist.Name
+                </a>
+            </li>
+        }                             
+    </ul>
+</div>

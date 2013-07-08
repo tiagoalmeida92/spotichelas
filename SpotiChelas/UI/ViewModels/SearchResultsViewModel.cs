@@ -9,10 +9,6 @@ namespace UI.ViewModels
     public class SearchResultsViewModel
     {
         public IEnumerable<TrackDto> Tracks { get; set; }
-
-        public IEnumerable<PlaylistDto> Playlists { get; set; }
-        
-        public IEnumerable<SharedPlaylistDto> Shared { get; set; }
         
         public string SearchTerm { get; set; }
 
