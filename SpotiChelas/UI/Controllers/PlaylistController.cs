@@ -6,7 +6,7 @@ using UI.ViewModels;
 
 namespace UI.Controllers
 {
-    [Authorize]
+
     public class PlaylistController : Controller
     {
         private readonly IPlaylistService _playlistService;
@@ -18,7 +18,7 @@ namespace UI.Controllers
 
         //
         // GET: /Playlist/
-
+        [Authorize]
         public ViewResult Index()
         {
             var playlists = _playlistService.GetAll(User.Identity.Name);
@@ -33,7 +33,7 @@ namespace UI.Controllers
 
         //
         // GET: /Playlist/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +44,7 @@ namespace UI.Controllers
 
         //AJAX
         [HttpPost]
+        [Authorize]
         public ActionResult Create(PlaylistDto playlist)
         {
 
@@ -59,6 +60,7 @@ namespace UI.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public ActionResult Edit(int playlistId)
         {
             var playlistDto = _playlistService.GetById(User.Identity.Name, playlistId);
@@ -77,6 +79,7 @@ namespace UI.Controllers
 
         //AJAX
         [HttpPost]
+        [Authorize]
         public ActionResult EditTracks(PlaylistDto playlist)
         {
             _playlistService.EditTracks(playlist);
@@ -84,6 +87,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int playlistId)
         {
 
@@ -91,6 +95,7 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public ActionResult Share()
         {
             var user = User.Identity.Name;
@@ -105,6 +110,7 @@ namespace UI.Controllers
 
         //AJAX
         [HttpPost]
+        [Authorize]
         public ActionResult AddSharePlaylist(SharedPlaylistDto sharedPlaylist)
         {
             if (_playlistService.AddOrUpdateSharedPlaylist(sharedPlaylist))
@@ -116,6 +122,7 @@ namespace UI.Controllers
 
         //AJAX
         [HttpPost]
+        [Authorize]
         public ActionResult RemoveSharedPlaylist(SharedPlaylistDto sharedPlaylist)
         {
             _playlistService.RemoveSharedPlaylist(sharedPlaylist);
@@ -123,6 +130,7 @@ namespace UI.Controllers
         }
 
         [ChildActionOnly]
+        [Authorize]
         public ActionResult GetPlaylistsForAddButton()
         {
             var playlists = _playlistService.GetAll(User.Identity.Name);
@@ -135,7 +143,7 @@ namespace UI.Controllers
                             });
         }
 
-        //AJAX
+        //AJAX     
         public ActionResult Play(string id)
         {
             return PartialView((object) id);
